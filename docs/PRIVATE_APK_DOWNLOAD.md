@@ -14,7 +14,7 @@ No SQL Editor do mesmo Supabase do ranking, execute uma vez:
 
 supabase/migrations/202611070002_private_download.sql
 
-Ela adiciona apenas tabelas/RPCs de limite e uso de códigos. Não altera/apaga recordes. Requer a migração inicial já aplicada.
+Ela cria o schema privado se necessário e adiciona apenas tabelas/RPCs de limite e uso de códigos. Não altera/apaga recordes. A migração do ranking continua necessária para o ranking, mas não é uma dependência do download. Correção de 2026-11-07: teste adicional executa esta migração sozinha em banco vazio com os papéis Supabase e verifica que o schema permanece privado. Validação após a correção: 32 testes aprovados.
 
 ### 2. Criar armazenamento privado
 
@@ -35,6 +35,8 @@ npm run upload:apk -- ../game/builds/CraftBunny-Android-0.3.5.apk 0.3.5
 ```
 
 O script calcula SHA256, usa pasta com versão/hash, impede sobrescrita e imprime apenas os metadados para cadastrar na Vercel. Nunca imprime o token.
+
+Execute no terminal do Windows, dentro de `C:\Users\rleti\OneDrive\Documentos\Codex\Jogos\CraftBunny\CraftBunny\web`. O script lê `BLOB_READ_WRITE_TOKEN` do ambiente ou do arquivo ignorado `web/.env.local`. Copie esse token da conexão do store privado na Vercel, sem enviá-lo no chat. `APK_BLOB_PATH` é o valor impresso pelo upload; para este arquivo, o caminho calculado é `releases/0.3.5/a4582f7a33ea/CraftBunny-Android-0.3.5.apk`. Só configure esse valor depois de um upload concluído nesse caminho. Upload manual no painel pode resultar em outro pathname.
 
 ### 4. Cadastrar o autenticador do responsável
 

@@ -42,6 +42,17 @@ async function call(options={},deps={}) {
  }finally{server.closeAllConnections();await new Promise(resolve=>server.close(resolve));}
 }
 const post=body=>({method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({expected_version:env.APK_DOWNLOAD_VERSION,...body})});
+test('download migration works without the ranking schema and keeps it private',async()=>{
+ const standalone=new PGlite();
+ try{
+  await standalone.exec('create role anon;create role authenticated;create role service_role;');
+  await standalone.exec(await readFile(new URL('../../supabase/migrations/202611070002_private_download.sql',import.meta.url),'utf8'));
+  const {rows}=await standalone.query("select to_regclass('craftbunny_private.download_codes')::text as name, has_schema_privilege('anon','craftbunny_private','USAGE') as accessible");
+  assert.equal(rows[0].name,'craftbunny_private.download_codes');
+  assert.equal(rows[0].accessible,false);
+ }finally{await standalone.close();}
+});
+
 test('TOTP follows RFC 6238 six-digit vector and rejects malformed/expired codes',()=>{
  assert.equal(validateDownloadCode(secret,'287082',59000),1);
  assert.equal(validateDownloadCode(secret,'287082',89000),1);

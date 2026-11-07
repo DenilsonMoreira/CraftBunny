@@ -1,5 +1,7 @@
 begin;
 -- Independent of leaderboard data. Never deletes or modifies scores.
+create schema if not exists craftbunny_private;
+revoke all on schema craftbunny_private from public,anon,authenticated;
 create table craftbunny_private.download_attempts (
  client_hash text not null check(client_hash ~ '^[0-9a-f]{64}$'),
  minute_bucket timestamptz not null,
