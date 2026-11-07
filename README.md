@@ -15,6 +15,8 @@ O jogo possui ranking local e cliente global opcional. Site/API em https://craft
 
 ## Abrir o jogo
 
+Windows 0.3.5: execute `game/builds/windows-0.3.5/CraftBunny-0.3.5.exe`. Pacote local: `game/builds/CraftBunny-Windows-0.3.5.zip`. Binários não são versionados. Use o projeto atual do repositório; a pasta anterior não recebe atualizações automaticamente. Validação em `game/docs/WINDOWS_BUILD.md`.
+
 Use Godot 4.7.2 para reproduzir a validação atual e importe game/project.godot. A engine não acompanha o repositório. Consulte game/README.md, game/AGENTS.md e game/ROADMAP.md para controles, regras e histórico.
 
 No editor, pressione F5. Testes pela CLI:

@@ -10,6 +10,8 @@
 
 ## Iniciar e testar
 
+Windows atual: `builds/windows-0.3.5/CraftBunny-0.3.5.exe`. Esta versão usa o mesmo projeto 0.3.5 do APK; abrir a pasta antiga não atualiza o jogo de PC. Exportação e verificações em `docs/WINDOWS_BUILD.md`.
+
 RECORDES → ZERAR RANKING LOCAL pede confirmação antes de apagar os recordes deste aparelho. Cancelar preserva os dados; a ação não afeta o ranking global. Detalhes em ../docs/LOCAL_RESET_AND_RANKING_LAYOUT.md.
 
 Cliente global opcional 0.3.4 configurado para https://craftbunny-web.vercel.app: confirmação no fim da tentativa, consulta pelo menu RECORDES e ranking local preservado sem internet. Ao terminar com cenouras, use três letras e ENVIAR AO GLOBAL; REGISTRAR LOCAL não publica. O APK anterior 0.3.3 não inclui esta integração. Guia em ../docs/GLOBAL_RANKING.md.

@@ -73,7 +73,7 @@
 - [ ] Corrigir travamentos, softlocks, cenouras inacessíveis e bugs de colisão.
 - [ ] Balancear tempos/altura somente com evidências de playtest.
 - [ ] Revisar visibilidade de ataques da ave (3 de dano) e clareza dos feedbacks.
-- [ ] Exportar Windows e executar o build gerado fora do editor.
+- [x] Exportar Windows e executar o build gerado fora do editor (0.3.5, smoke OpenGL de 120 frames; playtest completo pendente).
 - [ ] Produzir changelog da v1.0 e inventário de assets/licenças.
 - [ ] Congelar escopo; avaliar segunda fase **apenas depois da validação da v1.0**.
 **Pronto quando:** jogador completa ou perde a fase, registra ranking confiável e reinicia sem erros em build exportada.
@@ -84,6 +84,8 @@
 - [ ] Segredos, novos objetos construíveis, novos inimigos, desafios extras.
 
 ## Registro de execução (Codex deve preencher a cada sessão)
+
+Windows atualizado (2026-11-07): preset release x86_64 com PCK embutido e script reproduzível; EXE 0.3.5.0 gerado a partir do projeto atual, com ranking global e confirmação para zerar ranking local. A pasta antiga permanece preservada. Importação/smoke headless e smoke OpenGL do EXE passaram; 15 checks de exclusão local, 16 de fluxo e dez de integração Godot/API/PostgreSQL passaram no projeto. Aviso de recursos no encerramento do teste de fluxo e timeout ao tentar rodar script no release documentados. Playtest completo no Windows pendente; M7 em andamento. Ver docs/WINDOWS_BUILD.md.
 
 Exclusão local/site (2026-11-07): botão ZERAR RANKING LOCAL com confirmação e foco em cancelar, exclusão persistente, guarda de estado e tratamento de falha. Ranking global/tentativa preservados. Site agora exibe painel minimalista pixel art do ranking primeiro e apresentação depois. 15 checks novos, 16 de fluxo, 18 API/SQL e build web passaram; revisão OpenGL/browser móvel executada. APK 0.3.5 assinado. Playtest físico pendente. Ver ../docs/LOCAL_RESET_AND_RANKING_LAYOUT.md.
 
