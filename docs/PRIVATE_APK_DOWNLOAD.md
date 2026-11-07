@@ -92,6 +92,8 @@ npm run build aprovado; npm audit e auditoria de produção: zero vulnerabilidad
 
 Browser: posição do botão, abertura/cancelamento, estado não configurado e largura móvel de 390 px revisados. Captura docs/qa_download_otp.png não contém segredo. Download de 80 MB em produção, migração online adicional, store e validação do código real ainda dependem da ativação acima.
 
+Atualização visual (2026-11-07): botão BAIXAR APK com o mesmo fundo verde, texto claro, cor de borda e sombra do filtro TODOS OS TEMPOS; hover verde mais escuro. `npm run build` aprovado após a alteração.
+
 ## Referências
 
 [Vercel Blob privado](https://vercel.com/docs/vercel-blob/private-storage), [Signed URLs](https://vercel.com/docs/vercel-blob/vercel-signed-urls), [franquias Hobby](https://vercel.com/docs/vercel-blob/usage-and-pricing), [limite Supabase Free](https://supabase.com/docs/guides/storage/uploads/file-limits), [OTPAuth](https://github.com/hectorm/otpauth).
