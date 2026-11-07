@@ -14,4 +14,4 @@ Se adotar o Supabase CLI depois, sincronize o histórico da migração manual an
 
 RLS habilitada. Schema privado, tabelas e funções sem acesso de anon/authenticated. RPCs só executáveis pela chave secreta/service_role da API. Não exponha o schema privado na Data API nem libere INSERT público.
 
-Migração testada em PostgreSQL local via PGlite; ainda NÃO aplicada automaticamente no Supabase online. Guia em ../docs/GLOBAL_RANKING.md.
+Migração testada localmente via PGlite e aplicada online pelo usuário. Consulta e criação de sessão reais confirmadas em 2026-11-07; nenhum resultado fictício publicado. Guia em ../docs/GLOBAL_RANKING.md.

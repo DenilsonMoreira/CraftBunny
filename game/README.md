@@ -1,6 +1,6 @@
 # Craft Bunny 🐰🔨 — Godot 4
 
-> **Status:** protótipo v0.3.3 com verificações automatizadas e APK de teste exportado; QA completo e playtest em Android físico pendentes. **Objetivo:** concluir uma versão 1.0 jogável de **uma única fase longa**, com pontuação por cenouras e ranking local. **Engine validada:** Godot 4.7.2 / GDScript / 2D.
+> **Status:** protótipo v0.3.4 com verificações automatizadas e APK de teste exportado; QA completo e playtest em Android físico pendentes. **Objetivo:** concluir uma versão 1.0 jogável de **uma única fase longa**, com pontuação por cenouras e ranking local/global. **Engine validada:** Godot 4.7.2 / GDScript / 2D.
 
 ## O jogo
 
@@ -10,13 +10,13 @@
 
 ## Iniciar e testar
 
-Cliente global opcional 0.3.4: confirmação no fim da tentativa, consulta pelo menu RECORDES e ranking local preservado sem internet. Configure a URL pública antes de exportar; o APK anterior 0.3.3 não inclui esta integração. Guia em ../docs/GLOBAL_RANKING.md.
+Cliente global opcional 0.3.4 configurado para https://craftbunny-web.vercel.app: confirmação no fim da tentativa, consulta pelo menu RECORDES e ranking local preservado sem internet. Ao terminar com cenouras, use três letras e ENVIAR AO GLOBAL; REGISTRAR LOCAL não publica. O APK anterior 0.3.3 não inclui esta integração. Guia em ../docs/GLOBAL_RANKING.md.
 
 Título, opções e controles com tema pixel art; inimigos exibem balão de detecção e feedback de dano. Arte, fonte, testes e limitações em assets/production/v2/pixel_menus_feedback.md.
 
 Atualização visual: mundo ampliado em 25% pela câmera, com colisões preservadas. Ataque exclusivo do coelho em 12 quadros, martelo maior e alcance frontal de 32 unidades. Detalhes e testes em assets/production/v2/bunny_attack_12.md.
 
-Versão Android de teste já exportada na pasta de trabalho anterior, com controles multitoque, paisagem e mínimo API 24. APKs não são versionados neste repositório; novas exportações ficam em builds/. Instalação, build e limitações em docs/ANDROID_BUILD.md. Execução em aparelho ainda pendente.
+Versão Android atual em builds/CraftBunny-Android-0.3.4.apk, com controles multitoque, paisagem e mínimo API 24. APKs não são versionados. Instalação, build e limitações em docs/ANDROID_BUILD.md. Execução em aparelho ainda pendente.
 
 1. Instale **Godot 4.3 ou superior**.
 2. Abra o gerenciador de projetos da Godot, clique em **Importar** e escolha `project.godot` nesta pasta.

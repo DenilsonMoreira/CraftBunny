@@ -29,7 +29,7 @@ window/handheld/orientation=0
 
 [craft_bunny]
 
-ranking/api_url=""
+ranking/api_url="https://craftbunny-web.vercel.app"
 
 [physics]
 

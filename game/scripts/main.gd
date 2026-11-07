@@ -493,6 +493,14 @@ func _show_title() -> void:
  _title_button("Recordes","RECORDES",1,_show_records)
  _title_button("Opcoes","OPÇÕES",2,_show_settings)
  _title_button("Controles","CONTROLES",3,_show_controls)
+ var build_label := Label.new()
+ build_label.name = "BuildVersion"
+ build_label.text = "v%s | LOCAL + GLOBAL" % global_ranking.GAME_VERSION
+ build_label.position = Vector2(500,500)
+ build_label.size = Vector2(304,24)
+ build_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+ build_label.add_theme_font_size_override("font_size",12)
+ title_screen.add_child(build_label)
  start.call_deferred("grab_focus")
 
 func _title_button(button_name: String, label: String, index: int, callback: Callable) -> Button:

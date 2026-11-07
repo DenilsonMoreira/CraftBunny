@@ -15,13 +15,20 @@ if ([string]::IsNullOrWhiteSpace($GodotPath) -or -not (Test-Path -LiteralPath $G
 $godot = $GodotPath
 $output = Join-Path $projectRoot 'builds/CraftBunny-Android-Test.apk'
 New-Item -ItemType Directory -Force -Path (Split-Path $output) | Out-Null
-if ($Configure) {
-    & $godot --headless --editor --path $projectRoot --script res://tools/configure_android.gd
-    if ($LASTEXITCODE -ne 0) { throw 'Android configuration failed' }
+$presetPath = Join-Path $projectRoot 'export_presets.cfg'
+$portablePreset = [System.IO.File]::ReadAllText($presetPath)
+try {
+    if ($Configure) {
+        & $godot --headless --editor --path $projectRoot --script res://tools/configure_android.gd
+        if ($LASTEXITCODE -ne 0) { throw 'Android configuration failed' }
+    }
+    & $godot --headless --path $projectRoot --export-debug Android $output
+    if ($LASTEXITCODE -ne 0) { throw 'APK export failed' }
+    & (Join-Path $cache 'android-sdk/build-tools/35.0.1/apksigner.bat') verify --verbose $output
+    if ($LASTEXITCODE -ne 0) { throw 'APK signature verification failed' }
+} finally {
+    # Keep local key paths and credentials out of the tracked export preset.
+    [System.IO.File]::WriteAllText($presetPath, $portablePreset, [System.Text.UTF8Encoding]::new($false))
 }
-& $godot --headless --path $projectRoot --export-debug Android $output
-if ($LASTEXITCODE -ne 0) { throw 'APK export failed' }
-& (Join-Path $cache 'android-sdk/build-tools/35.0.1/apksigner.bat') verify --verbose $output
-if ($LASTEXITCODE -ne 0) { throw 'APK signature verification failed' }
 Get-Item -LiteralPath $output | Select-Object FullName,Length
 Get-FileHash -LiteralPath $output -Algorithm SHA256

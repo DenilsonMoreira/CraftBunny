@@ -71,7 +71,7 @@ São validações básicas de plausibilidade e abuso. O servidor não reproduz a
 - Navegador: paginação 1–10/11–14, busca FOX, ausência ZZZ, filtro semanal e vitórias, com 14 resultados fictícios em banco local isolado. Nenhum dado de QA enviado ao Supabase.
 - Visual revisado em janela normal e largura móvel 390 px, sem transbordamento horizontal observado. Capturas qa_ranking_desktop.png (sem configuração online) e qa_ranking_mobile.png (faixa de dados fictícios).
 
-Pendentes: aplicar migração online, variáveis/deploy Vercel, URL real no jogo, APK atualizado e teste em aparelho. Contas criadas não configuram esses itens automaticamente.
+Atualização 2026-11-07: usuário informou migração, variáveis e redeploy concluídos. Consulta e criação de sessão no serviço real https://craftbunny-web.vercel.app foram confirmadas pelo cliente Godot (PRODUCTION_LEADERBOARD=true, PRODUCTION_SESSION=true, PUBLIC_SCORES_SUBMITTED=0). URL configurada no jogo e APK 0.3.4 exportado/assinado; URL e permissão de internet verificadas dentro do pacote. Falta validar uma tentativa real em aparelho e o envio público. Nenhum resultado fictício foi publicado.
 
 ## Referências
 

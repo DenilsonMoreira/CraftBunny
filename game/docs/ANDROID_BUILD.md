@@ -1,19 +1,25 @@
 # Craft Bunny — APK de teste
 
-Build gerado em 2026-11-06 com Godot 4.7.2.
+Build atualizado em 2026-11-07 com Godot 4.7.2.
 
-- Arquivo: builds/CraftBunny-Android-Test.apk
+- Arquivo: builds/CraftBunny-Android-0.3.4.apk (também disponível como CraftBunny-Android-Test.apk).
 - Pacote: com.craftbunny.game
-- Versão: 0.3.3-android-test (código 3), menus pixel art e feedback de dano/detecção.
+- Versão: 0.3.4-android-test (código 4), cliente global configurado para https://craftbunny-web.vercel.app.
 - Mínimo: Android API 24 (Android 7.0), aparelho com OpenGL ES 3 compatível com o renderer Compatibility.
 - Target SDK: 36.
 - Arquiteturas: arm64-v8a e armeabi-v7a.
 - Orientação: paisagem, conteúdo 960x540 com proporção preservada.
-- Tamanho: 79.733.045 bytes (76,04 MiB).
-- SHA256: 776118388750D93A8C7AC7CAA83BFC1715D6A3A23E5988C1D49910FC0DDB8738
+- Tamanho: 79.737.304 bytes (76,04 MiB).
+- SHA256: D7354F4C5C7BE2A2323D84325DFF6400FC4E23A7F7914448E23149546B599722
 - Assinatura de depuração verificada: esquemas v2 e v3.
 
 ## Instalar
+
+Pode atualizar por cima do 0.3.3: mesma assinatura e mesmo pacote, conferidos. No título aparece v0.3.4 | LOCAL + GLOBAL. Comece uma tentativa nova com internet; ao terminar com cenouras, preencha três letras e pressione ENVIAR AO GLOBAL. REGISTRAR LOCAL salva somente no aparelho. Resultados antigos não são enviados retroativamente.
+
+Confirmados no APK: permissão INTERNET e URL real dentro de assets/project.binary. Cliente desktop abriu sessão real e consultou o ranking; nenhum score fictício foi publicado. Envio completo validado em banco local de teste. Playtest Android físico e envio de resultado real ainda pendentes.
+
+tools/build_android.ps1 agora restaura o preset sanitizado ao terminar, inclusive se ocorrer falha, para não deixar caminhos/credenciais locais no arquivo versionado. A configuração headless do editor reportou RIDs em uso ao sair; exportação/assinatura concluíram e importação normal/smoke passaram.
 
 Copie o APK para o celular e abra pelo gerenciador de arquivos. Se solicitado, permita que esse gerenciador instale apps dessa origem. É uma versão de teste para instalação direta; não é uma publicação na Play Store.
 

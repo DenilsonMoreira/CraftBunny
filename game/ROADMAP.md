@@ -85,6 +85,8 @@
 
 ## Registro de execução (Codex deve preencher a cada sessão)
 
+Ativação do cliente global (2026-11-07): corrigida URL vazia; configurado https://craftbunny-web.vercel.app e exibida versão 0.3.4 no título. Consulta e abertura de uma sessão reais passaram, sem publicar scores de teste. Dez checks de integração local e 16 de fluxo passaram; importação/smoke e título OpenGL revisados. APK código 4 exportado, assinatura v2/v3, mesma chave do 0.3.3, INTERNET e URL interna conferidos. Build restaura preset sanitizado. Playtest em aparelho e envio público real pendentes. Ver docs/ANDROID_BUILD.md e ../docs/GLOBAL_RANKING.md.
+
 Ranking global (2026-11-07, escopo adicional autorizado): site pixel art, API Vercel e migração Supabase; cliente opcional com confirmação, ranking local independente. 18 testes API/SQL, dez verificações Godot/HTTP/PostgreSQL e 16 checks de fluxo local passaram; build web e QA de filtros/paginação/móvel executados. Ativação online e APK com URL real pendentes. Ver ../docs/GLOBAL_RANKING.md.
 
 Repositório (2026-11-07): cópia organizada em game/, com web/ e supabase/ reservados ao ranking global. Fontes/assets preservados; presets sanitizados; build Android aceita engine externa. Importação/smoke e 50 verificações de fluxo/feedback passaram; 21 arquivos de referência conferidos por hash. Detalhes em ../docs/REPOSITORY_SETUP.md. Nenhuma mudança de gameplay ou integração online nesta etapa.
