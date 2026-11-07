@@ -88,6 +88,8 @@ Nenhuma lista pública permite escolher versões antigas. Links já emitidos pod
 
 ## Verificações
 
+Diagnóstico de 2026-11-07: falha de download no banco antes da validação TOTP; responsável confirmou migração corrigida pendente. Mensagens agora distinguem migração incompleta, permissões e indisponibilidade sem expor detalhes internos. 33 testes aprovados. Se a consulta antiga já estiver aberta no SQL Editor, substitua seu conteúdo pelo arquivo atualizado: ela precisa conter `create schema if not exists craftbunny_private;` e a revogação de acesso ao schema antes do primeiro `create table`.
+
 31 testes aprovados (13 novos e 18 de regressão), incluindo vetor RFC 6238, expiração, formato, limites, corrida/reutilização, troca de versão com diálogo aberto, falha do storage, permissões, metadados, escopo exato do link e geração privada do QR sem imprimir a chave. Migrações executadas em PostgreSQL local via PGlite; Blob/assinatura simulados nos testes, sem upload público ou uso do autenticador real.
 
 npm run build aprovado; npm audit e auditoria de produção: zero vulnerabilidades. Override pontual de zod em @vercel/cli-config para a versão corrigida 4.6.6.

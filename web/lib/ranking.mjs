@@ -30,6 +30,7 @@ export class SupabaseStore {
     this.url = new URL(url).origin; this.key = key; this.fetcher = fetcher;
   }
   async rpc(name, params) {
+    const downloading=['cb_download_attempt','cb_download_use_code'].includes(name);
     let response;
     try {
       const headers = { apikey: this.key, 'Content-Type': 'application/json' };
@@ -38,9 +39,9 @@ export class SupabaseStore {
         method: 'POST', headers,
         body: JSON.stringify(params), signal: AbortSignal.timeout(8000)
       });
-    } catch { throw new ApiError(503, 'unavailable', 'Ranking indisponível. Tente novamente em instantes.'); }
+    } catch { throw new ApiError(503, downloading?'download_database_unavailable':'unavailable', downloading?'Não foi possível conectar ao banco do download. Tente novamente em instantes.':'Ranking indisponível. Tente novamente em instantes.'); }
     let data;
-    try { data = await response.json(); } catch { throw new ApiError(503, 'unavailable', 'Resposta inválida do serviço de ranking.'); }
+    try { data = await response.json(); } catch { throw new ApiError(503, downloading?'download_database_unavailable':'unavailable', downloading?'O banco do download retornou uma resposta inválida.':'Resposta inválida do serviço de ranking.'); }
     if (!response.ok) {
       const errors = {
         rate_limited: [429, 'Muitas tentativas. Aguarde um pouco.'],
@@ -54,6 +55,11 @@ export class SupabaseStore {
       };
       const known = errors[data?.message];
       if (known) throw new ApiError(known[0], data.message, known[1]);
+      if(downloading){
+        if(['PGRST202','42883','42P01','3F000'].includes(data?.code))throw new ApiError(503,'download_migration_required','A configuração do banco do download está incompleta. O responsável deve aplicar a migração de download no Supabase conectado à Vercel.');
+        if(response.status===401 || response.status===403 || ['42501','PGRST301','PGRST302'].includes(data?.code))throw new ApiError(503,'download_database_permissions','O servidor não tem permissão para liberar o download. O responsável deve conferir a chave do servidor e as permissões da migração.');
+        throw new ApiError(503,'download_database_unavailable','O banco do download está indisponível. Tente novamente em instantes.');
+      }
       throw new ApiError(503, 'unavailable', 'Não foi possível acessar o ranking.');
     }
     return data;

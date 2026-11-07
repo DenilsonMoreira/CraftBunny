@@ -53,6 +53,16 @@ test('download migration works without the ranking schema and keeps it private',
  }finally{await standalone.close();}
 });
 
+test('download database failures identify setup and permissions without leaking provider details',async()=>{
+ for(const [providerCode,status,expected] of [['PGRST202',404,'download_migration_required'],['42P01',400,'download_migration_required'],['3F000',400,'download_migration_required'],['42883',404,'download_migration_required'],['42501',403,'download_database_permissions'],['XX000',500,'download_database_unavailable']]){
+  const failing=new SupabaseStore({SUPABASE_URL:'https://example.supabase.co',SUPABASE_SECRET_KEY:'sb_secret_test_only'},async()=>Response.json({code:providerCode,message:'PRIVATE provider details'},{status}));
+  const result=await call(post({code:'invalid'}),{store:failing,signer:async()=>{throw new Error('Signer must not run');}});
+  assert.equal(result.status,503);assert.equal(result.body.error,expected);
+  assert.ok(!JSON.stringify(result.body).includes('PRIVATE'));
+  assert.ok(!result.body.message.includes('ranking'));
+ }
+});
+
 test('TOTP follows RFC 6238 six-digit vector and rejects malformed/expired codes',()=>{
  assert.equal(validateDownloadCode(secret,'287082',59000),1);
  assert.equal(validateDownloadCode(secret,'287082',89000),1);
