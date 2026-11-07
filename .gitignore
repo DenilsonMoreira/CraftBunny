@@ -1,0 +1,40 @@
+# Godot caches and local export credentials
+**/.godot/
+**/.import/
+**/export_credentials.cfg
+**/.build_tools/
+**/.retired_sprites/
+**/builds/
+**/html/
+*.exe
+*.dll
+*.apk
+*.aab
+*.pck
+*.zip
+*.keystore
+*.jks
+*.pem
+*.key
+*.p12
+*.pfx
+*.tmp
+.DS_Store
+Thumbs.db
+
+# Web dependencies, output and secrets
+**/node_modules/
+**/.next/
+**/.vercel/
+**/dist/
+**/coverage/
+**/.env*
+!**/.env.example
+!**/.env.sample
+
+# Supabase local state
+supabase/.temp/
+supabase/.branches/
+
+# Invalid unused recording; original kept in the previous project folder
+game/music/hammer-atack1.mp3
