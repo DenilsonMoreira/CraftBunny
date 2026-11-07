@@ -4,7 +4,8 @@ import { resolve, extname, sep } from 'node:path';
 import leaderboard from '../api/leaderboard.js';
 import runs from '../api/runs.js';
 import scores from '../api/scores.js';
-const routes = { '/api/leaderboard': leaderboard, '/api/runs': runs, '/api/scores': scores };
+import download from '../api/download.js';
+const routes = { '/api/leaderboard': leaderboard, '/api/runs': runs, '/api/scores': scores, '/api/download':download };
 const root = resolve('public');
 const types = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'text/javascript', '.png': 'image/png', '.ttf': 'font/ttf', '.txt': 'text/plain' };
 const server = createServer(async (req, res) => {

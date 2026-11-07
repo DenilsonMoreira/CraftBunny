@@ -83,3 +83,45 @@ $('refresh').addEventListener('click', load);
 $('previous').addEventListener('click', () => { page--; render(); });
 $('next').addEventListener('click', () => { page++; render(); });
 load();
+
+const downloadDialog=$('download-dialog'),downloadCode=$('download-code'),downloadConfirm=$('confirm-download');
+let downloadAvailable=false,downloadBusy=false,downloadRequest,downloadVersion='';
+$('open-download').addEventListener('click',async()=>{
+  downloadDialog.showModal();downloadCode.value='';downloadAvailable=false;downloadVersion='';
+  downloadConfirm.disabled=true;downloadCode.disabled=true;
+  $('download-status').textContent='';$('download-version').textContent='Verificando a versão disponível…';
+  downloadRequest?.abort();downloadRequest=new AbortController();
+  try{
+    const response=await fetch('/api/download',{signal:downloadRequest.signal,cache:'no-store'});
+    const data=await response.json();
+    if(!response.ok || !data.available){$('download-version').textContent='Download de testes em preparação.';$('download-status').textContent='O responsável ainda está configurando o acesso.';return;}
+    downloadAvailable=true;downloadVersion=data.version;downloadConfirm.disabled=false;downloadCode.disabled=false;
+    $('download-version').textContent='Versão disponível: '+data.version+' · Android';
+    downloadCode.focus();
+  }catch(error){
+    if(error.name!=='AbortError')$('download-status').textContent='Não foi possível consultar a versão. Tente novamente.';
+  }
+});
+$('close-download').addEventListener('click',()=>downloadDialog.close());
+downloadDialog.addEventListener('close',()=>{downloadRequest?.abort();downloadCode.value='';});
+$('download-form').addEventListener('submit',async event=>{
+  event.preventDefault();
+  if(downloadBusy || !downloadAvailable || !/^[0-9]{6}$/.test(downloadCode.value))return;
+  downloadBusy=true;downloadConfirm.disabled=true;$('download-status').textContent='Confirmando seu código…';
+  const code=downloadCode.value;downloadCode.value='';
+  downloadRequest=new AbortController();
+  try{
+    const response=await fetch('/api/download',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code,expected_version:downloadVersion}),signal:downloadRequest.signal,cache:'no-store'});
+    const data=await response.json();
+    if(!response.ok){$('download-status').textContent=data.message||'Não foi possível liberar o download.';downloadCode.focus();return;}
+    const url=new URL(data.download_url);
+    if(url.protocol!=='https:' || !url.hostname.endsWith('.private.blob.vercel-storage.com'))throw new Error('invalid_download_url');
+    $('download-status').textContent='Download liberado. O link expira em 60 segundos.';
+    const link=document.createElement('a');
+    link.href=url.href;link.rel='noreferrer';link.referrerPolicy='no-referrer';
+    link.download='CraftBunny-Android-'+data.version+'.apk';
+    document.body.append(link);link.click();link.remove();
+  }catch(error){
+    if(error.name!=='AbortError')$('download-status').textContent='Não foi possível iniciar o download. Solicite um novo código e tente novamente.';
+  }finally{downloadBusy=false;downloadConfirm.disabled=!downloadAvailable;}
+});

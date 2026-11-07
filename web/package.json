@@ -3,12 +3,26 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "engines": { "node": "22.x" },
+  "engines": {
+    "node": "22.x"
+  },
   "scripts": {
     "dev": "node --env-file-if-exists=.env.local scripts/dev.mjs",
     "build": "node scripts/build.mjs",
     "test": "node --test --test-concurrency=1 tests/*.test.mjs",
-    "test:game": "node scripts/test-game.mjs"
+    "test:game": "node scripts/test-game.mjs",
+    "setup:download": "node scripts/setup-download.mjs",
+    "upload:apk": "node --env-file-if-exists=.env.local scripts/upload-apk.mjs"
   },
-  "devDependencies": { "@electric-sql/pglite": "0.5.15" }
+  "overrides": {
+    "@vercel/cli-config": { "zod": "4.6.6" }
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "0.5.15",
+    "qrcode": "1.5.4"
+  },
+  "dependencies": {
+    "@vercel/blob": "2.8.2",
+    "otpauth": "9.6.0"
+  }
 }

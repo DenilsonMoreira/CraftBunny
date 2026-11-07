@@ -27,6 +27,8 @@ godot --headless --path game --script res://tools/test_pixel_feedback.gd
 
 ## Ranking online
 
+O site também possui BAIXAR APK para distribuição controlada por código do Google Authenticator. A ativação do arquivo privado e autenticador é separada do ranking; veja [docs/PRIVATE_APK_DOWNLOAD.md](docs/PRIVATE_APK_DOWNLOAD.md).
+
 Vercel para web/ e API, Supabase para os recordes. A pasta web/ já contém aplicação executável: Root Directory web, Framework Other, Install npm ci, Build npm run build, Output public. Guia em [docs/GLOBAL_RANKING.md](docs/GLOBAL_RANKING.md).
 
 Manter o ranking local independente da internet. Enviar recordes globais com confirmação do jogador, validar no servidor, evitar duplicatas e permitir consulta pública dos melhores resultados. Credenciais privadas ficam somente no servidor.

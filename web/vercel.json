@@ -4,6 +4,7 @@
   "buildCommand": "npm run build",
   "outputDirectory": "public",
   "regions": ["gru1"],
+  "functions": { "api/download.js": { "maxDuration": 30 } },
   "headers": [
     { "source": "/(.*)", "headers": [
       { "key": "X-Content-Type-Options", "value": "nosniff" },

@@ -21,7 +21,7 @@ export async function readBody(req) {
   if (!body || typeof body !== 'object' || Array.isArray(body)) throw new ApiError(400, 'invalid_json', 'Envie um objeto JSON.');
   return body;
 }
-function allowOrigin(req, res, env, reading) {
+export function allowOrigin(req, res, env, reading) {
   if (reading) { res.setHeader('Access-Control-Allow-Origin', '*'); return; }
   const origin = req.headers.origin;
   if (!origin) return; // Native Godot clients do not send browser Origin.

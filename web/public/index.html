@@ -14,8 +14,20 @@
   <a class="skip" href="#ranking">Pular para o ranking</a>
   <header class="topbar">
     <a class="brand" href="/" aria-label="Craft Bunny, início"><img src="/assets/icon.png" alt="" width="42" height="42"><span>CRAFT <b>BUNNY</b><small>RECORDES DA FLORESTA</small></span></a>
-    <nav aria-label="Navegação principal"><a class="active" href="#ranking">Ranking</a><a href="#participar">Como participar</a><a class="project-link" href="https://github.com/DenilsonMoreira/CraftBunny" target="_blank" rel="noopener noreferrer">O projeto ↗</a></nav>
+    <nav aria-label="Navegação principal"><a class="active" href="#ranking">Ranking</a><a href="#participar">Como participar</a><a class="project-link" href="https://github.com/DenilsonMoreira/CraftBunny" target="_blank" rel="noopener noreferrer">O projeto ↗</a><button id="open-download" class="download-button" type="button">BAIXAR APK ↓</button></nav>
   </header>
+  <dialog id="download-dialog" aria-labelledby="download-title">
+    <form id="download-form">
+      <p class="eyebrow">ACESSO PARA TESTADORES</p>
+      <h2 id="download-title">Baixar versão de teste</h2>
+      <p id="download-version">Verificando a versão disponível…</p>
+      <label for="download-code">Código do Google Authenticator</label>
+      <input id="download-code" type="text" inputmode="numeric" pattern="[0-9]{6}" minlength="6" maxlength="6" autocomplete="one-time-code" placeholder="000000" required>
+      <p class="download-help">Solicite o código atual ao responsável pelos testes. Cada código libera um link temporário.</p>
+      <p id="download-status" role="status" aria-live="polite"></p>
+      <div class="download-actions"><button type="button" id="close-download">CANCELAR</button><button id="confirm-download" type="submit" disabled>CONFIRMAR E BAIXAR</button></div>
+    </form>
+  </dialog>
   <main>
     <section id="ranking" class="ranking-section pixel-ranking" aria-labelledby="ranking-title">
       <div class="section-heading"><div><p class="eyebrow">O QUADRO DE HONRA</p><h2 id="ranking-title">Recordes globais<span class="leaf" aria-hidden="true">✦</span></h2></div><div class="live-label"><span id="status-dot"></span><span id="connection">Conectando à floresta…</span></div></div>

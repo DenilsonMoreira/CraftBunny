@@ -23,4 +23,12 @@ main{max-width:1184px;margin:auto;padding:0 24px}.hero{display:grid;grid-templat
 .pixel-ranking .refresh span{font:9px var(--pixel)}.pixel-ranking .ranking-footnote{margin-top:13px}
 .hero{border-top:1px solid var(--edge);margin-top:38px}
 @media(max-width:560px){.pixel-ranking{margin-top:20px;padding:16px 10px;box-shadow:3px 3px 0 #d9dcc6}.pixel-ranking h2{font-size:18px}.pixel-ranking .stats>div{padding:12px 8px}.pixel-ranking .board-toolbar,.pixel-ranking .filters,.pixel-ranking .board-bottom{padding:12px 9px}.pixel-ranking .tabs{font-size:7px}.pixel-ranking .tabs button{padding:10px 7px}.pixel-ranking .stats{margin-bottom:13px}.hero{margin-top:28px}}
+.topbar .project-link{display:block}.download-button{font:9px var(--pixel);padding:11px 13px;border:2px solid #294d34;background:#e6edd9;color:#244d35;box-shadow:2px 2px 0 #bbc6a3;white-space:nowrap}
+.download-button:hover{background:#d4e1c1}#download-dialog{width:min(480px,calc(100% - 32px));border:3px solid #60784c;box-shadow:6px 6px 0 #1e392a66;padding:28px;background:#fffdf3;color:var(--ink)}
+#download-dialog::backdrop{background:#15251bd9}#download-dialog h2{font-size:18px;margin-bottom:14px}#download-dialog label{display:block;font-size:13px;margin:20px 0 8px}
+#download-version{font-size:13px;color:var(--muted)}#download-code{width:100%;border:2px solid #abb995;background:#f4f3e8;color:var(--green);font:26px var(--pixel);letter-spacing:12px;text-align:center;padding:14px 8px}
+.download-help{font-size:12px;color:var(--muted);margin:12px 0}#download-status{font-size:13px;min-height:40px;color:#725336;margin:12px 0}.download-actions{display:flex;gap:12px;justify-content:flex-end}
+.download-actions button{font:9px var(--pixel);padding:12px 10px;background:#eef1e2;border:2px solid #9cac83;color:#294d34}.download-actions button[type=submit]{background:#294d34;color:#fff5d9;border-color:#193b25}
+@media(max-width:800px){nav{gap:14px}.download-button{padding:9px 8px;font-size:8px}}
+@media(max-width:560px){.topbar nav{width:100%;justify-content:space-between;gap:7px}.topbar .project-link{display:block;border:0;padding:0;font-size:11px}.download-button{font-size:7px;padding:10px 8px}#download-dialog{padding:22px 18px}.download-actions{gap:8px}.download-actions button{font-size:8px;padding:12px 8px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.pixel-button{transition:none}}

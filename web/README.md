@@ -1,5 +1,7 @@
 # Craft Bunny — ranking global
 
+Download de versões de teste: BAIXAR APK ao lado de O projeto, protegido por código do Authenticator do responsável. Exige ativação de Blob Private, migração e variáveis específicas; guia em ../docs/PRIVATE_APK_DOWNLOAD.md. Sem configuração, o botão abre um aviso de preparação e não libera o arquivo.
+
 Site responsivo em pixel art e três funções Node.js para Vercel. Artes e fonte reutilizadas do jogo; nenhuma credencial no navegador ou no jogo.
 
 ## Desenvolvimento

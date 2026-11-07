@@ -5,4 +5,5 @@ if (!html.includes('id="ranking"')) throw new Error('Ranking markup missing');
 await import('../api/leaderboard.js');
 await import('../api/runs.js');
 await import('../api/scores.js');
+await import('../api/download.js');
 console.log('Static site and Vercel API modules validated.');

@@ -48,7 +48,9 @@ export class SupabaseStore {
         expired_run: [410, 'A tentativa online expirou.'],
         conflicting_result: [409, 'Esta tentativa já possui outro resultado.'],
         implausible_run: [422, 'O resultado não corresponde à duração da tentativa.'],
-        invalid_score: [422, 'Recorde inválido.'], invalid_filter: [422, 'Filtro inválido.']
+        invalid_score: [422, 'Recorde inválido.'], invalid_filter: [422, 'Filtro inválido.'],
+        download_rate_limited: [429, 'Muitas tentativas de código. Aguarde alguns minutos.'],
+        download_otp_used: [409, 'Este código já foi usado. Aguarde o próximo no Authenticator.']
       };
       const known = errors[data?.message];
       if (known) throw new ApiError(known[0], data.message, known[1]);

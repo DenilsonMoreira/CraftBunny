@@ -1,5 +1,7 @@
 # Banco do ranking
 
+Migração adicional para download privado: migrations/202611070002_private_download.sql. Aplicar uma vez após a migração inicial, antes de habilitar OTP em produção. Não altera recordes. Detalhes em ../docs/PRIVATE_APK_DOWNLOAD.md.
+
 Migração: migrations/202611070001_global_ranking.sql.
 
 No projeto correto do Supabase, abra SQL Editor e execute o arquivo inteiro uma única vez. A migração é transacional e aditiva: cria somente schema craftbunny_private, suas tabelas e funções cb_. Não apaga tabelas existentes.

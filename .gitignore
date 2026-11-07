@@ -29,6 +29,7 @@ Thumbs.db
 **/dist/
 **/coverage/
 **/.env*
+**/.private/
 !**/.env.example
 !**/.env.sample
 
