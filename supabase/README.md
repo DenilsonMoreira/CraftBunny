@@ -1,9 +1,17 @@
-# Banco do ranking — pendente
+# Banco do ranking
 
-Ainda não existem migrações executadas nem ligação com um projeto Supabase.
+Migração: migrations/202611070001_global_ranking.sql.
 
-As futuras migrações SQL deverão ficar em migrations/. Preparar tabela de tentativas, restrições de apelido/pontuação, identificador único para impedir duplicatas e acesso por API validada.
+No projeto correto do Supabase, abra SQL Editor e execute o arquivo inteiro uma única vez. A migração é transacional e aditiva: cria somente schema craftbunny_private, suas tabelas e funções cb_. Não apaga tabelas existentes.
 
-Leitura pública apenas dos campos necessários ao ranking. Escrita administrativa restrita ao servidor. Endereço e credenciais reais do projeto serão configurados fora do código.
+Se adotar o Supabase CLI depois, sincronize o histórico da migração manual antes de executar db push.
 
-Os arquivos desta pasta não alteram dados de nenhum projeto existente.
+## Estrutura
+
+- run_sessions: tentativa, hash do token, hash de rede, versão, início e expiração.
+- scores: uma linha por tentativa com apelido, cenouras, resultado, duração, versão e data do servidor.
+- cb_start_run, cb_submit_score e cb_leaderboard: RPCs usados pela API.
+
+RLS habilitada. Schema privado, tabelas e funções sem acesso de anon/authenticated. RPCs só executáveis pela chave secreta/service_role da API. Não exponha o schema privado na Data API nem libere INSERT público.
+
+Migração testada em PostgreSQL local via PGlite; ainda NÃO aplicada automaticamente no Supabase online. Guia em ../docs/GLOBAL_RANKING.md.

@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Os maiores recordes de Craft Bunny. Explore o ranking global de cenouras e descubra os campeões da floresta.">
+  <meta name="theme-color" content="#244d35">
+  <title>Craft Bunny — Recordes da floresta</title>
+  <link rel="icon" href="/assets/icon.png">
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" type="module"></script>
+</head>
+<body>
+  <a class="skip" href="#ranking">Pular para o ranking</a>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Craft Bunny, início"><img src="/assets/icon.png" alt="" width="42" height="42"><span>CRAFT <b>BUNNY</b><small>RECORDES DA FLORESTA</small></span></a>
+    <nav aria-label="Navegação principal"><a class="active" href="#ranking">Ranking</a><a href="#participar">Como participar</a><a class="project-link" href="https://github.com/DenilsonMoreira/CraftBunny" target="_blank" rel="noopener noreferrer">O projeto ↗</a></nav>
+  </header>
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy"><p class="eyebrow"><span class="tiny-carrot" aria-hidden="true"></span> UMA FLORESTA. MUITAS CONQUISTAS.</p>
+        <h1 id="hero-title">Uma cenoura<br>de cada vez.<br><em>Até o topo.</em></h1>
+        <p>Salte, construa e encontre o caminho de casa.<br>Os melhores recordes de Craft Bunny se encontram aqui.</p>
+        <a class="pixel-button" href="#ranking">EXPLORAR O RANKING <span aria-hidden="true">↓</span></a>
+        <span class="hero-note">Seu próximo recorde começa com uma nova tentativa.</span>
+      </div>
+      <figure class="hero-art"><img src="/assets/forest.png" alt="Coelho de lenço vermelho com um martelo, em uma floresta pixel art com uma cachoeira e caixas de madeira." width="1672" height="941"><figcaption>PEQUENO COELHO. GRANDES AVENTURAS.</figcaption></figure>
+    </section>
+    <section id="ranking" class="ranking-section" aria-labelledby="ranking-title">
+      <div class="section-heading"><div><p class="eyebrow">O QUADRO DE HONRA</p><h2 id="ranking-title">Recordes globais<span class="leaf" aria-hidden="true">✦</span></h2></div><div class="live-label"><span id="status-dot"></span><span id="connection">Conectando à floresta…</span></div></div>
+      <div class="stats" aria-label="Resumo do ranking">
+        <div><span class="stat-icon" aria-hidden="true">#</span><div><span class="stat-label">TENTATIVAS REGISTRADAS</span><strong id="total">—</strong></div></div>
+        <div><span class="tiny-carrot large" aria-hidden="true"></span><div><span class="stat-label">MAIOR COLHEITA NESTE FILTRO</span><strong id="best">—</strong></div></div>
+        <div><span class="stat-icon" aria-hidden="true">★</span><div><span class="stat-label">LUGARES NO QUADRO</span><strong>100 <small>melhores tentativas</small></strong></div></div>
+      </div>
+      <div class="board">
+        <div class="board-toolbar"><div class="tabs" role="group" aria-label="Período"><button type="button" class="selected" data-period="all" aria-pressed="true">Todos os tempos</button><button type="button" data-period="week" aria-pressed="false">Últimos 7 dias</button></div><button id="refresh" class="refresh" type="button" aria-label="Atualizar ranking">↻ <span>Atualizar</span></button></div>
+        <div class="filters"><label class="search"><span aria-hidden="true">⌕</span><input id="search" maxlength="3" placeholder="Buscar 3 letras…" aria-label="Buscar apelido no TOP 100" autocomplete="off" spellcheck="false"></label><label class="outcome-label">Mostrar <select id="outcome"><option value="all">Todas as tentativas</option><option value="victory">Chegadas à casa</option></select></label></div>
+        <div id="notice" class="notice" aria-live="polite" role="status"><div class="sprout" aria-hidden="true">✦</div><h3>Buscando os recordes…</h3><p>Estamos abrindo o quadro da floresta.</p></div>
+        <div class="table-wrap" id="table-wrap" hidden><table><caption class="sr-only">Melhores tentativas de Craft Bunny, ordenadas por cenouras coletadas</caption><thead><tr><th scope="col">POSIÇÃO</th><th scope="col">JOGADOR</th><th scope="col" class="numeric">CENOURAS</th><th scope="col">JORNADA</th><th scope="col" class="date-cell">DATA</th></tr></thead><tbody id="entries"></tbody></table></div>
+        <div class="board-bottom"><p id="result-info">Até 100 tentativas, ordenadas por cenouras.</p><div class="pagination"><button id="previous" type="button" aria-label="Página anterior" disabled>←</button><span id="page">1 / 1</span><button id="next" type="button" aria-label="Próxima página" disabled>→</button></div></div>
+      </div>
+      <p class="ranking-footnote">Uma posição por tentativa. Apelidos de três letras podem se repetir. Em empate, o recorde recebido primeiro fica à frente.</p>
+    </section>
+    <section id="participar" class="how" aria-labelledby="how-title"><div><p class="eyebrow">DO JOGO PARA O QUADRO</p><h2 id="how-title">Sua próxima grande colheita.</h2></div><div class="steps"><article><span>01</span><h3>Explore a floresta</h3><p>Colete cenouras, enfrente os inimigos e use suas caixas para seguir em frente.</p></article><article><span>02</span><h3>Guarde seu recorde</h3><p>O TOP 10 local fica no seu aparelho e funciona mesmo sem internet.</p></article><article><span>03</span><h3>Escolha compartilhar</h3><p>Ao terminar, confirme o envio no jogo. Só uma tentativa iniciada online pode entrar no ranking global.</p></article></div></section>
+  </main>
+  <footer><a class="footer-brand" href="/">CRAFT BUNNY</a><p>Feito de pixels, madeira e boas aventuras.</p><a href="https://github.com/DenilsonMoreira/CraftBunny" target="_blank" rel="noopener noreferrer">Acompanhe o projeto ↗</a></footer>
+</body>
+</html>

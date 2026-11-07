@@ -27,6 +27,10 @@ window/stretch/mode="canvas_items"
 window/stretch/aspect="keep"
 window/handheld/orientation=0
 
+[craft_bunny]
+
+ranking/api_url=""
+
 [physics]
 
 2d/default_gravity=1150.0

@@ -7,11 +7,11 @@ Jogo de plataforma 2D em Godot e estrutura para seu futuro ranking global.
 | Pasta | Conteúdo |
 |---|---|
 | game/ | Projeto Godot, código, artes, áudio, testes e documentação do jogo |
-| web/ | Área reservada para o site público e API de ranking |
-| supabase/ | Área reservada para migrações e configuração do banco |
+| web/ | Site público em pixel art, API Vercel e testes |
+| supabase/ | Migração SQL e instruções de configuração do banco |
 | docs/ | Decisões de integração e validação do repositório |
 
-O jogo já possui ranking local. O site, API e ranking global ainda não foram implementados ou publicados. A criação das contas não conecta automaticamente os serviços.
+O jogo possui ranking local e cliente global opcional. Site, API e migração estão implementados e testados localmente. Ativação online depende da migração e configuração dos projetos Supabase/Vercel.
 
 ## Abrir o jogo
 
@@ -25,9 +25,9 @@ godot --headless --path game --quit-after 120
 godot --headless --path game --script res://tools/test_pixel_feedback.gd
 ```
 
-## Ranking online: próxima implementação
+## Ranking online
 
-O destino planejado é Vercel para web/ e API, com Supabase para os recordes. Ainda não importe web/ na Vercel: nesta etapa ela contém apenas a especificação, sem aplicação para executar.
+Vercel para web/ e API, Supabase para os recordes. A pasta web/ já contém aplicação executável: Root Directory web, Framework Other, Install npm ci, Build npm run build, Output public. Guia em [docs/GLOBAL_RANKING.md](docs/GLOBAL_RANKING.md).
 
 Manter o ranking local independente da internet. Enviar recordes globais com confirmação do jogador, validar no servidor, evitar duplicatas e permitir consulta pública dos melhores resultados. Credenciais privadas ficam somente no servidor.
 

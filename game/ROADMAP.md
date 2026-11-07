@@ -85,6 +85,8 @@
 
 ## Registro de execução (Codex deve preencher a cada sessão)
 
+Ranking global (2026-11-07, escopo adicional autorizado): site pixel art, API Vercel e migração Supabase; cliente opcional com confirmação, ranking local independente. 18 testes API/SQL, dez verificações Godot/HTTP/PostgreSQL e 16 checks de fluxo local passaram; build web e QA de filtros/paginação/móvel executados. Ativação online e APK com URL real pendentes. Ver ../docs/GLOBAL_RANKING.md.
+
 Repositório (2026-11-07): cópia organizada em game/, com web/ e supabase/ reservados ao ranking global. Fontes/assets preservados; presets sanitizados; build Android aceita engine externa. Importação/smoke e 50 verificações de fluxo/feedback passaram; 21 arquivos de referência conferidos por hash. Detalhes em ../docs/REPOSITORY_SETUP.md. Nenhuma mudança de gameplay ou integração online nesta etapa.
 
 Regressão de fluxo após menus pixel art: tools/test_flow.gd passou em 16 checks (pausa, recordes, persistência de controles, reinício e vitória), usando arquivos de QA isolados.

@@ -10,6 +10,8 @@
 
 ## Iniciar e testar
 
+Cliente global opcional 0.3.4: confirmação no fim da tentativa, consulta pelo menu RECORDES e ranking local preservado sem internet. Configure a URL pública antes de exportar; o APK anterior 0.3.3 não inclui esta integração. Guia em ../docs/GLOBAL_RANKING.md.
+
 Título, opções e controles com tema pixel art; inimigos exibem balão de detecção e feedback de dano. Arte, fonte, testes e limitações em assets/production/v2/pixel_menus_feedback.md.
 
 Atualização visual: mundo ampliado em 25% pela câmera, com colisões preservadas. Ataque exclusivo do coelho em 12 quadros, martelo maior e alcance frontal de 32 unidades. Detalhes e testes em assets/production/v2/bunny_attack_12.md.

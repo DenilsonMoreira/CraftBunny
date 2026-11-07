@@ -1,5 +1,7 @@
 # Créditos e licenças dos assets
 
+Site do ranking: cópias de title_pixel.png, android_icon.png, collectibles.png e Silkscreen Regular em web/public/assets. Originais preservados; licença da fonte copiada como OFL.txt.
+
 Menus: title_pixel.png e menu_panel.png gerados com imagegen em 2026-11-06; referências title_screen.png/hud_wood.png preservadas. Prompts em assets/production/v2/pixel_menus_feedback.md. Fonte Silkscreen Regular: The Silkscreen Project Authors, SIL OFL 1.1; licença incluída em assets/production/v2/fonts/OFL.txt, origem https://github.com/google/fonts/tree/main/ofl/silkscreen.
 
 Ataque ampliado: bunny_attack_12.png gerado pela ferramenta integrada imagegen em 2026-11-06, com bunny_attack_8.png como referência de identidade. Prompt completo e integração em assets/production/v2/bunny_attack_12.md. Referências originais preservadas.

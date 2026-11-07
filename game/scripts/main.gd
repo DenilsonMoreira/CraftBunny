@@ -50,6 +50,9 @@ var status_hud: Control
 var impact_player: AudioStreamPlayer
 var title_screen: Control
 var mobile_controls: Control
+var global_ranking: Node
+var global_status: Label
+var global_listing: Label
 
 func _ready() -> void:
  if OS.has_feature("android"): get_tree().quit_on_go_back = false
@@ -79,6 +82,10 @@ func _ready() -> void:
  player.stomped.connect(_on_player_stomped)
  _populate_level()
  _create_hud()
+ global_ranking = preload("res://scripts/global_ranking.gd").new()
+ add_child(global_ranking)
+ global_ranking.status_changed.connect(_on_global_status)
+ global_ranking.leaderboard_loaded.connect(_on_global_records)
  _show_title()
  queue_redraw()
 
@@ -321,6 +328,7 @@ func _on_player_died() -> void:
  if is_finished: return
  if is_instance_valid(music_player): music_player.stop()
  is_finished = true
+ global_ranking.finish_attempt(false)
  player.controls_enabled = false
  _set_enemies_active(false)
  if player.death_cause == "pit":
@@ -343,6 +351,7 @@ func _on_pit_falling() -> void:
 func _finish(won: bool) -> void:
  if is_finished: return
  is_finished = true
+ global_ranking.finish_attempt(won)
  player.controls_enabled = false
  _set_enemies_active(false)
  _show_results("CHEGADA À CASINHA!" if won else "FIM DE JOGO", "Percurso concluído!" if won else "A tentativa terminou.")
@@ -502,6 +511,7 @@ func _title_button(button_name: String, label: String, index: int, callback: Cal
 func _begin_game() -> void:
  if game_started: return
  game_started = true
+ global_ranking.begin_attempt()
  player.controls_enabled = true
  _set_enemies_active(true)
  if is_instance_valid(music_player) and not music_player.playing: music_player.play()
@@ -509,12 +519,36 @@ func _begin_game() -> void:
  show_message("Alcance a casa do coelho e colete muitas cenouras!",4)
 
 func _show_records() -> void:
- var content := _create_overlay("TOP 10 — CENOURAS")
+ var content := _create_overlay("LOCAL — TOP 10")
  var ranking := Label.new()
  ranking.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
  ranking.text = _ranking_text()
  content.add_child(ranking)
+ _button(content,"RANKING GLOBAL",_show_global_records)
  _button(content,"VOLTAR",_show_title if not game_started else _show_pause)
+
+func _show_global_records() -> void:
+ var content := _create_overlay("RECORDES GLOBAIS")
+ global_status = Label.new()
+ global_status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+ content.add_child(global_status)
+ global_listing = Label.new()
+ global_listing.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+ content.add_child(global_listing)
+ _button(content,"ATUALIZAR",global_ranking.fetch_leaderboard)
+ if global_ranking.configured(): _button(content,"VER TOP 100 NO SITE",func(): OS.shell_open(global_ranking.api_url))
+ _button(content,"VOLTAR",_show_records)
+ global_ranking.fetch_leaderboard()
+
+func _on_global_status(message: String) -> void:
+ if is_instance_valid(global_status): global_status.text = message
+
+func _on_global_records(entries: Array) -> void:
+ if not is_instance_valid(global_listing): return
+ var listing := ""
+ for index in range(mini(10,entries.size())):
+  listing += "%02d  %s  %d\n" % [index+1,entries[index]["initials"],int(entries[index]["carrots"])]
+ global_listing.text = listing
 
 func _ranking_text() -> String:
  var lines := ""
@@ -650,21 +684,35 @@ func _show_results(title: String,detail: String) -> void:
  desc.text = "%s\nCenouras: %d   |   Inimigos: %d" % [detail,carrot_count,defeated_count]
  desc.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
  content.add_child(desc)
- if _qualifies():
+ if _qualifies() or (carrot_count>0 and global_ranking.configured()):
   var prompt := Label.new()
-  prompt.text = "TOP 10! Registre exatamente 3 letras:"
+  prompt.text = "Registre exatamente 3 letras A-Z:"
   content.add_child(prompt)
   record_input = LineEdit.new()
   record_input.max_length = 3
   record_input.placeholder_text = "AAA"
   content.add_child(record_input)
-  _button(content,"REGISTRAR",_save_record)
+  if _qualifies(): _button(content,"REGISTRAR LOCAL",_save_record)
+  if global_ranking.configured():
+   var sharing := Label.new()
+   sharing.text = "Envio opcional: apelido e pontuação públicos."
+   sharing.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+   content.add_child(sharing)
+   _button(content,"ENVIAR AO GLOBAL",_submit_global_record)
+   global_status = Label.new()
+   global_status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+   global_status.text = global_ranking.status_text
+   content.add_child(global_status)
  var listing := Label.new()
  listing.name = "Ranking"
  listing.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
  listing.text = _ranking_text()
  content.add_child(listing)
  _button(content,"REINICIAR DO INÍCIO",_restart)
+
+func _submit_global_record() -> void:
+ if not is_finished or not is_instance_valid(record_input): return
+ global_ranking.submit_score(record_input.text.strip_edges().to_upper(),carrot_count)
 
 func _qualifies() -> bool:
  return not record_saved and carrot_count>0 and (records.size()<RECORD_LIMIT or carrot_count>int(records[records.size()-1]["carrots"]))
