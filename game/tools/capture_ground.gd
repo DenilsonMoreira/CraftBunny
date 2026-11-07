@@ -11,6 +11,10 @@ func _capture() -> void:
  if not title: game._begin_game()
  if "--settings" in OS.get_cmdline_user_args(): game._show_settings()
  if "--controls" in OS.get_cmdline_user_args(): game._show_controls()
+ if "--reset-local" in OS.get_cmdline_user_args():
+  # Isolated in-memory fixture; never writes or clears the player's records.
+  game.records.assign([{"name":"ABC","carrots":50}])
+  game._show_local_reset_confirmation()
  game.music_player.stop()
  game._set_enemies_active(false)
  if "--hearts" in OS.get_cmdline_user_args():
@@ -51,7 +55,7 @@ func _capture() -> void:
   error = image.save_png("res://docs/qa_android_controls.png")
  if "--attack" in OS.get_cmdline_user_args():
   error = image.save_png("res://docs/qa_attack_12.png")
- for mode in ["settings","controls","feedback"]:
+ for mode in ["settings","controls","feedback","reset-local"]:
   if "--"+mode in OS.get_cmdline_user_args():
    error = image.save_png("res://docs/qa_pixel_"+mode+".png")
  print("GROUND_CAPTURE=", error)

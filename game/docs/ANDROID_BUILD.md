@@ -2,20 +2,22 @@
 
 Build atualizado em 2026-11-07 com Godot 4.7.2.
 
-- Arquivo: builds/CraftBunny-Android-0.3.4.apk (também disponível como CraftBunny-Android-Test.apk).
+- Arquivo: builds/CraftBunny-Android-0.3.5.apk (também disponível como CraftBunny-Android-Test.apk).
 - Pacote: com.craftbunny.game
-- Versão: 0.3.4-android-test (código 4), cliente global configurado para https://craftbunny-web.vercel.app.
+- Versão: 0.3.5-android-test (código 5), opção de zerar ranking local com confirmação; global configurado para https://craftbunny-web.vercel.app.
 - Mínimo: Android API 24 (Android 7.0), aparelho com OpenGL ES 3 compatível com o renderer Compatibility.
 - Target SDK: 36.
 - Arquiteturas: arm64-v8a e armeabi-v7a.
 - Orientação: paisagem, conteúdo 960x540 com proporção preservada.
-- Tamanho: 79.737.304 bytes (76,04 MiB).
-- SHA256: D7354F4C5C7BE2A2323D84325DFF6400FC4E23A7F7914448E23149546B599722
+- Tamanho: 79.741.400 bytes (76,05 MiB).
+- SHA256: A4582F7A33EA9DF76036E5C8A1FB903D52FAC30BFED046F18C1576531D785150
 - Assinatura de depuração verificada: esquemas v2 e v3.
 
 ## Instalar
 
-Pode atualizar por cima do 0.3.3: mesma assinatura e mesmo pacote, conferidos. No título aparece v0.3.4 | LOCAL + GLOBAL. Comece uma tentativa nova com internet; ao terminar com cenouras, preencha três letras e pressione ENVIAR AO GLOBAL. REGISTRAR LOCAL salva somente no aparelho. Resultados antigos não são enviados retroativamente.
+Atualização 0.3.5: no título aparece v0.3.5; RECORDES → ZERAR RANKING LOCAL abre CANCELAR/SIM, APAGAR OS RECORDES. Ranking global não é afetado. Contrato online permanece compatível com 0.3.4, sem alterar a fase nem exigir nova migração.
+
+Pode atualizar por cima da versão anterior: mesmo pacote e chave debug. No título aparece v0.3.5 | LOCAL + GLOBAL. Comece uma tentativa nova com internet; ao terminar com cenouras, preencha três letras e pressione ENVIAR AO GLOBAL. REGISTRAR LOCAL salva somente no aparelho. Resultados antigos não são enviados retroativamente.
 
 Confirmados no APK: permissão INTERNET e URL real dentro de assets/project.binary. Cliente desktop abriu sessão real e consultou o ranking; nenhum score fictício foi publicado. Envio completo validado em banco local de teste. Playtest Android físico e envio de resultado real ainda pendentes.
 

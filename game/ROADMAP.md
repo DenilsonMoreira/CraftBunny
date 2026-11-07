@@ -85,6 +85,8 @@
 
 ## Registro de execução (Codex deve preencher a cada sessão)
 
+Exclusão local/site (2026-11-07): botão ZERAR RANKING LOCAL com confirmação e foco em cancelar, exclusão persistente, guarda de estado e tratamento de falha. Ranking global/tentativa preservados. Site agora exibe painel minimalista pixel art do ranking primeiro e apresentação depois. 15 checks novos, 16 de fluxo, 18 API/SQL e build web passaram; revisão OpenGL/browser móvel executada. APK 0.3.5 assinado. Playtest físico pendente. Ver ../docs/LOCAL_RESET_AND_RANKING_LAYOUT.md.
+
 Ativação do cliente global (2026-11-07): corrigida URL vazia; configurado https://craftbunny-web.vercel.app e exibida versão 0.3.4 no título. Consulta e abertura de uma sessão reais passaram, sem publicar scores de teste. Dez checks de integração local e 16 de fluxo passaram; importação/smoke e título OpenGL revisados. APK código 4 exportado, assinatura v2/v3, mesma chave do 0.3.3, INTERNET e URL interna conferidos. Build restaura preset sanitizado. Playtest em aparelho e envio público real pendentes. Ver docs/ANDROID_BUILD.md e ../docs/GLOBAL_RANKING.md.
 
 Ranking global (2026-11-07, escopo adicional autorizado): site pixel art, API Vercel e migração Supabase; cliente opcional com confirmação, ranking local independente. 18 testes API/SQL, dez verificações Godot/HTTP/PostgreSQL e 16 checks de fluxo local passaram; build web e QA de filtros/paginação/móvel executados. Ativação online e APK com URL real pendentes. Ver ../docs/GLOBAL_RANKING.md.

@@ -11,7 +11,7 @@ Jogo de plataforma 2D em Godot e estrutura para seu futuro ranking global.
 | supabase/ | Migração SQL e instruções de configuração do banco |
 | docs/ | Decisões de integração e validação do repositório |
 
-O jogo possui ranking local e cliente global opcional. Site/API em https://craftbunny-web.vercel.app; consulta e criação de sessão reais verificadas. APK 0.3.4 com URL configurada disponível na pasta local game/builds/. Envio de uma tentativa real em aparelho ainda aguarda playtest.
+O jogo possui ranking local e cliente global opcional. Site/API em https://craftbunny-web.vercel.app; consulta e criação de sessão reais verificadas. APK 0.3.5 com URL configurada e exclusão local com confirmação em game/builds/. Envio de uma tentativa real em aparelho ainda aguarda playtest.
 
 ## Abrir o jogo
 

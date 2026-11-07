@@ -53,6 +53,7 @@ var mobile_controls: Control
 var global_ranking: Node
 var global_status: Label
 var global_listing: Label
+var local_reset_pending := false
 
 func _ready() -> void:
  if OS.has_feature("android"): get_tree().quit_on_go_back = false
@@ -431,6 +432,7 @@ func _update_hud() -> void:
  status_hud.update_values(player.health, carrot_count, wood_count)
 
 func _clear_overlay() -> void:
+ local_reset_pending = false
  if is_instance_valid(title_screen):
   title_screen.queue_free()
   title_screen = null
@@ -465,12 +467,13 @@ func _create_overlay(title: String) -> VBoxContainer:
  content.add_child(heading)
  return content
 
-func _button(parent: Node, label: String, callback: Callable) -> void:
+func _button(parent: Node, label: String, callback: Callable) -> Button:
  var btn := Button.new()
  btn.text = label
  btn.custom_minimum_size = Vector2(260,48)
  parent.add_child(btn)
  btn.pressed.connect(callback)
+ return btn
 
 func _show_title() -> void:
  game_started = false
@@ -495,7 +498,7 @@ func _show_title() -> void:
  _title_button("Controles","CONTROLES",3,_show_controls)
  var build_label := Label.new()
  build_label.name = "BuildVersion"
- build_label.text = "v%s | LOCAL + GLOBAL" % global_ranking.GAME_VERSION
+ build_label.text = "v%s | LOCAL + GLOBAL" % str(ProjectSettings.get_setting("application/config/version",global_ranking.GAME_VERSION))
  build_label.position = Vector2(500,500)
  build_label.size = Vector2(304,24)
  build_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -532,8 +535,38 @@ func _show_records() -> void:
  ranking.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
  ranking.text = _ranking_text()
  content.add_child(ranking)
+ var reset_button := _button(content,"ZERAR RANKING LOCAL",_show_local_reset_confirmation)
+ reset_button.disabled = records.is_empty()
  _button(content,"RANKING GLOBAL",_show_global_records)
  _button(content,"VOLTAR",_show_title if not game_started else _show_pause)
+
+func _show_local_reset_confirmation() -> void:
+ if records.is_empty(): return
+ var content := _create_overlay("ZERAR RANKING LOCAL?")
+ local_reset_pending = true
+ var explanation := Label.new()
+ explanation.text = "Apagar todos os recordes salvos neste aparelho?\n\nEsta ação não pode ser desfeita. O ranking global e a tentativa atual não serão alterados."
+ explanation.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+ content.add_child(explanation)
+ var cancel := _button(content,"CANCELAR",_show_records)
+ _button(content,"SIM, APAGAR OS RECORDES",_confirm_local_reset)
+ cancel.call_deferred("grab_focus")
+
+func _confirm_local_reset() -> void:
+ if not local_reset_pending: return
+ local_reset_pending = false
+ var cfg := ConfigFile.new()
+ cfg.set_value("ranking","entries",[])
+ if cfg.save(records_file) != OK:
+  var content := _create_overlay("NÃO FOI POSSÍVEL APAGAR")
+  var message := Label.new()
+  message.text = "Falha ao salvar no aparelho. Os recordes continuam na memória. Tente novamente."
+  message.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+  content.add_child(message)
+  _button(content,"VOLTAR",_show_records)
+  return
+ records.clear()
+ _show_records()
 
 func _show_global_records() -> void:
  var content := _create_overlay("RECORDES GLOBAIS")
