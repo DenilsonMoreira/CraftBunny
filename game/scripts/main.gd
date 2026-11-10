@@ -706,7 +706,7 @@ func _show_results(title: String,detail: String) -> void:
  desc.text = "%s\nCenouras: %d   |   Inimigos: %d" % [detail,carrot_count,defeated_count]
  desc.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
  content.add_child(desc)
- if _qualifies() or (carrot_count>0 and global_ranking.configured()):
+ if _qualifies():
   var prompt := Label.new()
   prompt.text = "Registre exatamente 3 letras A-Z:"
   content.add_child(prompt)
@@ -720,7 +720,6 @@ func _show_results(title: String,detail: String) -> void:
    sharing.text = "Ao registrar no TOP 10 local, enviamos automaticamente se entrar no TOP 100 global. Apelido e pontuação ficam públicos."
    sharing.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
    content.add_child(sharing)
-   _button(content,"ENVIAR AO GLOBAL",_submit_global_record)
    global_status = Label.new()
    global_status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
    global_status.text = global_ranking.status_text
@@ -731,10 +730,6 @@ func _show_results(title: String,detail: String) -> void:
  listing.text = _ranking_text()
  content.add_child(listing)
  _button(content,"REINICIAR DO INÍCIO",_restart)
-
-func _submit_global_record() -> void:
- if not is_finished or not is_instance_valid(record_input): return
- global_ranking.submit_score(record_input.text.strip_edges().to_upper(),carrot_count)
 
 func _qualifies() -> bool:
  return not record_saved and carrot_count>0 and (records.size()<RECORD_LIMIT or carrot_count>int(records[records.size()-1]["carrots"]))

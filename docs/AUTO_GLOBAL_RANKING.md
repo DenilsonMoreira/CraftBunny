@@ -2,6 +2,8 @@
 
 Versão do jogo: 0.3.6. Contrato da API continua 0.3.4, compatível com a API e a migração existentes; nenhuma nova migração SQL é necessária.
 
+Atualização 0.3.7: ENVIAR AO GLOBAL removido por solicitação do usuário. O envio continua automático após REGISTRAR RECORDE; não há mais tentativa manual pelo resultado. Falhas preservam o registro local, sem fila persistente. Analógico Android e validação em TOUCH_ANALOG.md. Os metadados de download da seção abaixo são históricos da versão 0.3.6.
+
 ## Comportamento
 
 Conforme esclarecido pelo responsável, “recorde” significa entrar no TOP 10 local e no TOP 100 global, não apenas superar o primeiro colocado.
@@ -12,7 +14,7 @@ Conforme esclarecido pelo responsável, “recorde” significa entrar no TOP 10
 4. Com menos de 100 resultados, qualquer pontuação válida tem vaga. Com 100 resultados, deve superar o último colocado. Empate no corte não entra, pois os registros anteriores têm precedência no servidor.
 5. Resultado elegível é enviado automaticamente com as mesmas três letras, cenouras, resultado e duração da tentativa. Resultado local fica salvo mesmo se consulta/envio falhar.
 
-O menu do jogo mostra somente recordes locais. RANKING GLOBAL abre https://craftbunny-web.vercel.app/ no navegador do dispositivo. A consulta para decidir o envio é interna; nenhuma tabela global é exibida no jogo. O aviso de publicação aparece no resultado antes do registro. O envio manual existente continua disponível, inclusive para tentar novamente após uma falha.
+O menu do jogo mostra somente recordes locais. RANKING GLOBAL abre https://craftbunny-web.vercel.app/ no navegador do dispositivo. A consulta para decidir o envio é interna; nenhuma tabela global é exibida no jogo. O aviso de publicação aparece no resultado antes do registro. A partir da 0.3.7, não existe botão de envio manual.
 
 Sem sessão iniciada online, a tentativa permanece local. Não criamos fila persistente, não enviamos resultados históricos retroativamente e não salvamos progresso de fase. Reiniciar invalida consultas pendentes da tentativa anterior. Envios simultâneos/repetidos são bloqueados no cliente; payload de retry e idempotência no banco foram preservados.
 

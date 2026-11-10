@@ -11,11 +11,11 @@ Jogo de plataforma 2D em Godot e estrutura para seu futuro ranking global.
 | supabase/ | Migração SQL e instruções de configuração do banco |
 | docs/ | Decisões de integração e validação do repositório |
 
-O jogo 0.3.6 salva o TOP 10 local e envia automaticamente resultados que também entrem no TOP 100 global, depois do registro das três letras. Site/API em https://craftbunny-web.vercel.app. RANKING GLOBAL abre o site; a tabela global não é exibida no jogo. Detalhes em docs/AUTO_GLOBAL_RANKING.md.
+O jogo 0.3.7 salva o TOP 10 local e envia automaticamente resultados que também entrem no TOP 100 global, depois do registro das três letras. Botão de envio manual removido; Android com analógico semitransparente. Site/API em https://craftbunny-web.vercel.app. RANKING GLOBAL abre o site; a tabela global não é exibida no jogo. Detalhes em docs/AUTO_GLOBAL_RANKING.md e docs/TOUCH_ANALOG.md.
 
 ## Abrir o jogo
 
-Windows 0.3.6: execute `game/builds/windows-0.3.6/CraftBunny-0.3.6.exe`. APK: `game/builds/CraftBunny-Android-0.3.6.apk`. Binários não são versionados. Use o projeto atual do repositório; a pasta anterior não recebe atualizações automaticamente. Histórico em `game/docs/WINDOWS_BUILD.md` e atualização em `docs/AUTO_GLOBAL_RANKING.md`.
+Windows 0.3.7: execute `game/builds/windows-0.3.7/CraftBunny-0.3.7.exe`. APK: `game/builds/CraftBunny-Android-0.3.7.apk`. Binários não são versionados. Use o projeto atual do repositório; a pasta anterior não recebe atualizações automaticamente. Histórico em `game/docs/WINDOWS_BUILD.md` e atualização em `docs/TOUCH_ANALOG.md`.
 
 Use Godot 4.7.2 para reproduzir a validação atual e importe game/project.godot. A engine não acompanha o repositório. Consulte game/README.md, game/AGENTS.md e game/ROADMAP.md para controles, regras e histórico.
 

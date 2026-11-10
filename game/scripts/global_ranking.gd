@@ -83,7 +83,7 @@ func submit_local_record(initials: String, carrots: int) -> void:
  if current != generation: return
  auto_checking = false
  if not _valid_top_100(response):
-  _status("Recorde local salvo. Não foi possível consultar o global; tente o envio novamente.")
+  _status("Não foi possível consultar o global. Seu recorde permanece salvo no aparelho.")
   return
  var rows: Array = response["entries"]
  if rows.size() == 100 and carrots <= int(rows[99]["carrots"]):
@@ -131,7 +131,7 @@ func submit_score(initials: String, carrots: int) -> void:
   submitted = true
   _status("Recorde publicado! Consulte os recordes globais.")
  else:
-  _status(str(response.get("message","Não foi possível enviar. Tente novamente; o ranking local permanece salvo.")))
+  _status(str(response.get("message","Não foi possível enviar. O ranking local permanece salvo.")))
 
 func fetch_leaderboard() -> void:
  if not configured():

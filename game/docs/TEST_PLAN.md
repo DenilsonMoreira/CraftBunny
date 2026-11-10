@@ -38,6 +38,8 @@ Registrar cada cenário como **Passou / Falhou / Não executado** e passos de re
 - [ ] T25 — Cenouras espalhadas ficam acessíveis, flutuam e são coletadas por contato.
 
 ## Ranking e preferências
+- [ ] T39 — Android: analógico semitransparente move nos dois sentidos, tem zona morta, não trava fora da base e libera na pausa/foco; pulo/ataque/caixa simultâneos. Automatizado em tools/test_touch.gd; ergonomia física pendente.
+- [ ] T40 — Resultado sem ENVIAR AO GLOBAL; registrar no TOP 10 local mantém envio automático quando qualifica no global. Automatizado em tools/test_auto_ranking.gd; playtest pendente.
 - [ ] T37 — Registrar resultado no TOP 10 local envia automaticamente se entrar no TOP 100 global; empate no corte, rede indisponível e falha ao salvar não causam envio indevido ou perda local. Automatizado em tools/test_auto_ranking.gd; playtest pendente.
 - [ ] T38 — RANKING GLOBAL abre o site no navegador, sem tabela global no jogo. Confirmar em Windows e Android.
 - [ ] T26 — Só entra no TOP 10 quem qualifica; aceitar exatamente 3 letras A–Z.

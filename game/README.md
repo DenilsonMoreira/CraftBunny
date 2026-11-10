@@ -1,6 +1,6 @@
 # Craft Bunny 🐰🔨 — Godot 4
 
-> **Status:** protótipo v0.3.6 com envio automático de recordes e verificações automatizadas; QA completo pendente. **Objetivo:** concluir uma versão 1.0 jogável de **uma única fase longa**, com pontuação por cenouras e ranking local/global. **Engine validada:** Godot 4.7.2 / GDScript / 2D.
+> **Status:** protótipo v0.3.7 com analógico transparente no Android e envio automático de recordes; QA completo pendente. **Objetivo:** concluir uma versão 1.0 jogável de **uma única fase longa**, com pontuação por cenouras e ranking local/global. **Engine validada:** Godot 4.7.2 / GDScript / 2D.
 
 ## O jogo
 
@@ -10,7 +10,7 @@
 
 ## Iniciar e testar
 
-Windows atual: `builds/windows-0.3.6/CraftBunny-0.3.6.exe`. Abrir a pasta antiga não atualiza o jogo de PC. Histórico da exportação em `docs/WINDOWS_BUILD.md`; atualização em `../docs/AUTO_GLOBAL_RANKING.md`.
+Windows atual: `builds/windows-0.3.7/CraftBunny-0.3.7.exe`. Abrir a pasta antiga não atualiza o jogo de PC. Histórico da exportação em `docs/WINDOWS_BUILD.md`; atualização em `../docs/TOUCH_ANALOG.md`.
 
 RECORDES → ZERAR RANKING LOCAL pede confirmação antes de apagar os recordes deste aparelho. Cancelar preserva os dados; a ação não afeta o ranking global. Detalhes em ../docs/LOCAL_RESET_AND_RANKING_LAYOUT.md.
 
@@ -20,7 +20,7 @@ Título, opções e controles com tema pixel art; inimigos exibem balão de dete
 
 Atualização visual: mundo ampliado em 25% pela câmera, com colisões preservadas. Ataque exclusivo do coelho em 12 quadros, martelo maior e alcance frontal de 32 unidades. Detalhes e testes em assets/production/v2/bunny_attack_12.md.
 
-Versão Android atual em builds/CraftBunny-Android-0.3.6.apk, com controles multitoque, paisagem e mínimo API 24. APKs não são versionados. Instalação, build e limitações em docs/ANDROID_BUILD.md. Playtest dos novos recursos em aparelho pendente.
+Versão Android atual em builds/CraftBunny-Android-0.3.7.apk, com analógico virtual semitransparente no lugar de ESQ/DIR, ações multitoque, paisagem e mínimo API 24. ENVIAR AO GLOBAL removido: o envio é automático ao registrar um recorde elegível. APKs não são versionados. Instalação, build e limitações em docs/ANDROID_BUILD.md. Playtest dos novos recursos em aparelho pendente.
 
 1. Instale **Godot 4.3 ou superior**.
 2. Abra o gerenciador de projetos da Godot, clique em **Importar** e escolha `project.godot` nesta pasta.

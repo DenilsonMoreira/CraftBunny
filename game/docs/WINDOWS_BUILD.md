@@ -1,5 +1,7 @@
 # Windows 0.3.5 — 2026-11-07
 
+Versão atual 0.3.7 (2026-11-10): `game/builds/windows-0.3.7/CraftBunny-0.3.7.exe` e ZIP `game/builds/CraftBunny-Windows-0.3.7.zip`, sem botão de envio manual. Propriedades 0.3.7.0 e smoke OpenGL de 120 frames fora do editor aprovados. SHA256 `ac429c3c4ad789379e2602cdf98b31351ca2286c4eb0e9304576c11903808b91`. Detalhes em ../../docs/TOUCH_ANALOG.md; notas seguintes são históricas.
+
 Atualização 2026-11-10: versão atual 0.3.6 em `game/builds/windows-0.3.6/CraftBunny-0.3.6.exe` e ZIP `game/builds/CraftBunny-Windows-0.3.6.zip`. Smoke OpenGL fora do editor aprovado, propriedades 0.3.6.0, SHA256 `9948D65171ACDC6110568A0A428B088BA2345F65C4BF911750EB24055EE90065`. Envio automático e botão global abrindo o site em `../../docs/AUTO_GLOBAL_RANKING.md`. As seções abaixo preservam o histórico do primeiro build 0.3.5.
 
 O projeto atual está em `CraftBunny/CraftBunny/game`. A pasta anterior `Craft_Bunny_Codex_Com_Sprites/Craft_Bunny_Codex` é uma cópia antiga: abrir seu project.godot continua executando o jogo antigo. O APK não atualiza essa cópia nem executáveis de PC automaticamente.

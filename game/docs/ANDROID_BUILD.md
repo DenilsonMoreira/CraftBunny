@@ -2,18 +2,20 @@
 
 Build atualizado em 2026-11-10 com Godot 4.7.2.
 
-- Arquivo: builds/CraftBunny-Android-0.3.6.apk (também disponível como CraftBunny-Android-Test.apk).
+- Arquivo: builds/CraftBunny-Android-0.3.7.apk (também disponível como CraftBunny-Android-Test.apk).
 - Pacote: com.craftbunny.game
-- Versão: 0.3.6-android-test (código 6), envio automático de recordes elegíveis; botão global abre https://craftbunny-web.vercel.app.
+- Versão: 0.3.7-android-test (código 7), analógico transparente e envio automático de recordes elegíveis, sem botão de envio manual; botão global abre https://craftbunny-web.vercel.app.
 - Mínimo: Android API 24 (Android 7.0), aparelho com OpenGL ES 3 compatível com o renderer Compatibility.
 - Target SDK: 36.
 - Arquiteturas: arm64-v8a e armeabi-v7a.
 - Orientação: paisagem, conteúdo 960x540 com proporção preservada.
 - Tamanho: 79.741.400 bytes (76,05 MiB).
-- SHA256: 1F6ED41FF230B8FA14169FFEACC8522782DCD1066F03B08F7D0FAA64031AF5DA
+- SHA256: 29F3572782898A896FDC0FEC16CEC3B1E873C0941401B4AD360568986AF5C575
 - Assinatura de depuração verificada: esquemas v2 e v3.
 
 ## Instalar
+
+Atualização 0.3.7: ESQ/DIR substituídos por analógico semitransparente, com zona morta e multitoque. Botão ENVIAR AO GLOBAL removido; REGISTRAR RECORDE mantém envio automático de pontuações elegíveis. Código 7 e mesmo certificado da 0.3.6 confirmados, permitindo atualização por cima. Captura, testes e variáveis para selecionar o novo download em ../../docs/TOUCH_ANALOG.md. As notas seguintes preservam o histórico de versões anteriores.
 
 Atualização 0.3.5: no título aparece v0.3.5; RECORDES → ZERAR RANKING LOCAL abre CANCELAR/SIM, APAGAR OS RECORDES. Ranking global não é afetado. Contrato online permanece compatível com 0.3.4, sem alterar a fase nem exigir nova migração.
 

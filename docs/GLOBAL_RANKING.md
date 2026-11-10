@@ -12,6 +12,8 @@ Atualização 0.3.6 (2026-11-10): cliente abre sessão ao iniciar e congela resu
 
 ## Ativação online
 
+Na versão 0.3.7 o botão ENVIAR AO GLOBAL foi removido; o registro local elegível aciona o envio automático. RANKING GLOBAL abre o site. Veja TOUCH_ANALOG.md para a atualização e a validação mais recentes.
+
 1. No projeto Supabase destinado ao jogo, abra SQL Editor e execute supabase/migrations/202611070001_global_ranking.sql por inteiro uma única vez. Não apaga dados existentes. Ainda não aplicada online nesta sessão.
 2. Na Vercel: Root Directory web, Framework Other, Node 22.x, Install npm ci, Build npm run build, Output public.
 3. Em Environment Variables configure SUPABASE_URL e SUPABASE_SECRET_KEY. URL HTTPS do projeto e chave Secret do painel Supabase. A alternativa legada SUPABASE_SERVICE_ROLE_KEY também é aceita.

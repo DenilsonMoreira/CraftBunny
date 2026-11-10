@@ -85,6 +85,7 @@ func _run() -> void:
  game.is_finished = true
  game.carrot_count = 25
  game._show_results("Teste","Teste")
+ check(not game.overlay_panel.find_children("*","Button",true,false).any(func(button): return button.text.contains("ENVIAR AO GLOBAL")),"results contain no manual global submission button")
  game.record_input.text = "A1!"
  game._save_record()
  check(not game.record_saved and value.requests.is_empty(),"invalid initials never save or upload")
