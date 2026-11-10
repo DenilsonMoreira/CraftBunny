@@ -15,6 +15,8 @@ O jogo 0.3.7 salva o TOP 10 local e envia automaticamente resultados que também
 
 ## Abrir o jogo
 
+Exemplo para aprender edição visual na Godot: `game/scenes/editor_example/fase_exemplo.tscn`. Terreno TileMap pintável, posição inicial do coelho e cobra arrastáveis; executar com F6. Guia em `game/docs/EDITABLE_EXAMPLE.md`. A fase principal permanece separada.
+
 Windows 0.3.7: execute `game/builds/windows-0.3.7/CraftBunny-0.3.7.exe`. APK: `game/builds/CraftBunny-Android-0.3.7.apk`. Binários não são versionados. Use o projeto atual do repositório; a pasta anterior não recebe atualizações automaticamente. Histórico em `game/docs/WINDOWS_BUILD.md` e atualização em `docs/TOUCH_ANALOG.md`.
 
 Use Godot 4.7.2 para reproduzir a validação atual e importe game/project.godot. A engine não acompanha o repositório. Consulte game/README.md, game/AGENTS.md e game/ROADMAP.md para controles, regras e histórico.

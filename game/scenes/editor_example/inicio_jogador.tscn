@@ -1,0 +1,53 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/production/v2/bunny.png" id="1_m3wxt"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7am34"]
+atlas = ExtResource("1_m3wxt")
+region = Rect2(56, 35, 213, 257)
+margin = Rect2(50, 56, 100, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7llrj"]
+atlas = ExtResource("1_m3wxt")
+region = Rect2(370, 28, 213, 264)
+margin = Rect2(50, 49, 100, 49)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qqbop"]
+atlas = ExtResource("1_m3wxt")
+region = Rect2(687, 22, 210, 270)
+margin = Rect2(51.5, 43, 103, 43)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i0xui"]
+atlas = ExtResource("1_m3wxt")
+region = Rect2(999, 33, 212, 259)
+margin = Rect2(50.5, 54, 101, 54)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_djlxw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7am34")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7llrj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qqbop")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i0xui")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 10.0
+}]
+
+[node name="InicioJogador" type="Marker2D" unique_id=103902804]
+metadata/_edit_group_ = true
+
+[node name="Previa" type="AnimatedSprite2D" parent="." unique_id=774882011]
+texture_filter = 1
+position = Vector2(0, -11.379311)
+scale = Vector2(0.20689656, 0.20689656)
+sprite_frames = SubResource("SpriteFrames_djlxw")
+animation = &"idle"

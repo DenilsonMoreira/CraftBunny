@@ -49,6 +49,7 @@ Registrar cada cenário como **Passou / Falhou / Não executado** e passos de re
 - [ ] T30 — Controles e volumes persistem; existe recuperação de configuração inválida.
 
 ## Balanceamento e distribuição
+- [ ] T41 — Editor: abrir scenes/editor_example/fase_exemplo.tscn, arrastar InicioJogador/Cobra, pintar/apagar Terreno, salvar e executar com F6. Verificar que F5 mantém o jogo principal. 19 checks automatizados aprovados em tools/test_editor_example.gd; edição manual pelo usuário pendente.
 - [ ] T31 — Cada uma das cinco áreas tem progressão legível e densidade crescente de inimigos.
 - [ ] T32 — Nenhuma plataforma/buraco excede o alcance de pulo + caixas disponíveis sem alternativa.
 - [ ] T33 — Todos os coletáveis obrigatórios e a casa são alcançáveis sem comandos de debug.

@@ -10,6 +10,8 @@
 
 ## Iniciar e testar
 
+**Aprender a editar a fase visualmente:** abra `scenes/editor_example/fase_exemplo.tscn` e pressione **F6**. Contém terra pintável com colisão, início do coelho e uma cobra arrastáveis. F5 continua no jogo principal. Guia passo a passo em `docs/EDITABLE_EXAMPLE.md`.
+
 Windows atual: `builds/windows-0.3.7/CraftBunny-0.3.7.exe`. Abrir a pasta antiga não atualiza o jogo de PC. Histórico da exportação em `docs/WINDOWS_BUILD.md`; atualização em `../docs/TOUCH_ANALOG.md`.
 
 RECORDES → ZERAR RANKING LOCAL pede confirmação antes de apagar os recordes deste aparelho. Cancelar preserva os dados; a ação não afeta o ranking global. Detalhes em ../docs/LOCAL_RESET_AND_RANKING_LAYOUT.md.
