@@ -10,6 +10,7 @@ var run_token := ""
 var generation := 0
 var starting := false
 var submitting := false
+var auto_checking := false
 var submitted := false
 var ended := false
 var won := false
@@ -41,6 +42,7 @@ func begin_attempt() -> void:
  pending_payload.clear()
  submitted = false
  submitting = false
+ auto_checking = false
  starting = false
  ended = false
  duration_ms = 0
@@ -56,7 +58,7 @@ func begin_attempt() -> void:
  if response.get("_ok",false) and typeof(response.get("run_id")) == TYPE_STRING and typeof(response.get("token")) == TYPE_STRING:
   run_id = response["run_id"]
   run_token = response["token"]
-  _status("Tentativa online pronta. Você escolhe se deseja compartilhar ao terminar.")
+  _status("Tentativa online pronta. Recordes locais que entrarem no TOP 100 serão enviados automaticamente.")
  else:
   _status("Esta tentativa ficará apenas no ranking local: não foi possível iniciar o envio online.")
 
@@ -66,8 +68,46 @@ func finish_attempt(victory: bool) -> void:
  won = victory
  duration_ms = int(Time.get_ticks_msec()-started_ms)
 
+func submit_local_record(initials: String, carrots: int) -> void:
+ if auto_checking or submitting or submitted: return
+ var current := generation
+ auto_checking = true
+ while starting and current == generation: await get_tree().process_frame
+ if current != generation: return
+ if not configured() or run_id.is_empty() or not ended:
+  auto_checking = false
+  _status("Recorde salvo no aparelho. Envio automático indisponível nesta tentativa.")
+  return
+ _status("Recorde local salvo. Verificando vaga no TOP 100 global…")
+ var response := await _call("/api/leaderboard?period=all&outcome=all&check=%d" % Time.get_ticks_usec(),HTTPClient.METHOD_GET,{})
+ if current != generation: return
+ auto_checking = false
+ if not _valid_top_100(response):
+  _status("Recorde local salvo. Não foi possível consultar o global; tente o envio novamente.")
+  return
+ var rows: Array = response["entries"]
+ if rows.size() == 100 and carrots <= int(rows[99]["carrots"]):
+  _status("Recorde local salvo. Esta pontuação não entra no TOP 100 global.")
+  return
+ await submit_score(initials,carrots)
+
+func _valid_top_100(response: Dictionary) -> bool:
+ if not response.get("_ok",false) or not response.get("entries") is Array: return false
+ var rows: Array = response["entries"]
+ var total: Variant = response.get("total")
+ if typeof(total) not in [TYPE_INT,TYPE_FLOAT] or not is_finite(float(total)) or float(total) != floor(float(total)) or total < 0: return false
+ if rows.size() != mini(int(total),100): return false
+ var previous := MAX_CARROTS
+ for row in rows:
+  if not row is Dictionary: return false
+  var score: Variant = row.get("carrots")
+  if typeof(score) not in [TYPE_INT,TYPE_FLOAT] or not is_finite(float(score)) or float(score) != floor(float(score)): return false
+  if score < 1 or score > previous: return false
+  previous = int(score)
+ return true
+
 func submit_score(initials: String, carrots: int) -> void:
- if submitting or submitted: return
+ if auto_checking or submitting or submitted: return
  if not configured() or run_id.is_empty():
   _status("Tentativa online não disponível. Seu recorde local permanece no aparelho.")
   return

@@ -32,8 +32,9 @@ func _run() -> void:
  game.carrot_count = 10
  game._finish(false)
  check(game.is_finished and game.global_ranking.ended,"finished run closes online duration without blocking game")
- game._show_global_records()
- check(game.global_status.text.contains("local"),"global menu handles unavailable service")
+ game._show_records()
+ var source := FileAccess.get_file_as_string("res://scripts/main.gd")
+ check(source.contains('OS.shell_open("https://craftbunny-web.vercel.app/")'),"global button opens the website instead of an embedded ranking")
  if not OS.get_environment("CRAFT_BUNNY_API_URL").is_empty():
   client.api_url = OS.get_environment("CRAFT_BUNNY_API_URL")
   client.begin_attempt()
@@ -41,8 +42,8 @@ func _run() -> void:
   check(not client.run_id.is_empty() and not client.run_token.is_empty(),"HTTP start obtains server run and token")
   await create_timer(1.1).timeout
   client.finish_attempt(false)
-  await client.submit_score("NET",12)
-  check(client.submitted,"HTTP publishes result")
+  await client.submit_local_record("NET",12)
+  check(client.submitted,"HTTP automatically publishes qualifying local record")
   var rows: Array = []
   client.leaderboard_loaded.connect(func(entries): rows.assign(entries))
   await client.fetch_leaderboard()

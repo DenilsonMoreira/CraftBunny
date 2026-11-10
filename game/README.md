@@ -1,6 +1,6 @@
 # Craft Bunny 🐰🔨 — Godot 4
 
-> **Status:** protótipo v0.3.5 com verificações automatizadas e APK de teste exportado; QA completo e playtest em Android físico pendentes. **Objetivo:** concluir uma versão 1.0 jogável de **uma única fase longa**, com pontuação por cenouras e ranking local/global. **Engine validada:** Godot 4.7.2 / GDScript / 2D.
+> **Status:** protótipo v0.3.6 com envio automático de recordes e verificações automatizadas; QA completo pendente. **Objetivo:** concluir uma versão 1.0 jogável de **uma única fase longa**, com pontuação por cenouras e ranking local/global. **Engine validada:** Godot 4.7.2 / GDScript / 2D.
 
 ## O jogo
 
@@ -10,17 +10,17 @@
 
 ## Iniciar e testar
 
-Windows atual: `builds/windows-0.3.5/CraftBunny-0.3.5.exe`. Esta versão usa o mesmo projeto 0.3.5 do APK; abrir a pasta antiga não atualiza o jogo de PC. Exportação e verificações em `docs/WINDOWS_BUILD.md`.
+Windows atual: `builds/windows-0.3.6/CraftBunny-0.3.6.exe`. Abrir a pasta antiga não atualiza o jogo de PC. Histórico da exportação em `docs/WINDOWS_BUILD.md`; atualização em `../docs/AUTO_GLOBAL_RANKING.md`.
 
 RECORDES → ZERAR RANKING LOCAL pede confirmação antes de apagar os recordes deste aparelho. Cancelar preserva os dados; a ação não afeta o ranking global. Detalhes em ../docs/LOCAL_RESET_AND_RANKING_LAYOUT.md.
 
-Cliente global opcional 0.3.4 configurado para https://craftbunny-web.vercel.app: confirmação no fim da tentativa, consulta pelo menu RECORDES e ranking local preservado sem internet. Ao terminar com cenouras, use três letras e ENVIAR AO GLOBAL; REGISTRAR LOCAL não publica. O APK anterior 0.3.3 não inclui esta integração. Guia em ../docs/GLOBAL_RANKING.md.
+Ao terminar, informe três letras e use REGISTRAR RECORDE: se entrar no TOP 10 local e no TOP 100 global, o envio ocorre automaticamente após salvar localmente. Falhas de internet preservam o recorde no aparelho. RANKING GLOBAL abre o site; não há tabela global dentro do jogo. Detalhes e limites em ../docs/AUTO_GLOBAL_RANKING.md. O contrato online continua 0.3.4 por compatibilidade.
 
 Título, opções e controles com tema pixel art; inimigos exibem balão de detecção e feedback de dano. Arte, fonte, testes e limitações em assets/production/v2/pixel_menus_feedback.md.
 
 Atualização visual: mundo ampliado em 25% pela câmera, com colisões preservadas. Ataque exclusivo do coelho em 12 quadros, martelo maior e alcance frontal de 32 unidades. Detalhes e testes em assets/production/v2/bunny_attack_12.md.
 
-Versão Android atual em builds/CraftBunny-Android-0.3.5.apk, com controles multitoque, paisagem e mínimo API 24. APKs não são versionados. Instalação, build e limitações em docs/ANDROID_BUILD.md. Execução em aparelho ainda pendente.
+Versão Android atual em builds/CraftBunny-Android-0.3.6.apk, com controles multitoque, paisagem e mínimo API 24. APKs não são versionados. Instalação, build e limitações em docs/ANDROID_BUILD.md. Playtest dos novos recursos em aparelho pendente.
 
 1. Instale **Godot 4.3 ou superior**.
 2. Abra o gerenciador de projetos da Godot, clique em **Importar** e escolha `project.godot` nesta pasta.

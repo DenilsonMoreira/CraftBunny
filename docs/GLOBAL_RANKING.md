@@ -8,7 +8,7 @@ Site em web/public com artes e fonte pixeladas do jogo, filtros todos os tempos/
 
 API em web/api, lógica em web/lib e migração em supabase/migrations. O navegador não fala diretamente com o banco e o jogo não contém chave Supabase.
 
-Cliente game/scripts/global_ranking.gd abre sessão ao iniciar, congela resultado ao terminar e envia só quando o jogador clica ENVIAR AO GLOBAL. Falhas não impedem jogar ou salvar/consultar o TOP 10 local. Menu RECORDES dá acesso ao global; o painel mostra dez posições e o site até 100.
+Atualização 0.3.6 (2026-11-10): cliente abre sessão ao iniciar e congela resultado ao terminar. Ao registrar três letras no TOP 10 local, consulta em segundo plano a elegibilidade no TOP 100 e envia automaticamente quando houver vaga. Falhas preservam o ranking local; envio manual/retry continua disponível. RANKING GLOBAL abre o site, sem tabela global embutida no jogo. Ver AUTO_GLOBAL_RANKING.md; o contrato da API continua 0.3.4.
 
 ## Ativação online
 

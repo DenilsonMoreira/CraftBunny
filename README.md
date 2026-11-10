@@ -11,11 +11,11 @@ Jogo de plataforma 2D em Godot e estrutura para seu futuro ranking global.
 | supabase/ | Migração SQL e instruções de configuração do banco |
 | docs/ | Decisões de integração e validação do repositório |
 
-O jogo possui ranking local e cliente global opcional. Site/API em https://craftbunny-web.vercel.app; consulta e criação de sessão reais verificadas. APK 0.3.5 com URL configurada e exclusão local com confirmação em game/builds/. Envio de uma tentativa real em aparelho ainda aguarda playtest.
+O jogo 0.3.6 salva o TOP 10 local e envia automaticamente resultados que também entrem no TOP 100 global, depois do registro das três letras. Site/API em https://craftbunny-web.vercel.app. RANKING GLOBAL abre o site; a tabela global não é exibida no jogo. Detalhes em docs/AUTO_GLOBAL_RANKING.md.
 
 ## Abrir o jogo
 
-Windows 0.3.5: execute `game/builds/windows-0.3.5/CraftBunny-0.3.5.exe`. Pacote local: `game/builds/CraftBunny-Windows-0.3.5.zip`. Binários não são versionados. Use o projeto atual do repositório; a pasta anterior não recebe atualizações automaticamente. Validação em `game/docs/WINDOWS_BUILD.md`.
+Windows 0.3.6: execute `game/builds/windows-0.3.6/CraftBunny-0.3.6.exe`. APK: `game/builds/CraftBunny-Android-0.3.6.apk`. Binários não são versionados. Use o projeto atual do repositório; a pasta anterior não recebe atualizações automaticamente. Histórico em `game/docs/WINDOWS_BUILD.md` e atualização em `docs/AUTO_GLOBAL_RANKING.md`.
 
 Use Godot 4.7.2 para reproduzir a validação atual e importe game/project.godot. A engine não acompanha o repositório. Consulte game/README.md, game/AGENTS.md e game/ROADMAP.md para controles, regras e histórico.
 
@@ -33,7 +33,7 @@ O site também possui BAIXAR APK para distribuição controlada por código do G
 
 Vercel para web/ e API, Supabase para os recordes. A pasta web/ já contém aplicação executável: Root Directory web, Framework Other, Install npm ci, Build npm run build, Output public. Guia em [docs/GLOBAL_RANKING.md](docs/GLOBAL_RANKING.md).
 
-Manter o ranking local independente da internet. Enviar recordes globais com confirmação do jogador, validar no servidor, evitar duplicatas e permitir consulta pública dos melhores resultados. Credenciais privadas ficam somente no servidor.
+Manter o ranking local independente da internet. Ao registrar as três letras, enviar automaticamente recordes elegíveis ao global, validar no servidor, evitar duplicatas e permitir consulta pública dos melhores resultados pelo site. Credenciais privadas ficam somente no servidor.
 
 ## Arquivos locais
 

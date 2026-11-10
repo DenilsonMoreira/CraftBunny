@@ -52,7 +52,6 @@ var title_screen: Control
 var mobile_controls: Control
 var global_ranking: Node
 var global_status: Label
-var global_listing: Label
 var local_reset_pending := false
 
 func _ready() -> void:
@@ -86,7 +85,6 @@ func _ready() -> void:
  global_ranking = preload("res://scripts/global_ranking.gd").new()
  add_child(global_ranking)
  global_ranking.status_changed.connect(_on_global_status)
- global_ranking.leaderboard_loaded.connect(_on_global_records)
  _show_title()
  queue_redraw()
 
@@ -569,27 +567,10 @@ func _confirm_local_reset() -> void:
  _show_records()
 
 func _show_global_records() -> void:
- var content := _create_overlay("RECORDES GLOBAIS")
- global_status = Label.new()
- global_status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
- content.add_child(global_status)
- global_listing = Label.new()
- global_listing.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
- content.add_child(global_listing)
- _button(content,"ATUALIZAR",global_ranking.fetch_leaderboard)
- if global_ranking.configured(): _button(content,"VER TOP 100 NO SITE",func(): OS.shell_open(global_ranking.api_url))
- _button(content,"VOLTAR",_show_records)
- global_ranking.fetch_leaderboard()
+ OS.shell_open("https://craftbunny-web.vercel.app/")
 
 func _on_global_status(message: String) -> void:
  if is_instance_valid(global_status): global_status.text = message
-
-func _on_global_records(entries: Array) -> void:
- if not is_instance_valid(global_listing): return
- var listing := ""
- for index in range(mini(10,entries.size())):
-  listing += "%02d  %s  %d\n" % [index+1,entries[index]["initials"],int(entries[index]["carrots"])]
- global_listing.text = listing
 
 func _ranking_text() -> String:
  var lines := ""
@@ -733,10 +714,10 @@ func _show_results(title: String,detail: String) -> void:
   record_input.max_length = 3
   record_input.placeholder_text = "AAA"
   content.add_child(record_input)
-  if _qualifies(): _button(content,"REGISTRAR LOCAL",_save_record)
+  if _qualifies(): _button(content,"REGISTRAR RECORDE",_save_record)
   if global_ranking.configured():
    var sharing := Label.new()
-   sharing.text = "Envio opcional: apelido e pontuação públicos."
+   sharing.text = "Ao registrar no TOP 10 local, enviamos automaticamente se entrar no TOP 100 global. Apelido e pontuação ficam públicos."
    sharing.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
    content.add_child(sharing)
    _button(content,"ENVIAR AO GLOBAL",_submit_global_record)
@@ -803,6 +784,7 @@ func _save_record() -> void:
   return
  record_saved = true
  record_input.editable = false
+ global_ranking.submit_local_record(name,carrot_count)
  var listing := overlay_panel.find_child("Ranking",true,false) as Label
  if is_instance_valid(listing): listing.text = _ranking_text()
 
