@@ -1,0 +1,15 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/production/v2/hearts.png" id="1_iimsg"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3di8g"]
+atlas = ExtResource("1_iimsg")
+region = Rect2(82, 119, 748, 702)
+
+[node name="Heart" type="Marker2D" unique_id=1510891840]
+metadata/kind = "heart"
+metadata/_edit_group_ = true
+
+[node name="Previa" type="Sprite2D" parent="." unique_id=1199598386]
+scale = Vector2(0.022792023, 0.022792023)
+texture = SubResource("AtlasTexture_3di8g")

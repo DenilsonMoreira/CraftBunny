@@ -1,0 +1,54 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/production/v2/cobra.png" id="1_byc8p"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8mjv3"]
+atlas = ExtResource("1_byc8p")
+region = Rect2(69, 122, 180, 152)
+margin = Rect2(66.5, 161, 133, 161)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7tjip"]
+atlas = ExtResource("1_byc8p")
+region = Rect2(384, 111, 181, 163)
+margin = Rect2(66, 150, 132, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i3dj5"]
+atlas = ExtResource("1_byc8p")
+region = Rect2(690, 98, 187, 176)
+margin = Rect2(63, 137, 126, 137)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vlehp"]
+atlas = ExtResource("1_byc8p")
+region = Rect2(1005, 118, 186, 156)
+margin = Rect2(63.5, 157, 127, 157)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1ruu2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8mjv3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7tjip")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i3dj5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vlehp")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 10.0
+}]
+
+[node name="Cobra" type="Marker2D" unique_id=528601711]
+metadata/kind = "cobra"
+metadata/_edit_group_ = true
+
+[node name="Previa" type="AnimatedSprite2D" parent="." unique_id=1961024792]
+texture_filter = 1
+position = Vector2(0, -13.466911)
+scale = Vector2(0.16911764, 0.16911764)
+sprite_frames = SubResource("SpriteFrames_1ruu2")
+animation = &"idle"

@@ -19,11 +19,11 @@ $presetPath = Join-Path $projectRoot 'export_presets.cfg'
 $portablePreset = [System.IO.File]::ReadAllText($presetPath)
 try {
     if ($Configure) {
-        & $godot --headless --editor --path $projectRoot --script res://tools/configure_android.gd
-        if ($LASTEXITCODE -ne 0) { throw 'Android configuration failed' }
+        & $godot --headless --editor --path $projectRoot --script res://tools/configure_android.gd 2>&1 | Tee-Object -Variable configureOutput
+        if ($LASTEXITCODE -ne 0 -or ($configureOutput -match 'SCRIPT ERROR|Parse Error')) { throw 'Android configuration failed' }
     }
-    & $godot --headless --path $projectRoot --export-debug Android $output
-    if ($LASTEXITCODE -ne 0) { throw 'APK export failed' }
+    & $godot --headless --path $projectRoot --export-debug Android $output 2>&1 | Tee-Object -Variable exportOutput
+    if ($LASTEXITCODE -ne 0 -or ($exportOutput -match 'SCRIPT ERROR|Parse Error')) { throw 'APK export failed' }
     & (Join-Path $cache 'android-sdk/build-tools/35.0.1/apksigner.bat') verify --verbose $output
     if ($LASTEXITCODE -ne 0) { throw 'APK signature verification failed' }
 } finally {

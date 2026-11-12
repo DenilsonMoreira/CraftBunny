@@ -1,0 +1,15 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/production/v2/collectibles.png" id="1_natd8"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aljx0"]
+atlas = ExtResource("1_natd8")
+region = Rect2(951, 248, 777, 458)
+
+[node name="Wood" type="Marker2D" unique_id=1406737028]
+metadata/kind = "wood"
+metadata/_edit_group_ = true
+
+[node name="Previa" type="Sprite2D" parent="." unique_id=502805371]
+scale = Vector2(0.033462033, 0.033462033)
+texture = SubResource("AtlasTexture_aljx0")

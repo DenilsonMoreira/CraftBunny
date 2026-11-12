@@ -15,9 +15,9 @@ $version = $versionMatch.Groups[1].Value
 $outputDirectory = Join-Path $projectRoot "builds/windows-$version"
 New-Item -ItemType Directory -Force -Path $outputDirectory | Out-Null
 $output = Join-Path $outputDirectory "CraftBunny-$version.exe"
-& $GodotPath --headless --editor --path $projectRoot --quit
-if ($LASTEXITCODE -ne 0) { throw 'Godot import failed.' }
-& $GodotPath --headless --path $projectRoot --export-release Windows $output
-if ($LASTEXITCODE -ne 0) { throw 'Windows export failed.' }
+& $GodotPath --headless --editor --path $projectRoot --quit 2>&1 | Tee-Object -Variable importOutput
+if ($LASTEXITCODE -ne 0 -or ($importOutput -match 'SCRIPT ERROR|Parse Error')) { throw 'Godot import failed.' }
+& $GodotPath --headless --path $projectRoot --export-release Windows $output 2>&1 | Tee-Object -Variable exportOutput
+if ($LASTEXITCODE -ne 0 -or ($exportOutput -match 'SCRIPT ERROR|Parse Error')) { throw 'Windows export failed.' }
 Get-Item -LiteralPath $output | Select-Object FullName,Length
 Get-FileHash -LiteralPath $output -Algorithm SHA256

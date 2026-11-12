@@ -1,0 +1,15 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/production/v2/collectibles.png" id="1_x6sbt"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vxre7"]
+atlas = ExtResource("1_x6sbt")
+region = Rect2(193, 112, 544, 693)
+
+[node name="Carrot" type="Marker2D" unique_id=1574557412]
+metadata/kind = "carrot"
+metadata/_edit_group_ = true
+
+[node name="Previa" type="Sprite2D" parent="." unique_id=1067647609]
+scale = Vector2(0.036764707, 0.036764707)
+texture = SubResource("AtlasTexture_vxre7")

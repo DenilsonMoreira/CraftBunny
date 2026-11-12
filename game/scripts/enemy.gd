@@ -10,6 +10,8 @@ const BIRD_RETURN_LIMIT := 1.2
 const BIRD_ATTACK_DISTANCE := 110.0
 const BIRD_RETURN_DRIFT := 80.0
 const BIRD_TURN_DISTANCE := 72.0
+const BIRD_GROUND_RECOVERY := 0.5
+const BIRD_LANDING_TIMEOUT := 2.0
 const HIT_FLASH_TIME := 0.24
 const HEALTH_FEEDBACK_TIME := 1.25
 const ALERT_TIME := 0.90
@@ -42,6 +44,7 @@ var alert_timer := 0.0
 var player_detected := false
 var last_damage := 0
 var hit_material: ShaderMaterial
+var landing_target := Vector2.ZERO
 
 func setup(enemy_kind: String, pos: Vector2, target: CharacterBody2D) -> void:
  kind = enemy_kind
@@ -91,6 +94,15 @@ func _physics_process(delta: float) -> void:
  timer += delta
  attack_timer = maxf(0.0, attack_timer - delta)
  _contact_damage_timer = maxf(0.0, _contact_damage_timer - delta)
+ if kind=="ave" and state=="grounded":
+  damage_recovery = maxf(0,damage_recovery-delta)
+  velocity = Vector2(0,GRAVITY*delta)
+  move_and_slide()
+  if timer >= BIRD_GROUND_RECOVERY:
+   state = "recover"
+   timer = 0
+  queue_redraw()
+  return
  if damage_recovery > 0:
   damage_recovery -= delta
   if kind != "ave":
@@ -136,9 +148,26 @@ func _physics_process(delta: float) -> void:
    attack_landed.emit(int(cfg["damage"]),global_position.x)
    _attack_hit_sent = true
   if timer > 0.32 or blocked_dive:
-   state = "recover"
+   state = "land" if kind=="ave" else "recover"
    timer = 0
    attack_timer = float(cfg["cooldown"])
+   if kind=="ave": landing_target = _landing_point()
+ elif state=="land":
+  velocity.x = clampf((landing_target.x-global_position.x)*5,-100,100)
+  velocity.y = minf(400,velocity.y+GRAVITY*delta)
+  move_and_slide()
+  var grounded := false
+  for index in range(get_slide_collision_count()):
+   var contact := get_slide_collision(index)
+   if contact.get_normal().y < -0.5 and contact.get_collider()!=player:
+    grounded = true
+  if grounded:
+   state = "grounded"
+   timer = 0
+   velocity = Vector2.ZERO
+  elif timer > BIRD_LANDING_TIMEOUT:
+   state = "recover"
+   timer = 0
  elif state == "recover":
   var recovered := timer > 0.35
   if kind == "ave":
@@ -187,6 +216,17 @@ func get_hurtbox() -> Rect2:
  var size := Vector2(40,24) if kind == "ave" else Vector2(36,26)
  return Rect2(global_position-size/2,size)
 
+func _landing_point() -> Vector2:
+ for offset in [0.0,-56.0,56.0,-112.0,112.0]:
+  var start := global_position+Vector2(offset,-2)
+  if absf(start.x-player.global_position.x)<50: continue
+  var query := PhysicsRayQueryParameters2D.create(start,start+Vector2(0,650),1)
+  query.exclude = [get_rid(),player.get_rid()]
+  var result := get_world_2d().direct_space_state.intersect_ray(query)
+  if not result.is_empty() and result["normal"].y < -0.5:
+   return result["position"]
+ return global_position+Vector2(-facing*56,120)
+
 func take_hit(amount: int, from_x: float) -> void:
  if not alive or damage_recovery > 0: return
  hp -= amount
@@ -207,8 +247,9 @@ func take_hit(amount: int, from_x: float) -> void:
   queue_free()
   return
  damage_recovery = 0.28
- state = "recover"
- timer = 0
+ if kind!="ave" or state not in ["land","grounded"]:
+  state = "recover"
+  timer = 0
  facing = 1 if global_position.x >= from_x else -1
  velocity.x = facing*150.0
  velocity.y = -95.0

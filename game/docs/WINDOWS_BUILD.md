@@ -1,5 +1,7 @@
 # Windows 0.3.5 — 2026-11-07
 
+Versão atual 0.4.0 (2026-11-12): `game/builds/windows-0.4.0/CraftBunny-0.4.0.exe` e ZIP `game/builds/CraftBunny-Windows-0.4.0.zip`, com a fase ampla. Propriedades 0.4.0.0 e smoke OpenGL de 120 frames fora do editor aprovados, sem erros no log. SHA256 `1ff4f47f53cc0fc57c0d1c2b47a1621a4bc455762a682ee1d617eed93a626594`. Guia atual: ../../docs/WIDE_LEVEL_040.md. Notas seguintes são históricas.
+
 Versão atual 0.3.7 (2026-11-10): `game/builds/windows-0.3.7/CraftBunny-0.3.7.exe` e ZIP `game/builds/CraftBunny-Windows-0.3.7.zip`, sem botão de envio manual. Propriedades 0.3.7.0 e smoke OpenGL de 120 frames fora do editor aprovados. SHA256 `ac429c3c4ad789379e2602cdf98b31351ca2286c4eb0e9304576c11903808b91`. Detalhes em ../../docs/TOUCH_ANALOG.md; notas seguintes são históricas.
 
 Atualização 2026-11-10: versão atual 0.3.6 em `game/builds/windows-0.3.6/CraftBunny-0.3.6.exe` e ZIP `game/builds/CraftBunny-Windows-0.3.6.zip`. Smoke OpenGL fora do editor aprovado, propriedades 0.3.6.0, SHA256 `9948D65171ACDC6110568A0A428B088BA2345F65C4BF911750EB24055EE90065`. Envio automático e botão global abrindo o site em `../../docs/AUTO_GLOBAL_RANKING.md`. As seções abaixo preservam o histórico do primeiro build 0.3.5.

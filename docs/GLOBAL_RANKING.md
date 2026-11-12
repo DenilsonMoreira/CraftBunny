@@ -1,5 +1,7 @@
 # Ranking global — implementação e ativação
 
+Atualização 0.4.0 (2026-11-12): fase ampla com teto 200 e compatibilidade dos envios 0.3.4/139. Aplicar `supabase/migrations/202611120003_wide_level_scores.sql`, sem apagar recordes. Guia de ativação e testes em WIDE_LEVEL_040.md. Seções seguintes preservam o histórico.
+
 2026-11-07. Cliente 0.3.4. TOP 10 local preservado e TOP 100 global por tentativa.
 
 ## Implementado

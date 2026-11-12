@@ -11,6 +11,7 @@ let server;
 try {
   await db.exec('create role anon;create role authenticated;create role service_role;');
   await db.exec(await readFile(new URL('../../supabase/migrations/202611070001_global_ranking.sql',import.meta.url),'utf8'));
+  await db.exec(await readFile(new URL('../../supabase/migrations/202611120003_wide_level_scores.sql',import.meta.url),'utf8'));
   const store=new SupabaseStore({SUPABASE_URL:'https://example.supabase.co',SUPABASE_SECRET_KEY:'sb_secret_test_only'},async (url,request)=>{
     const name=new URL(url).pathname.split('/').pop();
     if (!['cb_start_run','cb_submit_score','cb_leaderboard'].includes(name)) throw new Error('Unknown RPC');

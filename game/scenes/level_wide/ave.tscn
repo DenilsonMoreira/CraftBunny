@@ -1,0 +1,53 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/production/v2/ave.png" id="1_5um3l"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d8u7v"]
+atlas = ExtResource("1_5um3l")
+region = Rect2(40, 65, 233, 223)
+margin = Rect2(40, 45, 80, 90)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_svncn"]
+atlas = ExtResource("1_5um3l")
+region = Rect2(344, 109, 248, 175)
+margin = Rect2(32.5, 69, 65, 138)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nhnd8"]
+atlas = ExtResource("1_5um3l")
+region = Rect2(663, 135, 228, 172)
+margin = Rect2(42.5, 70.5, 85, 141)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o21tv"]
+atlas = ExtResource("1_5um3l")
+region = Rect2(959, 105, 261, 179)
+margin = Rect2(26, 67, 52, 134)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gum33"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d8u7v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_svncn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nhnd8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o21tv")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 10.0
+}]
+
+[node name="Ave" type="Marker2D" unique_id=1316103670]
+metadata/kind = "ave"
+metadata/_edit_group_ = true
+
+[node name="Previa" type="AnimatedSprite2D" parent="." unique_id=1673064831]
+texture_filter = 1
+scale = Vector2(0.1557377, 0.1557377)
+sprite_frames = SubResource("SpriteFrames_gum33")
+animation = &"idle"

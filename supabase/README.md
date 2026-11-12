@@ -1,5 +1,7 @@
 # Banco do ranking
 
+Fase ampla 0.4.0: executar `migrations/202611120003_wide_level_scores.sql` após a migração inicial. Aceita até 200 para 0.4.0 e mantém 139 para 0.3.4, sem apagar recordes. Aplicar no projeto conectado à Vercel (referência ulxrndtgoslkjpmuibpj), do begin ao commit. Guia em ../docs/WIDE_LEVEL_040.md.
+
 Migração adicional para download privado: migrations/202611070002_private_download.sql. Aplicar uma vez após a migração inicial, antes de habilitar OTP em produção. Não altera recordes. Detalhes em ../docs/PRIVATE_APK_DOWNLOAD.md.
 
 Migração: migrations/202611070001_global_ranking.sql.

@@ -2,8 +2,8 @@ extends Node
 
 signal status_changed(message: String)
 signal leaderboard_loaded(entries: Array)
-const GAME_VERSION := "0.3.4"
-const MAX_CARROTS := 139
+const GAME_VERSION := "0.4.0"
+const MAX_CARROTS := 200
 var api_url := ""
 var run_id := ""
 var run_token := ""

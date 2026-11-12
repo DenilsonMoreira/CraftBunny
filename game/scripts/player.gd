@@ -55,6 +55,8 @@ var stomp_visual_timer := 0.0
 var stomp_contact_grace := 0.0
 var ground_bounce_pending := false
 var ground_bounce_count := 0
+var pit_warning_y := 525.0
+var fall_death_y := 735.0
 
 func _ready() -> void:
  collision_layer = 1
@@ -219,10 +221,10 @@ func _physics_process(delta: float) -> void:
   hammer_used.emit(get_hammer_hitbox())
  if Input.is_action_just_pressed("craft"):
   box_requested.emit()
- if global_position.y > 525 and velocity.y > 0 and not is_on_floor() and not pit_announced:
+ if global_position.y > pit_warning_y and velocity.y > 0 and not is_on_floor() and not pit_announced:
   pit_announced = true
   pit_falling.emit()
- if global_position.y > 735:
+ if global_position.y > fall_death_y:
   _die("pit")
  _update_animation(axis)
  queue_redraw()

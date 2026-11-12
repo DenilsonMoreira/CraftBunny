@@ -1,0 +1,54 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/production/v2/guaxinim.png" id="1_fapah"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3asrj"]
+atlas = ExtResource("1_fapah")
+region = Rect2(28, 102, 265, 168)
+margin = Rect2(24, 145, 48, 145)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uqkwm"]
+atlas = ExtResource("1_fapah")
+region = Rect2(338, 90, 268, 179)
+margin = Rect2(22.5, 134, 45, 134)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a78rf"]
+atlas = ExtResource("1_fapah")
+region = Rect2(653, 82, 267, 187)
+margin = Rect2(23, 126, 46, 126)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ld15f"]
+atlas = ExtResource("1_fapah")
+region = Rect2(963, 104, 269, 165)
+margin = Rect2(22, 148, 44, 148)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_u0760"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3asrj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uqkwm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a78rf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ld15f")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 10.0
+}]
+
+[node name="Guaxinim" type="Marker2D" unique_id=701278908]
+metadata/kind = "guaxinim"
+metadata/_edit_group_ = true
+
+[node name="Previa" type="AnimatedSprite2D" parent="." unique_id=1865817863]
+texture_filter = 1
+position = Vector2(0, -9.0422535)
+scale = Vector2(0.14084508, 0.14084508)
+sprite_frames = SubResource("SpriteFrames_u0760")
+animation = &"idle"

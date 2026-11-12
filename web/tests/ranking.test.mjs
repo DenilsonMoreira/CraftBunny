@@ -11,6 +11,7 @@ before(async () => {
   db = new PGlite();
   await db.exec('create role anon; create role authenticated; create role service_role;');
   await db.exec(await readFile(new URL('../../supabase/migrations/202611070001_global_ranking.sql', import.meta.url), 'utf8'));
+  await db.exec(await readFile(new URL('../../supabase/migrations/202611120003_wide_level_scores.sql', import.meta.url), 'utf8'));
   store = new SupabaseStore({ SUPABASE_URL: 'https://example.supabase.co', SUPABASE_SERVICE_ROLE_KEY: 'test-server-key' }, async (url, request) => {
     const name = new URL(url).pathname.split('/').pop();
     assert.ok(['cb_start_run', 'cb_submit_score', 'cb_leaderboard'].includes(name));
@@ -32,6 +33,16 @@ async function begin(client = 'a'.repeat(64)) {
 function score(run, changes = {}) {
   return { run_id: run.run_id, token: run.token, game_version: version, initials: 'ABC', carrots: 24, won: true, duration_ms: 60000, ...changes };
 }
+test('wide level accepts 200 only for 0.4.0 and rejects 201 in API and PostgreSQL',async()=>{
+ const run=await service.start({game_version:'0.4.0'},'a'.repeat(64));
+ await db.query("update craftbunny_private.run_sessions set started_at=now()-interval '90 seconds' where id=$1",[run.run_id]);
+ await assert.rejects(service.submit(score(run,{game_version:'0.4.0',carrots:201})),error=>error.status===422);
+ await assert.rejects(store.rpc('cb_submit_score',{p_id:run.run_id,p_token_hash:hash(run.token),p_initials:'ABC',p_carrots:201,p_won:true,p_duration_ms:60000,p_game_version:'0.4.0'}),error=>error.status===422);
+ assert.equal((await service.submit(score(run,{game_version:'0.4.0',carrots:200}))).accepted,true);
+ const board=await service.list();
+ assert.equal(board.entries[0].carrots,200);assert.equal(board.entries[0].game_version,'0.4.0');
+});
+
 test('migration denies anonymous table and RPC access', async () => {
   for (const role of ['anon','authenticated']) {
     const { rows } = await db.query("select has_schema_privilege($1,'craftbunny_private','usage') as tables,has_function_privilege($1,'public.cb_submit_score(uuid,text,text,integer,boolean,integer,text)','execute') as write,has_function_privilege($1,'public.cb_leaderboard(text,text)','execute') as read", [role]);

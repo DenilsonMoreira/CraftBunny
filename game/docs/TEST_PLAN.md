@@ -49,6 +49,9 @@ Registrar cada cenário como **Passou / Falhou / Não executado** e passos de re
 - [ ] T30 — Controles e volumes persistem; existe recuperação de configuração inválida.
 
 ## Balanceamento e distribuição
+- [ ] T42 — Fase 0.4.0: explorar três alturas, usar quatro caixas na escada e retornar do subsolo sem caixas; confirmar 140 cenouras de mapa e 200 com todos os drops. 28 checks automatizados passaram; playtest completo pendente.
+- [ ] T43 — Ave pousa durante 0,5 s após mergulhar, permanece atacável mesmo se receber dano e retorna ao voo. Seis checks automatizados passaram; playtest físico pendente.
+- [ ] T44 — Cronometrar percurso exploratório da fase ampla e ajustar para cerca de 15 minutos com evidência de playtest. Não executado; não é duração mínima imposta.
 - [ ] T41 — Editor: abrir scenes/editor_example/fase_exemplo.tscn, arrastar InicioJogador/Cobra, pintar/apagar Terreno, salvar e executar com F6. Verificar que F5 mantém o jogo principal. 19 checks automatizados aprovados em tools/test_editor_example.gd; edição manual pelo usuário pendente.
 - [ ] T31 — Cada uma das cinco áreas tem progressão legível e densidade crescente de inimigos.
 - [ ] T32 — Nenhuma plataforma/buraco excede o alcance de pulo + caixas disponíveis sem alternativa.

@@ -3,7 +3,8 @@
 Você está desenvolvendo **Craft Bunny**, jogo de plataforma 2D **Godot 4.3+ / GDScript**, partindo do código existente. Leia `README.md`, `ROADMAP.md`, `docs/TEST_PLAN.md` e `docs/ASSETS.md` antes de alterar código.
 
 ## Regras inegociáveis
-- **Uma fase**, cinco ambientes, casa do coelho = chegada, ranking de cenouras = competição.
+- **Uma fase**, agora em três alturas (floresta, copa e subsolo), casa do coelho = chegada, ranking de cenouras = competição. Ampliação autorizada em 2026-11-12: 48.000 px, 140 cenouras no mapa e 60 em drops, teto 200 na versão 0.4.0; cerca de 15 minutos é meta de playtest, não mínimo imposto.
+- Após atacar, a ave pousa por 0,5 s antes de retornar ao voo (alteração autorizada em 2026-11-12). A escada da copa exige quatro caixas; manter retorno do subsolo sem gasto obrigatório.
 - **Sem checkpoints nem save de progresso**. Persistir apenas recordes (e preferências de áudio e controles).
 - Coelho: 3 HP, 1 s invulnerabilidade, martelo 1 dano; cobra 2 HP/1 dano/1 cenoura; guaxinim 5/2/3; ave 7/3/5.
 - Madeira sem limite (alteração solicitada pelo usuário); caixa custa 3 madeiras, tem 2 HP e somente o coelho a destrói.

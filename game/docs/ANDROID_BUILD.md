@@ -1,19 +1,21 @@
 # Craft Bunny — APK de teste
 
-Build atualizado em 2026-11-10 com Godot 4.7.2.
+Build atualizado em 2026-11-12 com Godot 4.7.2.
 
-- Arquivo: builds/CraftBunny-Android-0.3.7.apk (também disponível como CraftBunny-Android-Test.apk).
+- Arquivo: builds/CraftBunny-Android-0.4.0.apk (também disponível como CraftBunny-Android-Test.apk).
 - Pacote: com.craftbunny.game
-- Versão: 0.3.7-android-test (código 7), analógico transparente e envio automático de recordes elegíveis, sem botão de envio manual; botão global abre https://craftbunny-web.vercel.app.
+- Versão: 0.4.0-android-test (código 8), fase ampla de três alturas e teto de 200 cenouras; preservados analógico e envio automático. Aplicar a migração de ranking indicada em ../../docs/WIDE_LEVEL_040.md.
 - Mínimo: Android API 24 (Android 7.0), aparelho com OpenGL ES 3 compatível com o renderer Compatibility.
 - Target SDK: 36.
 - Arquiteturas: arm64-v8a e armeabi-v7a.
 - Orientação: paisagem, conteúdo 960x540 com proporção preservada.
-- Tamanho: 79.741.400 bytes (76,05 MiB).
-- SHA256: 29F3572782898A896FDC0FEC16CEC3B1E873C0941401B4AD360568986AF5C575
+- Tamanho: 80.986.248 bytes.
+- SHA256: D9FC3BB499FA5E51F3FC2629B0E0DCCDE114A1EC6618E4A807FA7790AEEB3265
 - Assinatura de depuração verificada: esquemas v2 e v3.
 
 ## Instalar
+
+Atualização 0.4.0: mapa editável com floresta/copa/subsolo, quatro caixas obrigatórias na escada, ave pousada por 0,5 s após atacar e casa pixel art. Mesma assinatura confirmada contra a 0.3.7, permitindo instalar por cima. Teto global 200 exige nova migração no Supabase; registro local continua independente. Guia e variáveis do download em ../../docs/WIDE_LEVEL_040.md. Notas seguintes são históricas.
 
 Atualização 0.3.7: ESQ/DIR substituídos por analógico semitransparente, com zona morta e multitoque. Botão ENVIAR AO GLOBAL removido; REGISTRAR RECORDE mantém envio automático de pontuações elegíveis. Código 7 e mesmo certificado da 0.3.6 confirmados, permitindo atualização por cima. Captura, testes e variáveis para selecionar o novo download em ../../docs/TOUCH_ANALOG.md. As notas seguintes preservam o histórico de versões anteriores.
 

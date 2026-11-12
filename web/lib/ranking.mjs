@@ -1,18 +1,19 @@
 import { createHash, createHmac, randomBytes, randomUUID } from 'node:crypto';
 
-export const GAME_VERSION = '0.3.4';
-export const MAX_CARROTS = 139;
+export const GAME_VERSION = '0.4.0';
+export const MAX_CARROTS = 200;
+export const VERSION_LIMITS = Object.freeze({'0.3.4':139,'0.4.0':200});
 export class ApiError extends Error {
   constructor(status, code, message) { super(message); this.status = status; this.code = code; }
 }
 export const hash = token => createHash('sha256').update(token).digest('hex');
 export function validateVersion(body) {
-  if (body.game_version !== GAME_VERSION) throw new ApiError(422, 'unsupported_version', 'Atualize o jogo para enviar seu recorde.');
+  if (typeof body.game_version!=='string' || !Object.hasOwn(VERSION_LIMITS,body.game_version)) throw new ApiError(422, 'unsupported_version', 'Atualize o jogo para enviar seu recorde.');
 }
 export function validateScore(body) {
   validateVersion(body);
   if (typeof body.initials !== 'string' || !/^[A-Z]{3}$/.test(body.initials) ||
-      !Number.isInteger(body.carrots) || body.carrots < 1 || body.carrots > MAX_CARROTS ||
+      !Number.isInteger(body.carrots) || body.carrots < 1 || body.carrots > VERSION_LIMITS[body.game_version] ||
       typeof body.won !== 'boolean' || !Number.isInteger(body.duration_ms) ||
       body.duration_ms < 1000 || body.duration_ms > 21600000 ||
       typeof body.run_id !== 'string' || !/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(body.run_id) ||
