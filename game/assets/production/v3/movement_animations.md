@@ -1,5 +1,7 @@
 # Dash e lenço — 2026-11-13
 
+Correção 0.4.3: PNGs preservados. A escala do planar agora é calibrada pela altura da pose normal (~53,17 px), eliminando o aumento de corpo. Enquadramento e capturas em `docs/SPRITE_LAYOUT_043.md` na raiz do repositório.
+
 Produção com a ferramenta integrada **imagegen**, duas chamadas separadas, transparência real RGBA. Referência de identidade: `../v2/bunny.png`, preservada. Originais gerados permanecem também no diretório de imagens do Codex. Não houve recorte/limpeza destrutiva das referências.
 
 ## Arquivos e integração

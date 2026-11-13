@@ -11,6 +11,7 @@ Registrar cada cenário como **Passou / Falhou / Não executado** e passos de re
 - [ ] T06 — Entrar na casa do coelhinho encerra a fase e apresenta resultado.
 
 ## Movimentação
+- [ ] T49 — Conferir martelo sem recorte nas duas direções e transição do planar sem aumento do corpo. 42 checks/capturas aprovados em tools/test_sprite_layout.gd; confirmação em partida real/Android físico pendente.
 - [ ] T46 — Dash I no chão/ar: uma carga por salto, cooldown, bloqueio em paredes, sem dano/invulnerabilidade, buffer do martelo e construção normal depois. Coberto por tools/test_mobility.gd; playtest humano pendente.
 - [ ] T47 — Duplo toque de pulo em 0,35 s: primeiro só salta, segundo aguarda descida, segurar plana, soltar cancela, limite 1 s, Dash suspende/retoma sem recarga aérea. Automatizado; playtest humano pendente.
 - [ ] T48 — Artes de 12 quadros, lenço, poeira, rastro e som de Dash: capturas OpenGL revisadas em câmera lenta; validar fluidez em velocidade normal, escuta e multitoque em aparelho físico.

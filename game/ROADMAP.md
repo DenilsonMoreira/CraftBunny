@@ -11,6 +11,7 @@
 **Pronto quando:** F5 abre o projeto e uma partida pode começar, terminar e reiniciar sem erro crítico.
 
 ## M1 — Movimento e câmera
+- [x] Correção visual 0.4.3: martelo completo em 12 quadros para ambos os lados e planar calibrado pela pose normal; 42 checks/capturas aprovados. Relatório: ../docs/SPRITE_LAYOUT_043.md.
 - [x] Dash e planar implementados por solicitação adicional: 40 checks físicos aprovados, incluindo combinação simultânea e orçamento aéreo; detalhes em ../docs/MOVEMENT_ABILITIES_042.md.
 - [ ] Validar manualmente fluidez, alinhamento das animações de 12 quadros, precisão nas bordas e ergonomia do Dash/duplo toque em Android físico.
 - [ ] Validar A/D/setas, aceleração, atrito e colisões.

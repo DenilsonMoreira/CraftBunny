@@ -23,6 +23,7 @@ Você está desenvolvendo **Craft Bunny**, jogo de plataforma 2D **Godot 4.3+ / 
 7. Prefira configuração via constantes/recursos; evite números mágicos escondidos em métodos de gameplay.
 8. Evite introduzir arquivos binários grandes, plugins ou dependências externas sem necessidade.
 9. Nunca editar o ranking local como se fosse estado de gameplay; todo reinício deve criar tentativa nova.
+10. Retenção autorizada em 2026-11-13: manter somente as duas últimas versões locais de builds. Após completar EXE/ZIP/APK, usar `tools/prune_builds.ps1 -Keep 2` para revisar e `-Apply` para limpar; nunca apagar fontes, referências, histórico Git ou armazenamento remoto como parte dessa limpeza.
 
 ## Definição de pronto por alteração
 - Projeto abre sem erros; comportamento novo testado; regras preservadas; recurso documentado; testes e limitações declarados; checklist atualizado. Se não for possível executar Godot, alteração é **pendente de validação**.

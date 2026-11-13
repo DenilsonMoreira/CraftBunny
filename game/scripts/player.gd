@@ -207,9 +207,11 @@ func _setup_visual() -> void:
   "idle": [0], "dash": range(12)
  }, Vector2(74,60), 21.0, false, Vector2i(4,3))
  if mobility_sprite != null:
+  var idle_pose := animated_sprite.sprite_frames.get_frame_texture("idle",0) as AtlasTexture
+  var normal_pose_height := idle_pose.region.size.y*animated_sprite.scale.y
   var glide := preload("res://scripts/sprite_atlas.gd").create("res://assets/production/v3/bunny_glide_12.png", {
    "idle": [0], "glide": range(12)
-  }, Vector2(82,76), 21.0, false, Vector2i(4,3))
+  }, Vector2(64,54), 21.0, false, Vector2i(4,3), PackedVector2Array(),normal_pose_height)
   if glide != null:
    # Copy frames; both sheets use the same cell dimensions. Per-animation
    # scale/position below preserves the helper's alpha-bound calibration.

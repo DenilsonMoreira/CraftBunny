@@ -1,6 +1,6 @@
 # Craft Bunny 🐰🔨 — Godot 4
 
-> **Status:** protótipo v0.4.2 com Dash, planar com lenço e fase editável de 24.000 px em três alturas; QA completo e duração pendentes de playtest. **Objetivo:** concluir uma versão 1.0 jogável de **uma única fase**, com pontuação por cenouras e ranking local/global. **Engine validada:** Godot 4.7.2 / GDScript / 2D.
+> **Status:** protótipo v0.4.3 com martelo sem recorte, planar na escala normal e fase editável de 24.000 px em três alturas; QA completo e duração pendentes de playtest. **Objetivo:** concluir uma versão 1.0 jogável de **uma única fase**, com pontuação por cenouras e ranking local/global. **Engine validada:** Godot 4.7.2 / GDScript / 2D.
 
 ## O jogo
 
@@ -14,7 +14,7 @@
 
 **Aprender a editar a fase visualmente:** abra `scenes/editor_example/fase_exemplo.tscn` e pressione **F6**. Contém terra pintável com colisão, início do coelho e uma cobra arrastáveis. F5 continua no jogo principal. Guia passo a passo em `docs/EDITABLE_EXAMPLE.md`.
 
-Windows atual: `builds/windows-0.4.2/CraftBunny-0.4.2.exe`. Abrir a pasta antiga não atualiza o jogo de PC. Histórico em `docs/WINDOWS_BUILD.md`; habilidades em `../docs/MOVEMENT_ABILITIES_042.md`.
+Windows atual: `builds/windows-0.4.3/CraftBunny-0.4.3.exe`. Abrir a pasta antiga não atualiza o jogo de PC. Histórico em `docs/WINDOWS_BUILD.md`; correção em `../docs/SPRITE_LAYOUT_043.md`.
 
 RECORDES → ZERAR RANKING LOCAL pede confirmação antes de apagar os recordes deste aparelho. Cancelar preserva os dados; a ação não afeta o ranking global. Detalhes em ../docs/LOCAL_RESET_AND_RANKING_LAYOUT.md.
 
@@ -24,7 +24,9 @@ Título, opções e controles com tema pixel art; inimigos exibem balão de dete
 
 Atualização visual: mundo ampliado em 25% pela câmera, com colisões preservadas. Ataque exclusivo do coelho em 12 quadros, martelo maior e alcance frontal de 32 unidades. Detalhes e testes em assets/production/v2/bunny_attack_12.md.
 
-Versão Android atual em builds/CraftBunny-Android-0.4.2.apk, com analógico semitransparente, botão DASH e PULO com duplo toque/segurar para planar. Paisagem e mínimo API 24. Envio automático de recorde elegível. APKs não são versionados. Instalação e limitações em docs/ANDROID_BUILD.md. Playtest físico pendente.
+Versão Android atual em builds/CraftBunny-Android-0.4.3.apk, com analógico semitransparente, botão DASH e PULO com duplo toque/segurar para planar. Paisagem e mínimo API 24. Envio automático de recorde elegível. APKs não são versionados. Instalação e limitações em docs/ANDROID_BUILD.md. Playtest físico pendente.
+
+Retenção local: manter apenas os dois builds completos mais recentes. Após exportar EXE, ZIP e APK, `./tools/prune_builds.ps1 -Keep 2` lista as versões antigas; `-Apply` realiza a limpeza. Em 2026-11-13 foram mantidas 0.4.3 e 0.4.2, removendo 23 entradas antigas e liberando cerca de 2,09 GB. Documentos históricos podem citar builds já removidos; fontes, artes e histórico Git permanecem.
 
 1. Instale **Godot 4.3 ou superior**.
 2. Abra o gerenciador de projetos da Godot, clique em **Importar** e escolha `project.godot` nesta pasta.
