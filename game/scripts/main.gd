@@ -8,8 +8,8 @@ const RECORD_FILE := "user://records.cfg"
 const CONFIG_FILE := "user://settings.cfg"
 const DEFAULT_VOLUMES := {"master": 0.8, "music": 0.65, "sfx": 0.8}
 const RECORD_LIMIT := 10
-const LEVEL_WIDTH := 48000.0
-const FINISH_X := 47600.0
+const LEVEL_WIDTH := preload("res://scripts/wide_level.gd").WIDTH
+const FINISH_X := 23600.0
 const FLOOR_Y := 435.0
 const BOX_SIZE := 42.0
 const BUILD_OFFSET := 40.0
@@ -131,7 +131,7 @@ func _setup_inputs() -> void:
 			if not InputMap.action_has_event(action,event): InputMap.action_add_event(action,event)
 
 func _generate_level() -> void:
-	level = load("res://scenes/level_wide/fase_ampla.tscn").instantiate()
+	level = load("res://scenes/level_wide/fase_compacta.tscn").instantiate()
 	add_child(level)
 	for rect in level.solid_rects():
 		rocks.append([rect.get_center().x,rect.get_center().y,rect.size.x,rect.size.y])

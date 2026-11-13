@@ -1,20 +1,20 @@
 # Craft Bunny 🐰🔨 — Godot 4
 
-> **Status:** protótipo v0.4.0 com fase ampla editável em três alturas, analógico Android e envio automático; QA completo e duração de 15 minutos pendentes de playtest. **Objetivo:** concluir uma versão 1.0 jogável de **uma única fase longa**, com pontuação por cenouras e ranking local/global. **Engine validada:** Godot 4.7.2 / GDScript / 2D.
+> **Status:** protótipo v0.4.1 com fase editável de 24.000 px em três alturas, analógico Android e envio automático; QA completo e duração pendentes de playtest. **Objetivo:** concluir uma versão 1.0 jogável de **uma única fase**, com pontuação por cenouras e ranking local/global. **Engine validada:** Godot 4.7.2 / GDScript / 2D.
 
 ## O jogo
 
 **Craft Bunny** é um jogo de plataforma 2D de correr, saltar, enfrentar inimigos e improvisar caixas de madeira com o martelinho. O coelho explora floresta, copa e subsolo conectados no mesmo mapa, até chegar à **casa do coelhinho**, que marca o final da tentativa. A competição é pelo maior número de cenouras coletadas, não pelo tempo de chegada.
 
-**Escopo da v1.0:** uma fase (ampliada por solicitação para 48.000 px e três alturas, revisável por playtest); sem checkpoints; sem lojas; sem áreas secretas; sem segunda fase; sem sistema de progressão persistente. **Somente os recordes e preferências/controles ficam salvos localmente.** Uma segunda fase será avaliada **após** validar a primeira.
+**Escopo da v1.0:** uma fase de 24.000 px em três alturas, revisável por playtest; sem checkpoints; sem lojas; sem áreas secretas; sem segunda fase; sem sistema de progressão persistente. **Somente os recordes e preferências/controles ficam salvos localmente.** Uma segunda fase será avaliada **após** validar a primeira.
 
 ## Iniciar e testar
 
-**Fase atual 0.4.0:** `scenes/level_wide/fase_ampla.tscn`, editável na área 2D, com floresta, copa de galhos/nuvens e subsolo marrom. 140 cenouras no mapa + 60 de inimigos = 200. Quatro desníveis exigem caixas; aves pousam por 0,5 s após atacar. Guia, meta de tempo e migração do ranking em `../docs/WIDE_LEVEL_040.md`. O exemplo inicial continua separado para aprendizado.
+**Fase atual 0.4.1:** `scenes/level_wide/fase_compacta.tscn`, editável na área 2D, com floresta, copa e subsolo. 140 cenouras no mapa + 60 de inimigos = 200. Quatro desníveis exigem caixas; aves pousam por 0,5 s após atacar. Guia em `../docs/COMPACT_LEVEL_041.md`. Geometria anterior e exemplo inicial preservados.
 
 **Aprender a editar a fase visualmente:** abra `scenes/editor_example/fase_exemplo.tscn` e pressione **F6**. Contém terra pintável com colisão, início do coelho e uma cobra arrastáveis. F5 continua no jogo principal. Guia passo a passo em `docs/EDITABLE_EXAMPLE.md`.
 
-Windows atual: `builds/windows-0.4.0/CraftBunny-0.4.0.exe`. Abrir a pasta antiga não atualiza o jogo de PC. Histórico em `docs/WINDOWS_BUILD.md`; atualização em `../docs/WIDE_LEVEL_040.md`.
+Windows atual: `builds/windows-0.4.1/CraftBunny-0.4.1.exe`. Abrir a pasta antiga não atualiza o jogo de PC. Histórico em `docs/WINDOWS_BUILD.md`; atualização em `../docs/COMPACT_LEVEL_041.md`.
 
 RECORDES → ZERAR RANKING LOCAL pede confirmação antes de apagar os recordes deste aparelho. Cancelar preserva os dados; a ação não afeta o ranking global. Detalhes em ../docs/LOCAL_RESET_AND_RANKING_LAYOUT.md.
 
@@ -24,7 +24,7 @@ Título, opções e controles com tema pixel art; inimigos exibem balão de dete
 
 Atualização visual: mundo ampliado em 25% pela câmera, com colisões preservadas. Ataque exclusivo do coelho em 12 quadros, martelo maior e alcance frontal de 32 unidades. Detalhes e testes em assets/production/v2/bunny_attack_12.md.
 
-Versão Android atual em builds/CraftBunny-Android-0.4.0.apk, com analógico semitransparente, ações multitoque, paisagem e mínimo API 24. ENVIAR AO GLOBAL removido: envio automático de recorde elegível. APKs não são versionados. Instalação e limitações em docs/ANDROID_BUILD.md. Playtest dos novos recursos em aparelho pendente.
+Versão Android atual em builds/CraftBunny-Android-0.4.1.apk, com analógico semitransparente, ações multitoque, paisagem e mínimo API 24. Envio automático de recorde elegível. APKs não são versionados. Instalação e limitações em docs/ANDROID_BUILD.md. Playtest físico pendente.
 
 1. Instale **Godot 4.3 ou superior**.
 2. Abra o gerenciador de projetos da Godot, clique em **Importar** e escolha `project.godot` nesta pasta.

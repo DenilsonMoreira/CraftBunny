@@ -39,7 +39,7 @@ func _run() -> void:
  check(get_nodes_in_group("crates").size() == 3 and game.wood_count == 13, "higher position allows third stacked crate")
  for crate in get_nodes_in_group("crates"): crate.queue_free()
  await physics_frame
- game.player.position = Vector2(4800,414)
+ game.player.position = Vector2(2368,414)
  await physics_frame
  game._on_box_requested()
  check(get_nodes_in_group("crates").is_empty() and game.wood_count == 13, "unsupported gap cannot consume materials")

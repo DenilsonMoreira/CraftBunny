@@ -1,19 +1,21 @@
 # Craft Bunny — APK de teste
 
-Build atualizado em 2026-11-12 com Godot 4.7.2.
+Build atualizado em 2026-11-13 com Godot 4.7.2.
 
-- Arquivo: builds/CraftBunny-Android-0.4.0.apk (também disponível como CraftBunny-Android-Test.apk).
+- Arquivo: builds/CraftBunny-Android-0.4.1.apk (também disponível como CraftBunny-Android-Test.apk).
 - Pacote: com.craftbunny.game
-- Versão: 0.4.0-android-test (código 8), fase ampla de três alturas e teto de 200 cenouras; preservados analógico e envio automático. Aplicar a migração de ranking indicada em ../../docs/WIDE_LEVEL_040.md.
+- Versão: 0.4.1-android-test (código 9), fase de 24.000 px em três alturas e teto de 200 cenouras; preservados analógico e envio automático. Contrato global permanece 0.4.0, sem nova migração nesta atualização.
 - Mínimo: Android API 24 (Android 7.0), aparelho com OpenGL ES 3 compatível com o renderer Compatibility.
 - Target SDK: 36.
 - Arquiteturas: arm64-v8a e armeabi-v7a.
 - Orientação: paisagem, conteúdo 960x540 com proporção preservada.
-- Tamanho: 80.986.248 bytes.
-- SHA256: D9FC3BB499FA5E51F3FC2629B0E0DCCDE114A1EC6618E4A807FA7790AEEB3265
+- Tamanho: 81.064.303 bytes.
+- SHA256: 3BBD3A9B0E1A529796024EB65B6777069D53859330D698B4A7449396FB89221E
 - Assinatura de depuração verificada: esquemas v2 e v3.
 
 ## Instalar
+
+Atualização 0.4.1: extensão horizontal reduzida pela metade, mantendo itens, inimigos, alturas e caixas obrigatórias. Mesmo certificado da 0.4.0 confirmado. APK privado enviado; seleção do download na Vercel e testes em ../../docs/COMPACT_LEVEL_041.md. Notas seguintes são históricas.
 
 Atualização 0.4.0: mapa editável com floresta/copa/subsolo, quatro caixas obrigatórias na escada, ave pousada por 0,5 s após atacar e casa pixel art. Mesma assinatura confirmada contra a 0.3.7, permitindo instalar por cima. Teto global 200 exige nova migração no Supabase; registro local continua independente. Guia e variáveis do download em ../../docs/WIDE_LEVEL_040.md. Notas seguintes são históricas.
 

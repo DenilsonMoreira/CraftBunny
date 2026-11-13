@@ -1,5 +1,7 @@
 # Fase ampla em três alturas — 0.4.0 — 2026-11-12
 
+Histórico da versão 0.4.0. A fase ativa foi compactada para 24.000 px na 0.4.1; consulte [COMPACT_LEVEL_041.md](COMPACT_LEVEL_041.md).
+
 Implementação baseada no esboço do responsável. Continua sendo uma única fase, sem checkpoint nem gravação de progresso. A geometria principal agora é uma cena nativa editável, não uma geração refeita a cada partida.
 
 ## Estrutura e meta de pontuação

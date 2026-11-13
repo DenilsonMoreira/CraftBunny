@@ -49,6 +49,7 @@ Registrar cada cenário como **Passou / Falhou / Não executado** e passos de re
 - [ ] T30 — Controles e volumes persistem; existe recuperação de configuração inválida.
 
 ## Balanceamento e distribuição
+- [ ] T45 — Fase 0.4.1 com 24.000 px: conferir maior densidade, quatro caixas na escada e retornos do subsolo. 32 checks de mapa, capturas OpenGL e smoke do EXE aprovados; playtest humano completo e cronometragem pendentes. Relatório: ../../docs/COMPACT_LEVEL_041.md.
 - [ ] T42 — Fase 0.4.0: explorar três alturas, usar quatro caixas na escada e retornar do subsolo sem caixas; confirmar 140 cenouras de mapa e 200 com todos os drops. 28 checks automatizados passaram; playtest completo pendente.
 - [ ] T43 — Ave pousa durante 0,5 s após mergulhar, permanece atacável mesmo se receber dano e retorna ao voo. Seis checks automatizados passaram; playtest físico pendente.
 - [ ] T44 — Cronometrar percurso exploratório da fase ampla e ajustar para cerca de 15 minutos com evidência de playtest. Não executado; não é duração mínima imposta.

@@ -1,5 +1,5 @@
 extends Node2D
-const WIDTH := 48000.0
+const WIDTH := 24000.0
 const SURFACE_Y := 435.0
 const UPPER_Y := -285.0
 const LOWER_Y := 915.0

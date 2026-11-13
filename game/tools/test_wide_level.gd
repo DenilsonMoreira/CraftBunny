@@ -38,14 +38,31 @@ func _run() -> void:
  check(rewards==60 and rewards+140==game.global_ranking.MAX_CARROTS,"all enemy rewards complete the exact 200-carrot ceiling")
  check(tier_wood==[24,40,16],"more planks upstairs and sufficient wood before crate stairs")
  check(lower_snakes==9 and lower_raccoons==2 and birds==6,"underground favors snakes and all six birds stay upstairs")
- check(game.LEVEL_WIDTH==48000 and game.player.fall_death_y>game.level.LOWER_Y+200,"wider camera and fall threshold support the lower floor")
+ check(game.LEVEL_WIDTH==24000 and game.player.fall_death_y>game.level.LOWER_Y+200,"24,000px camera and fall threshold support the lower floor")
+ for layer in game.level.get_node("Terrenos").get_children():
+  check(layer.get_used_rect().end.x*64==24000,"native terrain ends at 24,000px")
+ var surfaces: Array[Rect2] = game.level.solid_rects()
+ var all_supported := true
+ var all_inside := true
+ for marker in game.level.get_node("Itens").get_children():
+  var expected_y: float = 435 if marker.position.y>0 and marker.position.y<560 else (915 if marker.position.y>560 else -285)
+  all_inside = all_inside and marker.position.x>=0 and marker.position.x<24000
+  if not surfaces.any(func(rect): return is_equal_approx(rect.position.y,expected_y) and marker.position.x>=rect.position.x and marker.position.x<=rect.end.x): all_supported = false
+ check(all_supported and all_inside,"all collectibles remain inside the compact map with solid support")
+ var branches: Array = game.level.get_node("Plataformas").get_children().filter(func(node): return str(node.name).begins_with("Galho"))
+ branches.sort_custom(func(a,b): return a.position.x<b.position.x)
+ var gaps_ok := true
+ for index in range(1,branches.size()):
+  var gap: float = branches[index].surface_rect().position.x-branches[index-1].surface_rect().end.x
+  gaps_ok = gaps_ok and absf(gap-64)<0.1
+ check(gaps_ok,"branch gaps stay 64px instead of shrinking with map length")
  game.player.set_physics_process(false)
  game.player.position = Vector2(1000,894)
  game.player.velocity = Vector2.ZERO
  game.player.set_physics_process(true)
  for tick in range(15): await physics_frame
  check(game.player.is_on_floor() and game.player.health==3 and not game.pit_audio_started,"descending into underground is safe and does not trigger a pit death")
- game.player.position = Vector2(992,894)
+ game.player.position = Vector2(game.level.get_node("Plataformas/Retorno15_00").position.x,894)
  game.player.velocity = Vector2.ZERO
  for tick in range(4): await physics_frame
  for step in range(12):
@@ -92,7 +109,7 @@ func _run() -> void:
   for child in game.player.get_children():
    if child is Camera2D: camera = child
   camera.position_smoothing_enabled = false
-  for capture in [["forest",Vector2(160,414)],["canopy",Vector2(4500,-306)],["underground",Vector2(6500,894)],["stairs",Vector2(46500,174)],["house",Vector2(47600,894)]]:
+  for capture in [["forest",Vector2(160,414)],["canopy",Vector2(2200,-306)],["underground",Vector2(3250,894)],["stairs",Vector2(22500,174)],["house",Vector2(23600,894)]]:
    game.player.position = capture[1]
    game.player.velocity = Vector2.ZERO
    game.player.set_physics_process(true)
@@ -102,7 +119,7 @@ func _run() -> void:
    camera.reset_smoothing()
    await process_frame
    await RenderingServer.frame_post_draw
-   root.get_texture().get_image().save_png(ProjectSettings.globalize_path("res://../docs/qa_wide_"+capture[0]+".png"))
+   root.get_texture().get_image().save_png(ProjectSettings.globalize_path("res://../docs/qa_compact_"+capture[0]+".png"))
  game.queue_free()
  await process_frame
  print("WIDE_LEVEL_FAILURES=",failures)
