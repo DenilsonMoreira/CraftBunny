@@ -11,13 +11,13 @@ Jogo de plataforma 2D em Godot e estrutura para seu futuro ranking global.
 | supabase/ | Migração SQL e instruções de configuração do banco |
 | docs/ | Decisões de integração e validação do repositório |
 
-O jogo 0.4.1 tem uma fase editável de 24.000 px com floresta, copa e subsolo; 140 cenouras no mapa e 60 em drops, total 200, mantendo 24 inimigos. Salva o TOP 10 local e envia resultados elegíveis ao global. Android com analógico semitransparente. Site/API em https://craftbunny-web.vercel.app. Guia atual em docs/COMPACT_LEVEL_041.md; contrato/migração 0.4.0 preservados.
+O jogo 0.4.2 adiciona Dash (I) e planar com lenço (segundo toque no pulo e segurar), com artes de 12 quadros cada e controles touch. A fase editável tem 24.000 px com floresta, copa e subsolo; 140 cenouras no mapa e 60 em drops, total 200, mantendo 24 inimigos. Salva o TOP 10 local e envia resultados elegíveis ao global. Site/API em https://craftbunny-web.vercel.app. Habilidades em docs/MOVEMENT_ABILITIES_042.md; contrato/migração 0.4.0 preservados.
 
 ## Abrir o jogo
 
 Exemplo para aprender edição visual na Godot: `game/scenes/editor_example/fase_exemplo.tscn`. Terreno TileMap pintável, posição inicial do coelho e cobra arrastáveis; executar com F6. Guia em `game/docs/EDITABLE_EXAMPLE.md`. A fase principal permanece separada.
 
-Windows 0.4.1: execute `game/builds/windows-0.4.1/CraftBunny-0.4.1.exe`. APK: `game/builds/CraftBunny-Android-0.4.1.apk`. Binários não são versionados. Use o projeto atual do repositório; a pasta anterior não recebe atualizações automaticamente. Cena editável: `game/scenes/level_wide/fase_compacta.tscn`. Guia em `docs/COMPACT_LEVEL_041.md`.
+Windows 0.4.2: execute `game/builds/windows-0.4.2/CraftBunny-0.4.2.exe`. APK: `game/builds/CraftBunny-Android-0.4.2.apk`. Binários não são versionados. Use o projeto atual do repositório; a pasta anterior não recebe atualizações automaticamente. Cena editável: `game/scenes/level_wide/fase_compacta.tscn`. Guia do mapa em `docs/COMPACT_LEVEL_041.md`.
 
 Use Godot 4.7.2 para reproduzir a validação atual e importe game/project.godot. A engine não acompanha o repositório. Consulte game/README.md, game/AGENTS.md e game/ROADMAP.md para controles, regras e histórico.
 

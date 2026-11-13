@@ -1,6 +1,6 @@
 # Craft Bunny 🐰🔨 — Godot 4
 
-> **Status:** protótipo v0.4.1 com fase editável de 24.000 px em três alturas, analógico Android e envio automático; QA completo e duração pendentes de playtest. **Objetivo:** concluir uma versão 1.0 jogável de **uma única fase**, com pontuação por cenouras e ranking local/global. **Engine validada:** Godot 4.7.2 / GDScript / 2D.
+> **Status:** protótipo v0.4.2 com Dash, planar com lenço e fase editável de 24.000 px em três alturas; QA completo e duração pendentes de playtest. **Objetivo:** concluir uma versão 1.0 jogável de **uma única fase**, com pontuação por cenouras e ranking local/global. **Engine validada:** Godot 4.7.2 / GDScript / 2D.
 
 ## O jogo
 
@@ -14,7 +14,7 @@
 
 **Aprender a editar a fase visualmente:** abra `scenes/editor_example/fase_exemplo.tscn` e pressione **F6**. Contém terra pintável com colisão, início do coelho e uma cobra arrastáveis. F5 continua no jogo principal. Guia passo a passo em `docs/EDITABLE_EXAMPLE.md`.
 
-Windows atual: `builds/windows-0.4.1/CraftBunny-0.4.1.exe`. Abrir a pasta antiga não atualiza o jogo de PC. Histórico em `docs/WINDOWS_BUILD.md`; atualização em `../docs/COMPACT_LEVEL_041.md`.
+Windows atual: `builds/windows-0.4.2/CraftBunny-0.4.2.exe`. Abrir a pasta antiga não atualiza o jogo de PC. Histórico em `docs/WINDOWS_BUILD.md`; habilidades em `../docs/MOVEMENT_ABILITIES_042.md`.
 
 RECORDES → ZERAR RANKING LOCAL pede confirmação antes de apagar os recordes deste aparelho. Cancelar preserva os dados; a ação não afeta o ranking global. Detalhes em ../docs/LOCAL_RESET_AND_RANKING_LAYOUT.md.
 
@@ -24,7 +24,7 @@ Título, opções e controles com tema pixel art; inimigos exibem balão de dete
 
 Atualização visual: mundo ampliado em 25% pela câmera, com colisões preservadas. Ataque exclusivo do coelho em 12 quadros, martelo maior e alcance frontal de 32 unidades. Detalhes e testes em assets/production/v2/bunny_attack_12.md.
 
-Versão Android atual em builds/CraftBunny-Android-0.4.1.apk, com analógico semitransparente, ações multitoque, paisagem e mínimo API 24. Envio automático de recorde elegível. APKs não são versionados. Instalação e limitações em docs/ANDROID_BUILD.md. Playtest físico pendente.
+Versão Android atual em builds/CraftBunny-Android-0.4.2.apk, com analógico semitransparente, botão DASH e PULO com duplo toque/segurar para planar. Paisagem e mínimo API 24. Envio automático de recorde elegível. APKs não são versionados. Instalação e limitações em docs/ANDROID_BUILD.md. Playtest físico pendente.
 
 1. Instale **Godot 4.3 ou superior**.
 2. Abra o gerenciador de projetos da Godot, clique em **Importar** e escolha `project.godot` nesta pasta.
@@ -38,12 +38,24 @@ Versão Android atual em builds/CraftBunny-Android-0.4.1.apk, com analógico sem
 |---|---|
 | Andar | A/D ou setas esquerda/direita |
 | Saltar | Espaço/W/seta cima |
+| Dash | I |
+| Planar | Segundo toque no pulo em até 0,35 s; segurar durante a descida |
 | Martelar | J |
 | Construir caixa | K |
 | Pausar | Esc/P |
 | Reiniciar tentativa | R |
 
 As teclas devem ser remapeáveis nas opções. Reiniciar começa sempre do início.
+
+### Dash e planar — 0.4.2
+
+Dash: 600 px/s, duração 0,16 s, cooldown 0,8 s, na direção do olhar. Disponível no chão e uma vez por salto; a carga aérea volta ao pousar sobre terreno, plataforma ou caixa. Mantém colisões, não atravessa obstáculos, não causa dano e não dá invulnerabilidade. Ataque e construção ficam bloqueados durante a arrancada; uma martelada solicitada nos últimos 0,12 s é executada ao terminar. Dash aguarda o término da animação de um ataque já iniciado. Aceleração/atrito normais suavizam o retorno. Pulo continua disponível durante Dash no chão.
+
+Planar: o primeiro evento de pulo salta normalmente. Um segundo toque dentro de 0,35 s solicita abrir o lenço, sem impulso vertical; se ocorrer na subida, aguarda a descida. Segure o segundo toque para reduzir a queda a no máximo 70 px/s, por até 1 s acumulado por salto. Soltar cancela a solicitação e volta à queda normal; novos toques não recarregam o tempo. Dash suspende o planar sem consumir nem repor seu saldo e permite retomá-lo se o pulo continuar segurado. Dano cancela as habilidades e mantém knockback/invulnerabilidade existentes. O pulo base não foi alterado.
+
+Valores ajustáveis exportados em `scripts/player.gd`: `dash_speed`, `dash_duration`, `dash_cooldown`, `dash_attack_buffer_time`, `glide_double_tap_window`, `glide_duration`, `glide_fall_speed` e `dash_sound`. O som padrão substituível é `assets/audio/sfx/dash_placeholder.wav`. Artes RGBA de 12 quadros cada: `assets/production/v3/bunny_dash_12.png` e `bunny_glide_12.png`, com abertura, ciclo e recolhimento do lenço. Dash possui mais 0,08 s de animação de frenagem, sem prolongar sua velocidade.
+
+Testes reproduzíveis: `godot --headless --path . --script res://tools/test_mobility.gd` e `godot --path . --rendering-method gl_compatibility --script res://tools/test_mobility_visual.gd`. O segundo usa câmera lenta para inspeção e capturas. Relatório e testes manuais pendentes em `../docs/MOVEMENT_ABILITIES_042.md`.
 
 Construção: aproxime-se de um apoio e pressione K (padrão). Caixas podem ser empilhadas ao mirar uma caixa próxima; para atingir níveis mais altos, suba ou salte e deixe livre o espaço da nova caixa. Cada construção custa três tábuas; cenouras são apenas pontuação.
 

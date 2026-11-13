@@ -10,6 +10,7 @@ Você está desenvolvendo **Craft Bunny**, jogo de plataforma 2D **Godot 4.3+ / 
 - Madeira sem limite (alteração solicitada pelo usuário); caixa custa 3 madeiras, tem 2 HP e somente o coelho a destrói.
 - Pisão autorizado: cair por cima de um inimigo causa 1 dano, impulso de retorno e um único quique pequeno ao pousar no chão, com animação própria e impact-thud.mp3.
 - Coyote time e jump buffer 0,12 s; pulo ~altura do coelho com valores iniciais. Não tunar sem playtest.
+- Habilidades autorizadas em 2026-11-13: Dash I (600 px/s, 0,16 s, cooldown 0,8 s, uma carga aérea) e planar pelo segundo toque de pulo (janela 0,35 s, até 1 s por salto, queda máxima 70 px/s). Sem dano/invulnerabilidade; manter colisões e regras de combate. Detalhes em ../docs/MOVEMENT_ABILITIES_042.md.
 - Não adicionar fases, save points, loja, áreas secretas, multiplayer, monetização, sistemas extras ou mais ataques antes da validação da primeira fase.
 
 ## Fluxo de trabalho

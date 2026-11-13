@@ -11,6 +11,8 @@
 **Pronto quando:** F5 abre o projeto e uma partida pode começar, terminar e reiniciar sem erro crítico.
 
 ## M1 — Movimento e câmera
+- [x] Dash e planar implementados por solicitação adicional: 40 checks físicos aprovados, incluindo combinação simultânea e orçamento aéreo; detalhes em ../docs/MOVEMENT_ABILITIES_042.md.
+- [ ] Validar manualmente fluidez, alinhamento das animações de 12 quadros, precisão nas bordas e ergonomia do Dash/duplo toque em Android físico.
 - [ ] Validar A/D/setas, aceleração, atrito e colisões.
 - [ ] Confirmar pulo base ~1 altura do coelho; não tunar antes do teste.
 - [ ] Verificar coyote time de 0,12 s e jump buffer de 0,12 s.

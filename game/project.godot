@@ -15,7 +15,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="Craft Bunny"
-config/version="0.4.1"
+config/version="0.4.2"
 run/main_scene="res://main.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://assets/production/v2/android_icon.png"
@@ -29,6 +29,18 @@ ranking/api_url="https://craftbunny-web.vercel.app"
 window/size/viewport_width=960
 window/size/viewport_height=540
 window/stretch/mode="canvas_items"
+
+[input]
+
+jump={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"physical_keycode":32), Object(InputEventKey,"physical_keycode":87), Object(InputEventKey,"physical_keycode":4194320)]
+}
+
+dash={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"physical_keycode":73)]
+}
 
 [physics]
 

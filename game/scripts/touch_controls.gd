@@ -14,6 +14,7 @@ const BUTTONS := [
  {"area": Rect2(842,394,92,92), "action":"jump", "label":"PULO"},
  {"area": Rect2(742,446,78,78), "action":"attack", "label":"GOLPE"},
  {"area": Rect2(650,446,78,78), "action":"craft", "label":"CAIXA"},
+ {"area": Rect2(742,350,78,78), "action":"dash", "label":"DASH"},
  {"area": Rect2(886,90,50,44), "action":"pause", "label":"II"}
 ]
 
@@ -28,7 +29,7 @@ func _process(_delta: float) -> void:
  queue_redraw()
 
 func release_all() -> void:
- for action in fingers.values(): Input.action_release(action)
+ for action in fingers.values(): _send_action(action,false)
  fingers.clear()
  stick_finger = -1
  stick_offset = Vector2.ZERO
@@ -51,11 +52,23 @@ func set_finger(index: int, action: String) -> void:
  var previous: String = fingers.get(index,"")
  if previous == action: return
  fingers.erase(index)
- if previous != "" and previous not in fingers.values(): Input.action_release(previous)
+ if previous != "" and previous not in fingers.values(): _send_action(previous,false)
  if action != "":
+  var already_held := action in fingers.values()
   fingers[index] = action
-  Input.action_press(action)
+  if not already_held: _send_action(action,true)
  queue_redraw()
+
+func _send_action(action: String, pressed: bool) -> void:
+ # Keep touch state immediate, then deliver its explicit edge to the movement
+ # adapter. parse_input_event is buffered and can reorder rapid touch releases.
+ var event := InputEventAction.new()
+ event.action = action
+ event.pressed = pressed
+ if pressed: Input.action_press(action)
+ else: Input.action_release(action)
+ if is_instance_valid(game) and is_instance_valid(game.player):
+  game.player.handle_movement_input(event)
 
 func _input(event: InputEvent) -> void:
  if not visible: return

@@ -31,6 +31,39 @@ const STOMP_REBOUND := -240.0
 const STOMP_GROUND_BOUNCE := -110.0
 const STOMP_VISUAL_DURATION := 0.80
 
+@export_group("Dash")
+@export var dash_speed := 600.0
+@export var dash_duration := 0.16
+@export var dash_cooldown := 0.8
+@export var dash_attack_buffer_time := 0.12
+@export_group("Lenço")
+@export var glide_double_tap_window := 0.35
+@export var glide_duration := 1.0
+@export var glide_fall_speed := 70.0
+
+var dash_timer := 0.0
+var dash_cooldown_timer := 0.0
+var air_dash_used := false
+var dash_direction := 1
+var buffered_attack := 0.0
+var gliding := false
+var glide_remaining := 1.0
+var glide_requested := false
+var jump_tap_timer := 0.0
+var jumped_this_airtime := false
+var second_tap_used := false
+var jump_press_pending := false
+var dash_press_pending := false
+var dash_elapsed := 0.0
+var dash_visual_timer := 0.0
+const DASH_VISUAL_DURATION := 0.24
+var glide_visual_elapsed := 0.0
+var glide_release_timer := 0.0
+var mobility_sprite: AnimatedSprite2D
+var movement_fx: Node2D
+var dash_audio: AudioStreamPlayer
+@export var dash_sound: AudioStream
+
 var health := MAX_HEALTH
 var facing := 1
 var invincible_timer := 0.0
@@ -59,6 +92,7 @@ var pit_warning_y := 525.0
 var fall_death_y := 735.0
 
 func _ready() -> void:
+ glide_remaining = glide_duration
  collision_layer = 1
  collision_mask = 1
  var collision := CollisionShape2D.new()
@@ -77,6 +111,65 @@ func _ready() -> void:
  camera.position_smoothing_speed = 6.5
  add_child(camera)
  _setup_visual()
+ movement_fx = preload("res://scripts/movement_fx.gd").new()
+ add_child(movement_fx)
+ dash_audio = AudioStreamPlayer.new()
+ dash_audio.bus = "SFX" if AudioServer.get_bus_index("SFX") >= 0 else "Master"
+ dash_audio.stream = dash_sound if dash_sound != null else load("res://assets/audio/sfx/dash_placeholder.wav")
+ dash_audio.volume_db = -12.0
+ add_child(dash_audio)
+
+func _input(event: InputEvent) -> void:
+ handle_movement_input(event)
+
+func handle_movement_input(event: InputEvent) -> void:
+ # Events, including touch InputEventAction, distinguish taps from a held key.
+ if not controls_enabled or health <= 0 or event.is_echo(): return
+ if event.is_action_pressed("jump"): jump_press_pending = true
+ if event.is_action_released("jump"): glide_requested = false
+ if event.is_action_pressed("dash"): dash_press_pending = true
+
+func _reset_air_abilities() -> void:
+ air_dash_used = false
+ glide_remaining = glide_duration
+ glide_requested = false
+ gliding = false
+ jumped_this_airtime = false
+ second_tap_used = false
+ jump_tap_timer = 0.0
+
+func _cancel_mobility() -> void:
+ dash_timer = 0.0
+ dash_visual_timer = 0.0
+ glide_release_timer = 0.0
+ gliding = false
+ glide_requested = false
+ buffered_attack = 0.0
+ jump_press_pending = false
+ dash_press_pending = false
+
+func _try_dash() -> void:
+ if dash_timer > 0 or dash_cooldown_timer > 0 or attack_visual_timer > 0 or (not is_on_floor() and air_dash_used): return
+ dash_direction = facing
+ dash_timer = dash_duration
+ dash_elapsed = 0.0
+ dash_visual_timer = DASH_VISUAL_DURATION
+ dash_cooldown_timer = dash_cooldown
+ if not is_on_floor(): air_dash_used = true
+ gliding = false
+ movement_fx.start_dash(is_on_floor())
+ dash_audio.play()
+
+func _begin_attack() -> void:
+ hammer_timer = ATTACK_COOLDOWN
+ attack_active = ATTACK_ACTIVE_TIME
+ _hammer_hit_sent = false
+ attack_visual_timer = ATTACK_VISUAL_DURATION
+ attack_facing = facing
+ if is_instance_valid(attack_sprite):
+  attack_sprite.stop()
+  attack_sprite.play("attack")
+  attack_sprite.pause()
 
 func _setup_visual() -> void:
  animated_sprite = preload("res://scripts/sprite_atlas.gd").create("res://assets/production/v2/bunny.png", {
@@ -110,6 +203,26 @@ func _setup_visual() -> void:
  if stomp_sprite != null:
   stomp_sprite.visible = false
   add_child(stomp_sprite)
+ mobility_sprite = preload("res://scripts/sprite_atlas.gd").create("res://assets/production/v3/bunny_dash_12.png", {
+  "idle": [0], "dash": range(12)
+ }, Vector2(74,60), 21.0, false, Vector2i(4,3))
+ if mobility_sprite != null:
+  var glide := preload("res://scripts/sprite_atlas.gd").create("res://assets/production/v3/bunny_glide_12.png", {
+   "idle": [0], "glide": range(12)
+  }, Vector2(82,76), 21.0, false, Vector2i(4,3))
+  if glide != null:
+   # Copy frames; both sheets use the same cell dimensions. Per-animation
+   # scale/position below preserves the helper's alpha-bound calibration.
+   mobility_sprite.sprite_frames.add_animation("glide")
+   for index in range(12):
+    mobility_sprite.sprite_frames.add_frame("glide",glide.sprite_frames.get_frame_texture("glide",index))
+   mobility_sprite.set_meta("glide_scale",glide.scale)
+   mobility_sprite.set_meta("glide_position",glide.position)
+   glide.free()
+  mobility_sprite.set_meta("dash_scale",mobility_sprite.scale)
+  mobility_sprite.set_meta("dash_position",mobility_sprite.position)
+  mobility_sprite.visible = false
+  add_child(mobility_sprite)
 
 func _update_animation(axis: float) -> void:
  if not _visual_ready: return
@@ -144,6 +257,32 @@ func _update_animation(axis: float) -> void:
    stomp_sprite.pause()
    stomp_sprite.frame = mini(7, int((STOMP_VISUAL_DURATION-stomp_visual_timer)*8.0/STOMP_VISUAL_DURATION))
    stomp_sprite.flip_h = facing < 0
+ if is_instance_valid(mobility_sprite):
+  var show_dash := dash_visual_timer > 0.0
+  var show_glide := gliding or glide_release_timer > 0.0
+  mobility_sprite.visible = health > 0 and invincible_timer <= 0 and attack_visual_timer <= 0 and stomp_visual_timer <= 0 and (show_dash or show_glide)
+  if mobility_sprite.visible:
+   var action := "dash" if show_dash else "glide"
+   mobility_sprite.animation = action
+   mobility_sprite.pause()
+   mobility_sprite.scale = mobility_sprite.get_meta(action+"_scale")
+   mobility_sprite.position = mobility_sprite.get_meta(action+"_position")
+   mobility_sprite.flip_h = (dash_direction if show_dash else facing) < 0
+   if show_dash:
+    mobility_sprite.frame = mini(11,int((DASH_VISUAL_DURATION-dash_visual_timer)*12.0/DASH_VISUAL_DURATION))
+   elif gliding:
+    mobility_sprite.frame = mini(2,int(glide_visual_elapsed/0.04)) if glide_visual_elapsed < 0.12 else 3+int((glide_visual_elapsed-0.12)/0.06)%6
+   else:
+    mobility_sprite.frame = mini(11,9+int((0.12-glide_release_timer)/0.04))
+   animated_sprite.visible = false
+
+func _tick_mobility_visual(delta: float, was_gliding: bool) -> void:
+ dash_visual_timer = maxf(0.0,dash_visual_timer-delta)
+ glide_release_timer = maxf(0.0,glide_release_timer-delta)
+ if gliding:
+  glide_visual_elapsed = glide_visual_elapsed+delta if was_gliding else 0.0
+ elif was_gliding and dash_timer <= 0:
+  glide_release_timer = 0.12
 
 func _physics_process(delta: float) -> void:
  if health <= 0:
@@ -155,6 +294,7 @@ func _physics_process(delta: float) -> void:
   if _visual_ready: animated_sprite.visible = false
   if is_instance_valid(attack_sprite): attack_sprite.visible = false
   if is_instance_valid(stomp_sprite): stomp_sprite.visible = false
+  if is_instance_valid(mobility_sprite): mobility_sprite.visible = false
   if is_instance_valid(death_sprite):
    death_sprite.visible = true
    death_sprite.flip_h = facing < 0
@@ -163,6 +303,11 @@ func _physics_process(delta: float) -> void:
    death_sprite.frame = mini(7, int(death_elapsed * 8.0 / DEATH_VISUAL_DURATION))
   return
  if not controls_enabled:
+  # Pause freezes budgets, but queued button presses must never leak into resume.
+  jump_press_pending = false
+  dash_press_pending = false
+  buffered_attack = 0.0
+  if not Input.is_action_pressed("jump"): glide_requested = false
   velocity = Vector2.ZERO
   if is_instance_valid(attack_sprite): attack_sprite.speed_scale = 0
   if _visual_ready and health <= 0: _update_animation(0)
@@ -175,57 +320,86 @@ func _physics_process(delta: float) -> void:
  invincible_timer = maxf(0.0, invincible_timer - delta)
  hammer_timer = maxf(0.0, hammer_timer - delta)
  attack_active = maxf(0.0, attack_active - delta)
+ dash_cooldown_timer = maxf(0.0, dash_cooldown_timer-delta)
+ buffered_attack = maxf(0.0, buffered_attack-delta)
+ jump_tap_timer = maxf(0.0, jump_tap_timer-delta)
  if is_on_floor():
   coyote_timer = COYOTE_TIME
+  if not _was_on_floor and _landed_on_ground(): _reset_air_abilities()
  else:
   coyote_timer = maxf(0.0, coyote_timer - delta)
- if Input.is_action_just_pressed("jump"):
-  jump_buffer = JUMP_BUFFER_TIME
+ if jump_press_pending or Input.is_action_just_pressed("jump"):
+  if jump_press_pending and jumped_this_airtime and not is_on_floor() and not second_tap_used and jump_tap_timer > 0.0:
+   second_tap_used = true
+   glide_requested = Input.is_action_pressed("jump")
+  else:
+   jump_buffer = JUMP_BUFFER_TIME
+ jump_press_pending = false
  jump_buffer = maxf(0.0, jump_buffer - delta)
  var axis := Input.get_axis("move_left", "move_right")
- if absf(axis) > 0.01:
+ var was_gliding := gliding
+ if dash_press_pending or Input.is_action_just_pressed("dash"): _try_dash()
+ dash_press_pending = false
+ var dashing := dash_timer > 0.0
+ if dashing:
+  velocity.x = dash_direction * dash_speed
+ elif absf(axis) > 0.01:
   facing = 1 if axis > 0 else -1
   velocity.x = move_toward(velocity.x, axis * SPEED, ACCELERATION * delta)
  else:
   velocity.x = move_toward(velocity.x, 0.0, FRICTION * delta)
  if jump_buffer > 0 and coyote_timer > 0:
   velocity.y = JUMP_SPEED
+  jumped_this_airtime = true
+  second_tap_used = false
+  jump_tap_timer = glide_double_tap_window
   jump_buffer = 0.0
   coyote_timer = 0.0
  velocity.y += GRAVITY * delta
+ gliding = not dashing and not is_on_floor() and velocity.y >= 0.0 and glide_requested and Input.is_action_pressed("jump") and glide_remaining > 0.0
+ if gliding:
+  # Never boost upward; only cap downward speed, spending one budget per airtime.
+  velocity.y = minf(velocity.y, glide_fall_speed)
+  glide_remaining = maxf(0.0, glide_remaining-delta)
  if Input.is_action_just_released("jump") and velocity.y < MIN_RELEASE_JUMP_SPEED:
   velocity.y = MIN_RELEASE_JUMP_SPEED
  var was_grounded := is_on_floor()
  var fall_speed := velocity.y
  var previous_bottom := global_position.y + 21.0
  move_and_slide()
- var did_stomp := _resolve_stomp(previous_bottom, fall_speed)
+ if dashing:
+  dash_timer = maxf(0.0, dash_timer-delta)
+  dash_elapsed += delta
+  if is_on_wall(): dash_timer = 0.0
+  # A ground dash leaving a ledge consumes the same aerial charge.
+  if not is_on_floor(): air_dash_used = true
+ if is_on_floor() and not was_grounded and _landed_on_ground(): _reset_air_abilities()
+ # Dash itself never deals damage, including incidental top contacts.
+ var did_stomp := false if dashing else _resolve_stomp(previous_bottom, fall_speed)
  if not did_stomp and not was_grounded and is_on_floor() and ground_bounce_pending and _landed_on_ground():
   ground_bounce_pending = false
   ground_bounce_count += 1
   velocity.y = STOMP_GROUND_BOUNCE
  _was_on_floor = is_on_floor()
- if Input.is_action_just_pressed("attack") and hammer_timer <= 0:
-  hammer_timer = ATTACK_COOLDOWN
-  attack_active = ATTACK_ACTIVE_TIME
-  _hammer_hit_sent = false
-  attack_visual_timer = ATTACK_VISUAL_DURATION
-  attack_facing = facing
-  if is_instance_valid(attack_sprite):
-   attack_sprite.stop()
-   attack_sprite.play("attack")
-   # Drive all twelve frames with the visual clock, independent of render FPS.
-   attack_sprite.pause()
+ if Input.is_action_just_pressed("attack"):
+  if dashing:
+   buffered_attack = dash_attack_buffer_time
+  elif hammer_timer <= 0:
+   _begin_attack()
+ if dash_timer <= 0 and buffered_attack > 0 and hammer_timer <= 0:
+  buffered_attack = 0.0
+  _begin_attack()
  if attack_active > 0 and not _hammer_hit_sent:
   _hammer_hit_sent = true
   hammer_used.emit(get_hammer_hitbox())
- if Input.is_action_just_pressed("craft"):
+ if Input.is_action_just_pressed("craft") and not dashing:
   box_requested.emit()
  if global_position.y > pit_warning_y and velocity.y > 0 and not is_on_floor() and not pit_announced:
   pit_announced = true
   pit_falling.emit()
  if global_position.y > fall_death_y:
   _die("pit")
+ _tick_mobility_visual(delta,was_gliding)
  _update_animation(axis)
  queue_redraw()
 
@@ -237,6 +411,7 @@ func take_damage(amount: int = 1, from_x: float = 0.0) -> void:
  if health <= 0 or invincible_timer > 0.0 or stomp_contact_grace > 0 or not controls_enabled:
   return
  health = maxi(0, health - amount)
+ _cancel_mobility()
  invincible_timer = INVULNERABILITY
  velocity.x = 215.0 if global_position.x >= from_x else -215.0
  velocity.y = -190.0
@@ -250,6 +425,7 @@ func _die(cause: String) -> void:
  controls_enabled = false
  death_cause = cause
  death_elapsed = 0
+ _cancel_mobility()
  attack_visual_timer = 0
  health_changed.emit(health)
  died.emit()

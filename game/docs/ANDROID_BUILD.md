@@ -2,18 +2,20 @@
 
 Build atualizado em 2026-11-13 com Godot 4.7.2.
 
-- Arquivo: builds/CraftBunny-Android-0.4.1.apk (também disponível como CraftBunny-Android-Test.apk).
+- Arquivo: builds/CraftBunny-Android-0.4.2.apk (também disponível como CraftBunny-Android-Test.apk).
 - Pacote: com.craftbunny.game
-- Versão: 0.4.1-android-test (código 9), fase de 24.000 px em três alturas e teto de 200 cenouras; preservados analógico e envio automático. Contrato global permanece 0.4.0, sem nova migração nesta atualização.
+- Versão: 0.4.2-android-test (código 10), Dash e planar com lenço; fase de 24.000 px e teto 200. Contrato global permanece 0.4.0, sem nova migração nesta atualização.
 - Mínimo: Android API 24 (Android 7.0), aparelho com OpenGL ES 3 compatível com o renderer Compatibility.
 - Target SDK: 36.
 - Arquiteturas: arm64-v8a e armeabi-v7a.
 - Orientação: paisagem, conteúdo 960x540 com proporção preservada.
-- Tamanho: 81.064.303 bytes.
-- SHA256: 3BBD3A9B0E1A529796024EB65B6777069D53859330D698B4A7449396FB89221E
+- Tamanho: 83.096.748 bytes.
+- SHA256: 6A645E2388778C5F7172A04C4BB0AE11A696F53122DF64E85BA24616702CEA5C
 - Assinatura de depuração verificada: esquemas v2 e v3.
 
 ## Instalar
+
+Atualização 0.4.2: novo botão DASH e segundo toque/segurar PULO para planar. Duas artes de 12 quadros. Mesmo certificado da 0.4.1 confirmado; instalar por cima. Manifesto ARM32/64, código 10, INTERNET e assinatura conferidos. Playtest físico pendente. Arquivo local exportado; a versão selecionada para download no site não foi alterada nesta etapa. Guia: ../../docs/MOVEMENT_ABILITIES_042.md.
 
 Atualização 0.4.1: extensão horizontal reduzida pela metade, mantendo itens, inimigos, alturas e caixas obrigatórias. Mesmo certificado da 0.4.0 confirmado. APK privado enviado; seleção do download na Vercel e testes em ../../docs/COMPACT_LEVEL_041.md. Notas seguintes são históricas.
 

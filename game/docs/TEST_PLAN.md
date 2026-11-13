@@ -11,6 +11,9 @@ Registrar cada cenário como **Passou / Falhou / Não executado** e passos de re
 - [ ] T06 — Entrar na casa do coelhinho encerra a fase e apresenta resultado.
 
 ## Movimentação
+- [ ] T46 — Dash I no chão/ar: uma carga por salto, cooldown, bloqueio em paredes, sem dano/invulnerabilidade, buffer do martelo e construção normal depois. Coberto por tools/test_mobility.gd; playtest humano pendente.
+- [ ] T47 — Duplo toque de pulo em 0,35 s: primeiro só salta, segundo aguarda descida, segurar plana, soltar cancela, limite 1 s, Dash suspende/retoma sem recarga aérea. Automatizado; playtest humano pendente.
+- [ ] T48 — Artes de 12 quadros, lenço, poeira, rastro e som de Dash: capturas OpenGL revisadas em câmera lenta; validar fluidez em velocidade normal, escuta e multitoque em aparelho físico.
 - [ ] T07 — Direção, aceleração e desaceleração funcionam nos dois sentidos.
 - [ ] T08 — Pulo tem altura próxima ao corpo do coelho no sprite final; pouso sem atravessar chão.
 - [ ] T09 — Coyote time: pular dentro de 0,12 s após sair da borda.

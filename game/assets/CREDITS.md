@@ -30,6 +30,8 @@ Personagens v2: imagens novas geradas pela ferramenta integrada de geração de 
 
 Registrar URL de origem, nome, autor, licença e data de aquisição para cada asset importado.
 
+Habilidades 2026-11-13: `production/v3/bunny_dash_12.png` e `bunny_glide_12.png`, gerados com a ferramenta integrada imagegen a partir da identidade de `production/v2/bunny.png`, sem alterar a referência. Prompts e integração em `production/v3/movement_animations.md`. `audio/sfx/dash_placeholder.wav`: sopro sintético original de 0,13 s criado para este projeto (ruído filtrado determinístico e envelope suave), sem amostra externa, substituível via `dash_sound` no jogador.
+
 ## Áudio fornecido pelo usuário
 
 Arquivos recebidos na pasta `music/` em 2026-11-06:

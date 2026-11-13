@@ -38,8 +38,8 @@ func _run() -> void:
  await process_frame
  game = create_game()
  await physics_frame
- # Place player above the first real gap to exercise the actual fall signal.
- game.player.position = Vector2(980,530)
+ # Current three-height level: trigger the real lower kill-plane path.
+ game.player.position = Vector2(480,game.player.pit_warning_y+5)
  game.player.velocity = Vector2.ZERO
  for tick in range(3): await physics_frame
  check(game.pit_audio_started and game.scream_player.playing, "fall triggers funny scream")

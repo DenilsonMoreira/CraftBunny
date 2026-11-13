@@ -122,7 +122,7 @@ func _create_audio_player(player_name: String, stream: AudioStream, bus_name: St
 	return player_node
 
 func _setup_inputs() -> void:
-	var bindings := {"move_left": [KEY_A,KEY_LEFT],"move_right":[KEY_D,KEY_RIGHT],"jump":[KEY_SPACE,KEY_W,KEY_UP],"attack":[KEY_J],"craft":[KEY_K],"pause_game":[KEY_ESCAPE,KEY_P]}
+	var bindings := {"move_left": [KEY_A,KEY_LEFT],"move_right":[KEY_D,KEY_RIGHT],"jump":[KEY_SPACE,KEY_W,KEY_UP],"dash":[KEY_I],"attack":[KEY_J],"craft":[KEY_K],"pause_game":[KEY_ESCAPE,KEY_P]}
 	for action in bindings.keys():
 		if not InputMap.has_action(action): InputMap.add_action(action)
 		for key in bindings[action]:
@@ -438,7 +438,7 @@ func _create_hud() -> void:
 	info.add_theme_constant_override("outline_size",4)
 	hud.add_child(info)
 	var instructions := Label.new()
-	instructions.text = "A/D ou ←/→ mover  ·  Espaço pular  ·  J martelo  ·  K caixa  ·  ESC opções  ·  R reiniciar"
+	instructions.text = "A/D mover · Espaço pulo / 2 toques planar · I dash · J martelo · K caixa · ESC opções"
 	instructions.position = Vector2(20,504)
 	instructions.add_theme_color_override("font_color",Color("ffffff"))
 	instructions.add_theme_color_override("font_outline_color",Color("30251f"))
@@ -650,12 +650,12 @@ func _show_controls() -> void:
 	if is_instance_valid(mobile_controls):
 		var content := _create_overlay("CONTROLES DE TOQUE")
 		var help := Label.new()
-		help.text = "ESQ / DIR: andar\nPULO: saltar\nGOLPE: martelo\nCAIXA: construir (3 tábuas)\nII: pausar e retomar\n\nUse dois dedos para andar e agir juntos."
+		help.text = "ANALÓGICO: andar\nPULO: saltar; toque novamente e segure para planar\nDASH: arrancada\nGOLPE: martelo\nCAIXA: construir (3 tábuas)\nII: pausar e retomar\n\nUse vários dedos para combinar as ações."
 		content.add_child(help)
 		_button(content,"VOLTAR",_show_settings)
 		return
 	var content := _create_overlay("CONTROLES")
-	var keys := {"move_left":"Mover esquerda","move_right":"Mover direita","jump":"Pular","attack":"Martelar","craft":"Construir","pause_game":"Pausar"}
+	var keys := {"move_left":"Mover esquerda","move_right":"Mover direita","jump":"Pular / planar (2 toques)","dash":"Dash","attack":"Martelar","craft":"Construir","pause_game":"Pausar"}
 	for action in keys:
 		var control_button := Button.new()
 		control_button.custom_minimum_size.y = 40
@@ -689,7 +689,7 @@ func _apply_binding(event: InputEventKey) -> void:
 
 func _save_controls() -> void:
 	var cfg := ConfigFile.new()
-	for action in ["move_left","move_right","jump","attack","craft","pause_game"]:
+	for action in ["move_left","move_right","jump","dash","attack","craft","pause_game"]:
 		var events := InputMap.action_get_events(action)
 		if events.size()>0 and events[0] is InputEventKey:
 			cfg.set_value("keys",action,events[0].physical_keycode)
@@ -698,7 +698,7 @@ func _save_controls() -> void:
 func _load_controls() -> void:
 	var cfg := ConfigFile.new()
 	if cfg.load(controls_file)!=OK: return
-	for action in ["move_left","move_right","jump","attack","craft","pause_game"]:
+	for action in ["move_left","move_right","jump","dash","attack","craft","pause_game"]:
 		if not cfg.has_section_key("keys",action): continue
 		var raw: Variant = cfg.get_value("keys",action)
 		if typeof(raw) != TYPE_INT: continue

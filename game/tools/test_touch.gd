@@ -80,6 +80,23 @@ func _run() -> void:
  for tick in range(8): await physics_frame
  check(game.player.position.x > initial.x and game.player.position.y < initial.y,"touch actions move and jump the character")
  controller.release_all()
+ game.player.position = Vector2(100,414)
+ game.player.velocity = Vector2.ZERO
+ for tick in range(45): await physics_frame
+ touch(controller,20,Vector2(885,430),true)
+ for tick in range(2): await physics_frame
+ touch(controller,20,Vector2(885,430),false)
+ for tick in range(2): await physics_frame
+ touch(controller,20,Vector2(885,430),true)
+ for tick in range(1): await physics_frame
+ check(game.player.glide_requested and not game.player.gliding,"touch second jump queues glide during ascent")
+ for tick in range(19): await physics_frame
+ check(game.player.gliding and game.player.velocity.y <= 70,"touch holding second tap glides during descent")
+ touch(controller,21,Vector2(780,380),true)
+ for tick in range(2): await physics_frame
+ check(game.player.dash_timer > 0 and not game.player.gliding,"touch dash combines with held glide")
+ controller.release_all()
+ check(not Input.is_action_pressed("dash") and not game.player.glide_requested,"touch release clears dash and glide inputs")
  game.music_player.play()
  game._notification(game.NOTIFICATION_APPLICATION_FOCUS_OUT)
  check(game.pause_open and game.music_player.stream_paused,"background pauses gameplay and music")
