@@ -109,7 +109,7 @@ func _run() -> void:
   await ticks(1)
   check(game.status_hud.equipped_tool==expected and p.switch_audio.stream.resource_path.ends_with("item-switch.mp3"),"HUD and supplied switch sound match tool")
   await ticks(16)
- check(p.tool_visual.available_animations.size()==32,"four tools expose eight named animation states each")
+ check(p.tool_visual.available_animations.size()==33,"four tools expose eight states plus dedicated slingshot aim")
  var template := load("res://assets/production/tools/tool_frames_template.tres") as SpriteFrames
  check(template.get_animation_names().size()==32,"editable SpriteFrames template contains all named slots")
  var custom_frames := template.duplicate() as SpriteFrames

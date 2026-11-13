@@ -2,6 +2,7 @@
 extends StaticBody2D
 const TOOLS = preload("res://scripts/tool_catalog.gd")
 const ICONS = preload("res://scripts/tool_icons.gd")
+const ART = preload("res://scripts/world_art.gd")
 @export_enum("tree","rock") var kind := "tree":
  set(value):
   kind = value
@@ -98,15 +99,24 @@ func _activate_bridge() -> void:
 func _draw() -> void:
  if kind=="tree":
   var t := clampf(animation_time/.65,0,1) if falling else (1.0 if bridge_ready else 0.0)
-  draw_set_transform(Vector2(-80*t,12*t),t*PI/2)
-  draw_rect(Rect2(-12,-bridge_length,24,bridge_length),Color("533625"))
-  draw_rect(Rect2(-8,-bridge_length,16,bridge_length),Color("986032"))
-  for index in range(ceili(bridge_length/32)):
-   draw_rect(Rect2(-5,-index*32-20,3,14),Color("bd8445"))
-  if t < .99:
-   var tree := preload("res://scripts/prop_art.gd").texture("tree")
-   draw_texture_rect(tree,Rect2(-160,-bridge_length-100,320,360),false)
-  draw_set_transform(Vector2.ZERO)
+  if t<.99:
+   draw_texture_rect(ART.texture("tree",4),Rect2(-32,-48,64,48),false)
+   draw_set_transform(Vector2(-80*t,12*t),t*PI/2)
+   var bark := ART.texture("tree",1)
+   for index in range(ceili(bridge_length/64)):
+    var height := minf(64,bridge_length-index*64)
+    draw_texture_rect_region(bark,Rect2(-16,-bridge_length+index*64,32,height),Rect2(Vector2.ZERO,Vector2(bark.get_width(),bark.get_height()*height/64)))
+   draw_texture_rect(ART.texture("tree",0),Rect2(-170,-bridge_length-120,340,290),false)
+   draw_set_transform(Vector2.ZERO)
+  else:
+   var middle := ART.texture("tree",2)
+   for index in range(ceili((bridge_length-80)/64)):
+    var width := minf(64,bridge_length-80-index*64)
+    draw_texture_rect_region(middle,Rect2(-40+index*64,0,width,24),Rect2(Vector2.ZERO,Vector2(middle.get_width()*width/64,middle.get_height())))
+   draw_texture_rect(ART.texture("tree",5),Rect2(-80,0,40,24),false)
+   draw_texture_rect(ART.texture("tree",6),Rect2(bridge_length-120,0,40,24),false)
+   draw_texture_rect(ART.texture("tree",3),Rect2(-16,-12,32,12),false)
+   draw_texture_rect(ART.texture("tree",7),Rect2(bridge_length-145,-9,65,21),false)
   if not bridge_ready and not falling:
    draw_rect(Rect2(-19,-67,38,34),Color("eee0ac"))
    ICONS.draw_icon(self,"axe",Vector2(0,-49),.75)
@@ -114,13 +124,11 @@ func _draw() -> void:
  else:
   if broken:
    if animation_time < .5:
+    draw_texture_rect(ART.texture("rock",3),Rect2(0,-28,rock_size.x,28),false,Color(1,1,1,1-animation_time))
     for index in range(7):
      var offset := Vector2(index*9, -20-animation_time*80+animation_time*animation_time*200)
      draw_rect(Rect2(offset,Vector2(7,7)),Color(.6,.59,.52,1-animation_time*2))
    return
   var box := Rect2(Vector2(0,-rock_size.y),rock_size)
-  draw_rect(box,Color("454b4a"))
-  draw_rect(box.grow(-4),Color("929b8a") if flash<=0 else Color("e4d7ad"))
-  for index in range(hits_required-hp):
-   draw_polyline(PackedVector2Array([Vector2(rock_size.x*.5,-rock_size.y),Vector2(12+index*9,-rock_size.y*.65),Vector2(36,-rock_size.y*.4),Vector2(20+index*11,0)]),Color("353f3c"),3)
+  draw_texture_rect(ART.texture("rock",clampi(hits_required-hp,0,2)),box,false,Color.WHITE if flash<=0 else Color(1.25,1.15,1))
   ICONS.draw_icon(self,"pickaxe",Vector2(rock_size.x*.5,-rock_size.y*.5),.9)

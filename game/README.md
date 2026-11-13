@@ -1,6 +1,6 @@
 # Craft Bunny 🐰🔨 — Godot 4
 
-> **Status:** protótipo v0.5.0 com quatro ferramentas, projétil/mira, árvores-ponte, rochas quebráveis e botões touch circulares. Artes novas de ferramentas/personagem são provisórias; percurso completo e Android físico pendentes de playtest. **Objetivo:** concluir uma versão 1.0 jogável de **uma única fase**. **Engine validada:** Godot 4.7.2 / GDScript / 2D.
+> **Status:** protótipo v0.5.1 com quatro ferramentas, projétil/mira, árvores-ponte, rochas quebráveis e botões touch circulares. Artes de ferramentas/personagem e obstáculos integradas em production/v4; percurso completo e Android físico pendentes de playtest. **Objetivo:** concluir uma versão 1.0 jogável de **uma única fase**. **Engine validada:** Godot 4.7.2 / GDScript / 2D.
 
 ## O jogo
 
@@ -10,11 +10,11 @@
 
 ## Iniciar e testar
 
-**Fase atual 0.5.0:** `scenes/level_wide/fase_ferramentas.tscn`, editável na área 2D, com floresta, copa e subsolo. 140 cenouras no mapa + 60 de inimigos = 200 antes de gastar munição. Dois buracos exigem árvores derrubadas com machado; duas passagens com cenouras visíveis exigem picareta. Quatro desníveis da escada continuam exigindo caixas; aves pousam por 0,5 s após atacar. Guia em `../docs/TOOLS_050.md`. Cenas anteriores e exemplo inicial preservados.
+**Fase atual 0.5.1:** `scenes/level_wide/fase_ferramentas.tscn`, editável na área 2D, com floresta, copa e subsolo. 140 cenouras no mapa + 60 de inimigos = 200 antes de gastar munição. Dois buracos exigem árvores derrubadas com machado; duas passagens com cenouras visíveis exigem picareta. Quatro desníveis da escada continuam exigindo caixas; aves pousam por 0,5 s após atacar. Guia em `../docs/TOOLS_050.md`. Cenas anteriores e exemplo inicial preservados.
 
 **Aprender a editar a fase visualmente:** abra `scenes/editor_example/fase_exemplo.tscn` e pressione **F6**. Contém terra pintável com colisão, início do coelho e uma cobra arrastáveis. F5 continua no jogo principal. Guia passo a passo em `docs/EDITABLE_EXAMPLE.md`.
 
-Windows atual: `builds/windows-0.5.0/CraftBunny-0.5.0.exe`. Abrir a pasta antiga não atualiza o jogo de PC. Histórico em `docs/WINDOWS_BUILD.md`; atualização em `../docs/TOOLS_050.md`.
+Windows atual: `builds/windows-0.5.1/CraftBunny-0.5.1.exe`. Abrir a pasta antiga não atualiza o jogo de PC. Histórico em `docs/WINDOWS_BUILD.md`; atualização em `../docs/TOOLS_050.md`.
 
 RECORDES → ZERAR RANKING LOCAL pede confirmação antes de apagar os recordes deste aparelho. Cancelar preserva os dados; a ação não afeta o ranking global. Detalhes em ../docs/LOCAL_RESET_AND_RANKING_LAYOUT.md.
 
@@ -163,3 +163,7 @@ Um jogador consegue iniciar no título, percorrer toda a fase, controlar o coelh
 ## Arte incluída no pacote
 
 As referências de sprites do coelho, inimigos, coletáveis, HUD, tela de título, terreno e folhagens estão em `assets/references/`. Leia `assets/references/README.md` antes de convertê-las em spritesheets técnicos; as folhas atuais não são atlas prontos para importação automática.
+
+## Artes 0.5.1
+
+Onze folhas de 12 quadros, quatro ferramentas, kit de árvore e quatro estados de rocha. Corpo modular em idle/run/jump/fall/dash/glide/switch; ataques próprios de machado/picareta/estilingue e mira. Martelo, morte e pisão anteriores preservados. Parâmetros de movimento, danos, hitboxes, inventário e ranking preservados. Fontes e prompts: assets/production/v4/README.md; testes e limites: ../docs/ART_051.md.

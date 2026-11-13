@@ -29,3 +29,7 @@
 - Eventos prioritários: pulo, aterrissagem, martelo, golpe recebido, ataque inimigo, morte, coletar cenoura, coletar madeira, curar, construir caixa, caixa quebrar, finalizar fase, navegar em menus.
 - Conectar faixas ao bus `Music` e efeitos ao bus `SFX`; suportar controle master e preferências persistentes.
 - Registrar origem, licença e nome de cada download em `assets/CREDITS.md` antes de publicar.
+
+## Pacote v4 / 0.5.1
+
+Artes de ferramentas e obstáculos substituem o desenho provisório do lançamento 0.5.0. Onze folhas de 12 quadros, quatro equipamentos e kits ambientais. Atlas, pivôs, composição e prompts em ../assets/production/v4/README.md; validação em ../../docs/ART_051.md. Referências e assets anteriores preservados.

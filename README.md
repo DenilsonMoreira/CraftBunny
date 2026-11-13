@@ -11,13 +11,13 @@ Jogo de plataforma 2D em Godot e estrutura para seu futuro ranking global.
 | supabase/ | Migração SQL e instruções de configuração do banco |
 | docs/ | Decisões de integração e validação do repositório |
 
-O jogo 0.5.0 adiciona quatro ferramentas (I troca, J ação/mira), Dash em L, árvores-ponte, rochas quebráveis e Android com analógico/círculos com ícones. Fase editável de 24.000 px e orçamento 140+60=200 cenouras; estilingue gasta uma por disparo e ranking usa saldo restante. Novas poses/ferramentas possuem arte técnica provisória e template para SpriteFrames finais. Salva TOP 10 local e envia resultados elegíveis ao global. Site/API em https://craftbunny-web.vercel.app. Relatório em docs/TOOLS_050.md; contrato/migração 0.4.0 preservados.
+O jogo 0.5.1 inclui quatro ferramentas (I troca, J ação/mira), Dash em L, árvores-ponte, rochas quebráveis e Android com analógico/círculos com ícones. Fase editável de 24.000 px e orçamento 140+60=200 cenouras; estilingue gasta uma por disparo e ranking usa saldo restante. Artes novas integradas: 132 poses do coelho, ferramentas modulares, árvores-ponte e rochas com rachaduras. Relatório visual em docs/ART_051.md. Salva TOP 10 local e envia resultados elegíveis ao global. Site/API em https://craftbunny-web.vercel.app. Relatório em docs/TOOLS_050.md; contrato/migração 0.4.0 preservados.
 
 ## Abrir o jogo
 
 Exemplo para aprender edição visual na Godot: `game/scenes/editor_example/fase_exemplo.tscn`. Terreno TileMap pintável, posição inicial do coelho e cobra arrastáveis; executar com F6. Guia em `game/docs/EDITABLE_EXAMPLE.md`. A fase principal permanece separada.
 
-Windows 0.5.0: execute `game/builds/windows-0.5.0/CraftBunny-0.5.0.exe`. APK: `game/builds/CraftBunny-Android-0.5.0.apk`. Binários não são versionados. Somente as duas versões locais mais recentes são mantidas; fontes e histórico Git permanecem. Use o projeto atual do repositório; a pasta anterior não recebe atualizações automaticamente. Cena editável: `game/scenes/level_wide/fase_ferramentas.tscn`. Guia em `docs/TOOLS_050.md`.
+Windows 0.5.1: execute `game/builds/windows-0.5.1/CraftBunny-0.5.1.exe`. APK: `game/builds/CraftBunny-Android-0.5.1.apk`. Binários não são versionados. Somente as duas versões locais mais recentes são mantidas; fontes e histórico Git permanecem. Use o projeto atual do repositório; a pasta anterior não recebe atualizações automaticamente. Cena editável: `game/scenes/level_wide/fase_ferramentas.tscn`. Guia em `docs/TOOLS_050.md`.
 
 Use Godot 4.7.2 para reproduzir a validação atual e importe game/project.godot. A engine não acompanha o repositório. Consulte game/README.md, game/AGENTS.md e game/ROADMAP.md para controles, regras e histórico.
 

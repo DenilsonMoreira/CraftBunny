@@ -9,7 +9,9 @@ func ticks(count: int) -> void:
   await process_frame
 func capture(label: String) -> void:
  await RenderingServer.frame_post_draw
- var path := ProjectSettings.globalize_path("res://../docs/qa_tools_"+label+".png")
+ var prefix := "qa_art_" if "--art" in OS.get_cmdline_user_args() else "qa_tools_"
+ var suffix := "_051" if "--art" in OS.get_cmdline_user_args() else ""
+ var path := ProjectSettings.globalize_path("res://../docs/"+prefix+label+suffix+".png")
  if root.get_texture().get_image().save_png(path)!=OK: failures += 1
 func _run() -> void:
  game = load("res://main.tscn").instantiate()

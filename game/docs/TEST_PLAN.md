@@ -79,3 +79,9 @@ Casos aprovados:
 Falhas e reprodução:
 Próximo ajuste:
 ```
+
+## Arte 0.5.1 — execução 2026-11-13
+
+Executado test_art.gd -- --capture: 494 checks aprovados. test_mobility_visual.gd -- --art confirmou 12 frames de Dash e 12 de planar. Regressões executadas: ferramentas 68, desafios 15, touch 25, mobilidade 40, fase 32, caixas 9, ave/martelo 14, pisão 24, fluxo 16, ranking automático offline 22, enquadramento 40, morte 10; ataque PASS. Importação/smoke sem parser/runtime. Há avisos antigos de recursos no encerramento de alguns harnesses. Relatório completo e comandos: ../../docs/ART_051.md. Capturas QA novas usam sufixo _051, sem substituir as históricas.
+
+Manual pendente: percurso completo, sensação/fluidez em velocidade normal, encaixe das ferramentas nas mãos, quatro variantes mirando para ambos os lados e ergonomia no Android físico. Conferir que arte nunca mude hitbox/alcance, que golpes continuem únicos e que o lenço não provoque impulso vertical. Nenhuma validação online adicional nesta etapa.

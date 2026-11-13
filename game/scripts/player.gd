@@ -12,6 +12,7 @@ signal sling_released(origin: Vector2, launch_velocity: Vector2)
 
 const TOOLS = preload("res://scripts/tool_catalog.gd")
 var equipped_tool := TOOLS.Type.HAMMER
+var previous_tool := TOOLS.Type.HAMMER
 var attack_tool := TOOLS.Type.HAMMER
 var attack_total := 0.35
 var tool_hit_ids: Dictionary = {}
@@ -141,6 +142,8 @@ func _ready() -> void:
  switch_audio.volume_db = -8
  add_child(switch_audio)
  tool_visual = preload("res://scripts/tool_visual.gd").new()
+ if final_tool_frames==null and FileAccess.file_exists("res://assets/production/v4/tool_frames.tres"):
+  final_tool_frames = load("res://assets/production/v4/tool_frames.tres") as SpriteFrames
  tool_visual.final_frames = final_tool_frames
  add_child(tool_visual)
 
@@ -212,6 +215,7 @@ func request_tool_switch() -> void:
  if attack_visual_timer > 0 or dash_timer > 0:
   queued_switch = true
   return
+ previous_tool = equipped_tool
  equipped_tool = (equipped_tool+1)%TOOLS.NAMES.size()
  switch_remaining = TOOLS.SWITCH_DURATION
  switch_name_timer = 1.2

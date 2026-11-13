@@ -1,9 +1,12 @@
 extends Node2D
-## Modular technical placeholder. Final SpriteFrames use tool/state names.
+## SpriteFrames plus modular raster equipment. Native drawing is fallback only.
 const TOOLS = preload("res://scripts/tool_catalog.gd")
 const ICONS = preload("res://scripts/tool_icons.gd")
 var final_frames: SpriteFrames
 var final_sprite: AnimatedSprite2D
+var gear_sprite: Sprite2D
+var layouts: Dictionary = {}
+var production_art := false
 var animation_key := "hammer/idle"
 var frame := 0
 var clock := 0.0
@@ -14,9 +17,17 @@ var draw_placeholder := false
 func _ready() -> void:
  texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
  if final_frames != null:
+  layouts = final_frames.get_meta("layout",{})
+  production_art = final_frames.get_meta("art_version","")=="v4"
+  if production_art: available_animations = final_frames.get_animation_names()
   final_sprite = AnimatedSprite2D.new()
   final_sprite.sprite_frames = final_frames
+  final_sprite.visible = false
   add_child(final_sprite)
+  gear_sprite = Sprite2D.new()
+  gear_sprite.visible = false
+  gear_sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+  add_child(gear_sprite)
 
 func _physics_process(delta: float) -> void:
  var p = get_parent()
@@ -26,26 +37,39 @@ func _physics_process(delta: float) -> void:
  if p.switch_remaining > 0:
   state = "switch"
   progress = 1.0-p.switch_remaining/TOOLS.SWITCH_DURATION
+ elif p.aiming and p.equipped_tool==TOOLS.Type.SLINGSHOT:
+  state = "aim"
+  progress = minf(1.0,clock/.30)
  elif p.attack_visual_timer > 0:
   state = "attack"
   progress = 1.0-p.attack_visual_timer/p.attack_total
  elif p.dash_visual_timer > 0:
   state = "dash"
   progress = 1.0-p.dash_visual_timer/p.DASH_VISUAL_DURATION
- elif p.gliding:
+ elif p.gliding or p.glide_release_timer>0:
   state = "glide"
- elif not p.is_on_floor(): state = "jump" if p.velocity.y < 0 else "fall"
+ elif not p.is_on_floor():
+  state = "jump" if p.velocity.y < 0 else "fall"
+  progress = minf(1.0,clock/.30)
  elif absf(p.velocity.x)>5:
   state = "run"
   progress = fmod(clock,.6)/.6
  var next_key: String = TOOLS.KEYS[p.equipped_tool]+"/"+state
- if next_key != animation_key and state in ["idle","run","jump","fall","glide"]:
+ if next_key != animation_key and state in ["idle","run","jump","fall","glide","aim"]:
   clock = 0
   progress = 0
  frame = clampi(int(progress*12),0,11)
+ if state=="aim" and clock>=.30: frame = 8+int((clock-.30)/.08)%4
+ if state=="glide":
+  if p.gliding: frame = mini(2,int(p.glide_visual_elapsed/.04)) if p.glide_visual_elapsed<.12 else 3+int((p.glide_visual_elapsed-.12)/.06)%6
+  else: frame = mini(11,9+int((.12-p.glide_release_timer)/.04))
  animation_key = next_key
  var has_final: bool = final_frames != null and final_frames.has_animation(animation_key) and final_frames.get_frame_count(animation_key)>0
+ # Keep shared death/stomp and the approved hammer attack renderer intact.
+ var shared_pose: bool = production_art and ((state=="attack" and p.equipped_tool==TOOLS.Type.HAMMER) or (p.stomp_visual_timer>0 and state not in ["attack","dash","switch"]))
+ if shared_pose: has_final = false
  var custom: bool = (p.equipped_tool != TOOLS.Type.HAMMER or p.switch_remaining > 0 or has_final) and p.health > 0
+ if shared_pose: custom = false
  var blink: bool = p.invincible_timer <= 0 or int(Time.get_ticks_msec()/90)%2 != 0
  draw_placeholder = custom and blink
  if custom:
@@ -59,7 +83,13 @@ func _physics_process(delta: float) -> void:
    final_sprite.pause()
    final_sprite.frame = mini(frame,final_frames.get_frame_count(animation_key)-1)
    final_sprite.flip_h = p.facing < 0
+   if layouts.has(animation_key):
+    final_sprite.scale = layouts[animation_key]["scale"]
+    final_sprite.position = layouts[animation_key]["position"]
    if custom: draw_placeholder = false
+ if is_instance_valid(gear_sprite):
+  gear_sprite.visible = final_sprite.visible and layouts.has(animation_key) and layouts[animation_key].get("layered",false)
+  if gear_sprite.visible: _update_equipment(p,state)
  trajectory_points.clear()
  if p.aiming and p.controls_enabled:
   var origin: Vector2 = p.sling_origin()
@@ -74,6 +104,35 @@ func _physics_process(delta: float) -> void:
    trajectory_points.append((hit["position"] if not hit.is_empty() else point)-p.global_position)
    if not hit.is_empty(): break
  queue_redraw()
+
+func _update_equipment(p: CharacterBody2D, state: String) -> void:
+ var tool: int = p.equipped_tool
+ var socket: Vector2 = layouts[animation_key].get("socket",Vector2(12,7))
+ var angle := .20
+ var opacity := 1.0
+ if state=="dash": angle = .7
+ if state=="glide": angle = -.3
+ if state=="switch":
+  var hands := [Vector2(12,7),Vector2(8,8),Vector2(3,8),Vector2(-6,8),Vector2(-10,9),Vector2(-12,9),Vector2(-10,7),Vector2(-6,6),Vector2(-1,6),Vector2(6,6),Vector2(10,7),Vector2(12,7)]
+  socket = hands[frame]
+  if frame<4:
+   tool = p.previous_tool
+   opacity = 1-float(frame)/4
+  else: opacity = clampf(float(frame-7)/4,0,1)
+ var art = preload("res://scripts/equipment_art.gd")
+ var texture: Texture2D = art.texture(tool)
+ gear_sprite.texture = texture
+ var factor := 26.0/texture.get_height()
+ if state=="glide": factor *= .75
+ var grip: Vector2 = texture.get_size()*art.GRIPS[tool]
+ var offset := (texture.get_size()/2-grip)*factor
+ offset.x *= p.facing
+ angle *= p.facing
+ gear_sprite.position = Vector2(socket.x*p.facing,socket.y)+offset.rotated(angle)
+ gear_sprite.scale = Vector2.ONE*factor
+ gear_sprite.rotation = angle
+ gear_sprite.flip_h = p.facing<0
+ gear_sprite.modulate.a = opacity
 
 func _draw() -> void:
  for index in range(1,trajectory_points.size()):

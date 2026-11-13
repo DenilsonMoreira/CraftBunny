@@ -9,6 +9,7 @@ var tool_ghosts: Array[Dictionary] = []
 
 func _ready() -> void:
  show_behind_parent = true
+ process_physics_priority = 1
 
 func start_dash(grounded: bool) -> void:
  ghost_clock = 0.0
@@ -39,7 +40,9 @@ func _physics_process(delta: float) -> void:
   if ghost_clock <= 0.0:
    ghost_clock = 0.05
    var source: AnimatedSprite2D = player.mobility_sprite
-   if player.equipped_tool != 0:
+   var detailed: bool = is_instance_valid(player.tool_visual.final_sprite) and player.tool_visual.final_sprite.visible
+   if detailed: source = player.tool_visual.final_sprite
+   if player.equipped_tool != 0 and not detailed:
     tool_ghosts.append({"at":player.global_position,"alpha":.32,"tool":player.equipped_tool,"facing":player.facing})
     if tool_ghosts.size()>3: tool_ghosts.pop_front()
    elif is_instance_valid(source):
@@ -53,6 +56,15 @@ func _physics_process(delta: float) -> void:
     add_child(ghost)
     ghost.top_level = true
     ghost.global_transform = source.global_transform
+    if detailed and is_instance_valid(player.tool_visual.gear_sprite) and player.tool_visual.gear_sprite.visible:
+     var gear: Sprite2D = player.tool_visual.gear_sprite
+     var gear_copy := Sprite2D.new()
+     gear_copy.texture = gear.texture
+     gear_copy.flip_h = gear.flip_h
+     gear_copy.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+     ghost.add_child(gear_copy)
+     gear_copy.global_transform = gear.global_transform
+     gear_copy.modulate = gear.modulate
     ghosts.append(ghost)
     if ghosts.size() > 3: ghosts.pop_front().free()
  dust_time = maxf(0.0,dust_time-delta)

@@ -2,6 +2,14 @@ extends RefCounted
 ## Native pixel-shaped placeholder icons, shared by HUD, touch and tools.
 static func draw_icon(canvas: CanvasItem, action: String, center: Vector2, factor := 1.0, angle := 0.0) -> void:
  canvas.draw_set_transform(center,angle,Vector2.ONE*factor)
+ var tools := ["hammer","axe","pickaxe","slingshot"]
+ if action in tools:
+  var texture := preload("res://scripts/equipment_art.gd").texture(tools.find(action))
+  if texture != null:
+   var size := texture.get_size()*minf(30.0/texture.get_width(),32.0/texture.get_height())
+   canvas.draw_texture_rect(texture,Rect2(-size/2,size),false)
+   canvas.draw_set_transform(Vector2.ZERO)
+   return
  var ink := Color("392a25")
  var wood := Color("b87938")
  var metal := Color("c3d2c9")

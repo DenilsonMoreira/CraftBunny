@@ -1,5 +1,7 @@
 # Windows 0.3.5 — 2026-11-07
 
+Versão atual 0.5.1 (2026-11-13): game/builds/windows-0.5.1/CraftBunny-0.5.1.exe e ZIP CraftBunny-Windows-0.5.1.zip. Novas artes de personagem, ferramentas, árvore/ponte e rochas. EXE 151.817.440 bytes; versão 0.5.1.0; SHA256 67cb872000703d1736d328b2ae26cb1f1d91ee6fb1f34ac52262a27cf84010af. Smoke OpenGL 120 frames, saída 0, log sem erros. Retenção local 0.5.1/0.5.0; notas seguintes são históricas. Guia: ../../docs/ART_051.md.
+
 Versão atual 0.5.0 (2026-11-13): `game/builds/windows-0.5.0/CraftBunny-0.5.0.exe` e ZIP `game/builds/CraftBunny-Windows-0.5.0.zip`. Quatro ferramentas, obstáculos e controles atualizados. Propriedades 0.5.0.0 e smoke OpenGL de 120 frames aprovados, saída 0 sem erros de runtime. SHA256 `d45944d20c6984ea6c2afc8e26dc1a8e63015b52cc745ee994c888935bea454a`. Retenção local: 0.5.0 e 0.4.3. Guia atual: ../../docs/TOOLS_050.md. Notas abaixo são históricas.
 
 Versão atual 0.4.3 (2026-11-13): `game/builds/windows-0.4.3/CraftBunny-0.4.3.exe` e ZIP `game/builds/CraftBunny-Windows-0.4.3.zip`. Corrigidos recorte do martelo e escala do planar. Smoke OpenGL de 120 frames aprovado, saída 0 e log sem erros. SHA256 `294009ca200fd3af7111438b79aa19382dab70369d798872bb876ba3597029ae`. Mantidos somente builds locais 0.4.3 e 0.4.2; referências a builds anteriores nas notas abaixo são históricas. Guia atual: ../../docs/SPRITE_LAYOUT_043.md.

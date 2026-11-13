@@ -45,3 +45,7 @@ Arquivos recebidos na pasta `music/` em 2026-11-06:
 
 Origem informada pelo usuário: Pixabay (https://pixabay.com/). Arquivos escolhidos e copiados pelo usuário.
 Autor e licença específica de cada faixa: conferir os detalhes das páginas de download antes da distribuição.
+
+## Artes v4 — 2026-11-13
+
+Coelho modular, ataques de machado/picareta/estilingue, mira, equipamentos, árvore-ponte e rochas: imagens geradas com a ferramenta integrada imagegen a partir da identidade visual do projeto. Prompts/proveniência em production/v4/PROMPTS.md. Referências originais preservadas; nenhuma arte de terceiros adicionada nesta etapa. Integração técnica pelo projeto Craft Bunny.

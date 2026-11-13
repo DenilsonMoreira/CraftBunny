@@ -2,6 +2,11 @@
 
 **Regra de uso:** `[x]` = testado/verificado no projeto, `[ ]` = pendente. Recursos já codificados no protótipo mas **não testados** continuam pendentes. **Prioridade máxima:** estabilizar o build antes de adicionar assets ou efeitos.
 
+## Arte 0.5.1 — 2026-11-13
+- [x] Novos sprites, ícones e obstáculos integrados, com transparência e escala controlada.
+- [x] Regressões: 315 checks de gameplay/interface, ataque e captura dos 12 quadros de mobilidade aprovados.
+- [ ] Validar fluidez em playtest humano completo e Android físico; não concluir M5/M7 apenas pelas capturas.
+
 ## Escopo adicional autorizado — Ferramentas 0.5.0
 - [x] Ciclo I, Dash L, HUD/som de troca, danos 1/2/3/3 e tempos configuráveis: 68 checks em tools/test_tools.gd.
 - [x] Picareta 0,30/0,20/0,50 s e interceptação frontal/superior sem imunidade geral; casos lateral e fora da janela validados.
@@ -9,7 +14,7 @@
 - [x] Fase editável com duas árvores-ponte e duas rochas guardando cenouras: 15 checks físicos, incluindo travessias reais.
 - [x] Analógico esquerdo preservado e círculos com ícones: 25 checks de toque e seis capturas OpenGL.
 - [x] Estrutura modular de 12 passos e 32 slots SpriteFrames, com fallback provisório e substituição por recurso final testada.
-- [ ] Produzir/revisar artes finais das novas variantes e dos obstáculos; não confundir poses provisórias com 12 desenhos finais por sequência.
+- [x] Artes v4 integradas: 132 poses novas, 33 sequências de 12 quadros por composição modular, quatro ferramentas, árvore/ponte e rochas; 494 checks de arte e captura de Dash/planar com 12 quadros observados. Relatório: ../docs/ART_051.md.
 - [ ] Playtest humano completo, sensação das ferramentas/parry e ergonomia em Android físico.
 
 Relatório, arquivos e limitações: ../docs/TOOLS_050.md. Este escopo não conclui automaticamente os marcos gerais abaixo.

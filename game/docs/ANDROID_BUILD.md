@@ -2,18 +2,21 @@
 
 Build atualizado em 2026-11-13 com Godot 4.7.2.
 
-- Arquivo: builds/CraftBunny-Android-0.5.0.apk (também disponível como CraftBunny-Android-Test.apk).
+- Arquivo: builds/CraftBunny-Android-0.5.1.apk (também disponível como CraftBunny-Android-Test.apk).
 - Pacote: com.craftbunny.game
-- Versão: 0.5.0-android-test (código 12), quatro ferramentas, árvores/rochas e círculos com ícones; fase de 24.000 px e teto 200 antes de gastar munição. Contrato global permanece 0.4.0, sem nova migração nesta atualização.
+- Versão: 0.5.1-android-test (código 13), artes v4 de personagem, ferramentas, árvores/rochas e círculos com ícones; fase de 24.000 px e teto 200 antes de gastar munição. Contrato global permanece 0.4.0, sem nova migração nesta atualização.
 - Mínimo: Android API 24 (Android 7.0), aparelho com OpenGL ES 3 compatível com o renderer Compatibility.
 - Target SDK: 36.
 - Arquiteturas: arm64-v8a e armeabi-v7a.
 - Orientação: paisagem, conteúdo 960x540 com proporção preservada.
-- Tamanho: 83.212.930 bytes.
-- SHA256: 3F46E9CB99EF8784768D27DAE006A4D31B4CFEB03D7F0515D1025539434AD37E
+- Tamanho: 95.672.672 bytes.
+- SHA256: 56B705D33BC232AA66C4BAD37A847372E218803BCA313701F59ECBB7E11030E0
 - Assinatura de depuração verificada: esquemas v2 e v3.
 
 ## Instalar
+
+Atualização 0.5.1: artes v4 integradas. Manifesto ARM32/64, INTERNET, código 13 e assinatura v2/v3 verificados; mesmo certificado da 0.5.0. Retidas somente versões locais 0.5.1/0.5.0. Site/Blob não atualizados nesta etapa; execução em aparelho físico pendente. Relatório: ../../docs/ART_051.md.
+
 
 Atualização 0.5.0: mantido joystick esquerdo, ações em círculos com ícones e troca de ferramentas. Mira por segurar/soltar; ranking usa cenouras restantes. Artes novas são provisórias, com template para estados finais. Pacote, ARM32/64, INTERNET e mesmo certificado da 0.4.3 confirmados. Somente builds locais 0.5.0/0.4.3 mantidos; site não atualizado nesta etapa. Playtest físico pendente. Relatório: ../../docs/TOOLS_050.md. Notas abaixo são históricas.
 

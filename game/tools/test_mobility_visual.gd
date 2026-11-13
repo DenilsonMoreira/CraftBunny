@@ -7,9 +7,11 @@ class FrameProbe extends Node:
  var glide_frames := {}
  func _physics_process(_delta: float) -> void:
   var sprite: AnimatedSprite2D = player.mobility_sprite
+  if is_instance_valid(player.tool_visual.final_sprite) and player.tool_visual.final_sprite.visible:
+   sprite = player.tool_visual.final_sprite
   if not sprite.visible: return
-  if sprite.animation == "dash": dash_frames[sprite.frame] = true
-  if sprite.animation == "glide": glide_frames[sprite.frame] = true
+  if str(sprite.animation).get_slice("/",str(sprite.animation).get_slice_count("/")-1) == "dash": dash_frames[sprite.frame] = true
+  if str(sprite.animation).get_slice("/",str(sprite.animation).get_slice_count("/")-1) == "glide": glide_frames[sprite.frame] = true
 
 func _initialize() -> void: call_deferred("_run")
 
@@ -26,7 +28,8 @@ func ticks(count: int) -> void:
 
 func capture(label: String) -> void:
  await RenderingServer.frame_post_draw
- var path := ProjectSettings.globalize_path("res://../docs/qa_mobility_"+label+".png")
+ var suffix := "_051" if "--art" in OS.get_cmdline_user_args() else ""
+ var path := ProjectSettings.globalize_path("res://../docs/qa_mobility_"+label+suffix+".png")
  if root.get_texture().get_image().save_png(path) != OK: failures += 1
 
 func _run() -> void:
