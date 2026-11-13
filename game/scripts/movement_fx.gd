@@ -63,6 +63,7 @@ func _physics_process(delta: float) -> void:
      gear_copy.flip_h = gear.flip_h
      gear_copy.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
      ghost.add_child(gear_copy)
+     gear_copy.show_behind_parent = true
      gear_copy.global_transform = gear.global_transform
      gear_copy.modulate = gear.modulate
     ghosts.append(ghost)

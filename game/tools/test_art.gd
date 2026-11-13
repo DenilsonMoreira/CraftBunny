@@ -82,6 +82,7 @@ func _run() -> void:
      gear.position += at
      gear.visible = true
      sheet.add_child(gear)
+     sheet.move_child(gear,sprite.get_index())
     var label := Label.new()
     label.text = TOOLS.KEYS[tool]+" / "+state
     label.position = at+Vector2(-70,29)
@@ -89,7 +90,8 @@ func _run() -> void:
     sheet.add_child(label)
   await process_frame
   await RenderingServer.frame_post_draw
-  check(root.get_texture().get_image().save_png(ProjectSettings.globalize_path("res://../docs/qa_art_poses_051.png"))==OK,"saved rendered production poses")
+  var suffix := "054" if "--rig" in OS.get_cmdline_user_args() else "051"
+  check(root.get_texture().get_image().save_png(ProjectSettings.globalize_path("res://../docs/qa_art_poses_"+suffix+".png"))==OK,"saved rendered production poses")
   sheet.queue_free()
  player.queue_free()
  await process_frame

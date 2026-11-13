@@ -2,18 +2,21 @@
 
 Build atualizado em 2026-11-13 com Godot 4.7.2.
 
-- Arquivo: builds/CraftBunny-Android-0.5.3.apk (também disponível como CraftBunny-Android-Test.apk).
+- Arquivo: builds/CraftBunny-Android-0.5.4.apk (também disponível como CraftBunny-Android-Test.apk).
 - Pacote: com.craftbunny.game
-- Versão: 0.5.3-android-test (código 15), artes v4 de personagem, ferramentas, árvores/rochas e círculos com ícones; fase de 24.000 px e teto 200 antes de gastar munição. Contrato global permanece 0.4.0, sem nova migração nesta atualização.
+- Versão: 0.5.4-android-test (código 16), artes v4 de personagem, ferramentas, árvores/rochas e círculos com ícones; fase de 24.000 px e teto 200 antes de gastar munição. Contrato global permanece 0.4.0, sem nova migração nesta atualização.
 - Mínimo: Android API 24 (Android 7.0), aparelho com OpenGL ES 3 compatível com o renderer Compatibility.
 - Target SDK: 36.
 - Arquiteturas: arm64-v8a e armeabi-v7a.
 - Orientação: paisagem, conteúdo 960x540 com proporção preservada.
-- Tamanho: 100.130.461 bytes.
-- SHA256: 20377061DD81580C1C8D5A3B79FDB0CA7A5A1A5272B8ECA82B02B431306B86A8
+- Tamanho: 100.134.718 bytes.
+- SHA256: BB8C7EE48CF5E9AB4D9206DDC221C7DCCE38BC7B3AF2637FE186E3A12CD67334
 - Assinatura de depuração verificada: esquemas v2 e v3.
 
 ## Instalar
+
+Atualização 0.5.4: encaixe das ferramentas acompanha a mão em cada quadro; cabos atrás das palmas, inclinação e bolsa no planar. Alcance e gameplay mantidos. Código16, ARM32/64, INTERNET e assinatura v2/v3 verificados; mesmo certificado da 0.5.3. Recursos de rig/visual/SpriteFrames conferidos dentro do APK. Mantidas versões locais 0.5.4/0.5.3. Android físico pendente; site não atualizado nesta etapa. Relatório: ../../docs/EQUIPMENT_RIG_054.md. Notas seguintes são históricas.
+
 
 Atualização 0.5.3: abertura aprovada em seis slides, com avançar/pular e forest-birds em loop até o título. NOVO JOGO troca para o tema anterior. APK código15, ARM32/64, INTERNET e assinatura v2/v3 verificados; mesmo certificado da 0.5.2. Recursos de cena, script, imagem e áudio conferidos dentro do APK. Mantidas versões locais 0.5.3/0.5.2. Android físico e escuta pendentes; download do site não alterado nesta etapa. Guia: ../../docs/OPENING_053.md. Notas seguintes são históricas.
 

@@ -28,6 +28,8 @@ func _ready() -> void:
   gear_sprite.visible = false
   gear_sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
   add_child(gear_sprite)
+  # Same world layer; draw the body/palm over the handle, never over the face.
+  move_child(gear_sprite,0)
 
 func _physics_process(delta: float) -> void:
  var p = get_parent()
@@ -82,7 +84,7 @@ func _physics_process(delta: float) -> void:
    final_sprite.animation = animation_key
    final_sprite.pause()
    final_sprite.frame = mini(frame,final_frames.get_frame_count(animation_key)-1)
-   final_sprite.flip_h = p.facing < 0
+   final_sprite.flip_h = _pose_facing(p,state) < 0
    if layouts.has(animation_key):
     final_sprite.scale = layouts[animation_key]["scale"]
     final_sprite.position = layouts[animation_key]["position"]
@@ -105,33 +107,41 @@ func _physics_process(delta: float) -> void:
    if not hit.is_empty(): break
  queue_redraw()
 
+func _pose_facing(p: CharacterBody2D,state: String) -> float:
+ if state=="attack": return p.attack_facing
+ if state=="dash": return p.dash_direction
+ return p.facing
+
 func _update_equipment(p: CharacterBody2D, state: String) -> void:
  var tool: int = p.equipped_tool
- var socket: Vector2 = layouts[animation_key].get("socket",Vector2(12,7))
- var angle := .20
+ var layout: Dictionary = layouts[animation_key]
+ var socket: Vector2 = layout.get("socket",Vector2(12,7))
+ if layout.has("attachments"): socket = layout["attachments"][frame]
+ var stowed: bool = layout.get("stowed",false)
+ var angle: float = preload("res://scripts/equipment_rig.gd").TOOL_ANGLES[tool]
+ if layout.has("angles"): angle += layout["angles"][frame]
+ if stowed: angle = -.65
+ var facing := _pose_facing(p,state)
  var opacity := 1.0
- if state=="dash": angle = .7
- if state=="glide": angle = -.3
  if state=="switch":
-  var hands := [Vector2(12,7),Vector2(8,8),Vector2(3,8),Vector2(-6,8),Vector2(-10,9),Vector2(-12,9),Vector2(-10,7),Vector2(-6,6),Vector2(-1,6),Vector2(6,6),Vector2(10,7),Vector2(12,7)]
-  socket = hands[frame]
   if frame<4:
    tool = p.previous_tool
    opacity = 1-float(frame)/4
   else: opacity = clampf(float(frame-7)/4,0,1)
+  angle = preload("res://scripts/equipment_rig.gd").TOOL_ANGLES[tool]
  var art = preload("res://scripts/equipment_art.gd")
  var texture: Texture2D = art.texture(tool)
  gear_sprite.texture = texture
  var factor := 26.0/texture.get_height()
- if state=="glide": factor *= .75
+ if stowed: factor *= .75
  var grip: Vector2 = texture.get_size()*art.GRIPS[tool]
  var offset := (texture.get_size()/2-grip)*factor
- offset.x *= p.facing
- angle *= p.facing
- gear_sprite.position = Vector2(socket.x*p.facing,socket.y)+offset.rotated(angle)
+ offset.x *= facing
+ angle *= facing
+ gear_sprite.position = Vector2(socket.x*facing,socket.y)+offset.rotated(angle)
  gear_sprite.scale = Vector2.ONE*factor
  gear_sprite.rotation = angle
- gear_sprite.flip_h = p.facing<0
+ gear_sprite.flip_h = facing<0
  gear_sprite.modulate.a = opacity
 
 func _draw() -> void:

@@ -37,3 +37,7 @@ Artes de ferramentas e obstáculos substituem o desenho provisório do lançamen
 ## Abertura aprovada 0.5.3
 
 production/intro/storyboard.png reutiliza a prévia v2 aprovada, com olhos fechados no terceiro painel. AtlasTextures separam seis cenas sem editar o original. Catálogo/prompts em ../assets/production/intro/README.md. Forest-birds fornecido pelo usuário e creditado em assets/CREDITS.md. Integração/testes em ../../docs/OPENING_053.md.
+
+## Encaixe 0.5.4
+
+Imagens v4 preservadas. equipment_rig.gd contém centros de mão por quadro; tool_frames.tres recebe attachments/angles por pose e é reconstruído por build_tool_art.gd. Cabos atrás das mãos e ferramentas junto à bolsa no planar. Detalhes/testes em ../../docs/EQUIPMENT_RIG_054.md.

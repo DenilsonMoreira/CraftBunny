@@ -93,3 +93,7 @@ Nova regressão tools/test_presentation.gd: 47 checks em fontes com captura; 46 
 ## Abertura 0.5.3 — 2026-11-13
 
 Executado tools/test_opening.gd: 52 checks/capturas OpenGL e 45 headless, zero falhas. Recortes aprovados, seis quadros, crossfade, autoavanço, pular, teclado/toque, deduplicação de mouse emulado, foco, mute salvo, handoff da mesma instância de áudio, título e troca de tema/morte validados. Regressões: áudio zero falhas, morte10, fluxo16, ferramentas68, touch25, mobilidade40, ranking offline22. Alguns harnesses mantêm avisos de recursos no encerramento. Detalhes/comandos: ../../docs/OPENING_053.md. Escuta do loop/volume, ritmo humano e Android físico pendentes.
+
+## Encaixe por quadro — 0.5.4
+
+Executado tools/test_equipment_rig.gd com captura: 1.430 checks, zero falhas. Centros da palma dentro da arte real, encaixe dos quatro itens por quadro em ambos os lados, ordem de desenho e direções travadas validados. Arte: 494 com captura/493 sem; ferramentas68, apresentação46, mobilidade40, toque25, enquadramento40, ave/martelo14, abertura45, ataque PASS. Avisos antigos de recursos permanecem em alguns encerramentos. Capturas em docs/qa_rig_sling_054.png e qa_art_poses_054.png. Testes/comandos e limites em ../../docs/EQUIPMENT_RIG_054.md. Fluidez percebida em velocidade normal e Android físico pendentes.

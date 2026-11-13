@@ -1,6 +1,6 @@
 # Craft Bunny 🐰🔨 — Godot 4
 
-> **Status:** protótipo v0.5.3 com quatro ferramentas, projétil/mira, árvores-ponte, rochas quebráveis e botões touch circulares. Artes de ferramentas/personagem e obstáculos integradas em production/v4; percurso completo e Android físico pendentes de playtest. **Objetivo:** concluir uma versão 1.0 jogável de **uma única fase**. **Engine validada:** Godot 4.7.2 / GDScript / 2D.
+> **Status:** protótipo v0.5.4 com quatro ferramentas, projétil/mira, árvores-ponte, rochas quebráveis e botões touch circulares. Artes de ferramentas/personagem e obstáculos integradas em production/v4; percurso completo e Android físico pendentes de playtest. **Objetivo:** concluir uma versão 1.0 jogável de **uma única fase**. **Engine validada:** Godot 4.7.2 / GDScript / 2D.
 
 ## O jogo
 
@@ -10,11 +10,11 @@
 
 ## Iniciar e testar
 
-**Fase atual 0.5.3:** `scenes/level_wide/fase_ferramentas.tscn`, editável na área 2D, com floresta, copa e subsolo. 140 cenouras no mapa + 60 de inimigos = 200 antes de gastar munição. Dois buracos exigem árvores derrubadas com machado; duas passagens com cenouras visíveis exigem picareta. Quatro desníveis da escada continuam exigindo caixas; aves pousam por 0,5 s após atacar. Guia em `../docs/TOOLS_050.md`. Cenas anteriores e exemplo inicial preservados.
+**Fase atual 0.5.4:** `scenes/level_wide/fase_ferramentas.tscn`, editável na área 2D, com floresta, copa e subsolo. 140 cenouras no mapa + 60 de inimigos = 200 antes de gastar munição. Dois buracos exigem árvores derrubadas com machado; duas passagens com cenouras visíveis exigem picareta. Quatro desníveis da escada continuam exigindo caixas; aves pousam por 0,5 s após atacar. Guia em `../docs/TOOLS_050.md`. Cenas anteriores e exemplo inicial preservados.
 
 **Aprender a editar a fase visualmente:** abra `scenes/editor_example/fase_exemplo.tscn` e pressione **F6**. Contém terra pintável com colisão, início do coelho e uma cobra arrastáveis. F5 continua no jogo principal. Guia passo a passo em `docs/EDITABLE_EXAMPLE.md`.
 
-Windows atual: `builds/windows-0.5.3/CraftBunny-0.5.3.exe`. Abrir a pasta antiga não atualiza o jogo de PC. Histórico em `docs/WINDOWS_BUILD.md`; atualização em `../docs/TOOLS_050.md`.
+Windows atual: `builds/windows-0.5.4/CraftBunny-0.5.4.exe`. Abrir a pasta antiga não atualiza o jogo de PC. Histórico em `docs/WINDOWS_BUILD.md`; atualização em `../docs/TOOLS_050.md`.
 
 RECORDES → ZERAR RANKING LOCAL pede confirmação antes de apagar os recordes deste aparelho. Cancelar preserva os dados; a ação não afeta o ranking global. Detalhes em ../docs/LOCAL_RESET_AND_RANKING_LAYOUT.md.
 
@@ -24,9 +24,9 @@ Título, opções e controles com tema pixel art; inimigos exibem balão de dete
 
 Atualização visual: mundo ampliado em 25% pela câmera, com colisões preservadas. Ataque exclusivo do coelho em 12 quadros, martelo maior e alcance frontal de 32 unidades. Detalhes e testes em assets/production/v2/bunny_attack_12.md.
 
-Versão Android atual em builds/CraftBunny-Android-0.5.3.apk, com analógico semitransparente à esquerda e círculos com ícones para pulo, ação, caixa, troca, Dash e pausa. Duplo toque/segurar no pulo plana; segurar/soltar a ação mira/dispara estilingue. Paisagem e mínimo API 24. APKs não são versionados. Playtest físico pendente.
+Versão Android atual em builds/CraftBunny-Android-0.5.4.apk, com analógico semitransparente à esquerda e círculos com ícones para pulo, ação, caixa, troca, Dash e pausa. Duplo toque/segurar no pulo plana; segurar/soltar a ação mira/dispara estilingue. Paisagem e mínimo API 24. APKs não são versionados. Playtest físico pendente.
 
-Retenção local: manter apenas os dois builds completos mais recentes. Após exportar EXE, ZIP e APK, `./tools/prune_builds.ps1 -Keep 2` lista as versões antigas; `-Apply` realiza a limpeza. Atualmente mantidas **0.5.3 e 0.5.2**. A limpeza anterior da 0.4.3 liberou ~2,09 GB; a atualização 0.5.0 removeu a 0.4.2, liberando mais ~430 MB. Documentos históricos podem citar builds removidos; fontes, artes e histórico Git permanecem.
+Retenção local: manter apenas os dois builds completos mais recentes. Após exportar EXE, ZIP e APK, `./tools/prune_builds.ps1 -Keep 2` lista as versões antigas; `-Apply` realiza a limpeza. Atualmente mantidas **0.5.4 e 0.5.3**. A limpeza anterior da 0.4.3 liberou ~2,09 GB; a atualização 0.5.0 removeu a 0.4.2, liberando mais ~430 MB. Documentos históricos podem citar builds removidos; fontes, artes e histórico Git permanecem.
 
 1. Instale **Godot 4.3 ou superior**.
 2. Abra o gerenciador de projetos da Godot, clique em **Importar** e escolha `project.godot` nesta pasta.
@@ -164,10 +164,12 @@ Um jogador consegue iniciar no título, percorrer toda a fase, controlar o coelh
 
 As referências de sprites do coelho, inimigos, coletáveis, HUD, tela de título, terreno e folhagens estão em `assets/references/`. Leia `assets/references/README.md` antes de convertê-las em spritesheets técnicos; as folhas atuais não são atlas prontos para importação automática.
 
-## Artes 0.5.3
+## Artes 0.5.4
 
 Onze folhas de 12 quadros, quatro ferramentas, kit de árvore e quatro estados de rocha. Corpo modular em idle/run/jump/fall/dash/glide/switch; ataques próprios de machado/picareta/estilingue e mira. Martelo, morte e pisão anteriores preservados. Parâmetros de movimento, danos, hitboxes, inventário e ranking preservados. Fontes e prompts: assets/production/v4/README.md; testes e limites: ../docs/ART_051.md.
 
-Correção 0.5.3: sprites finais das ferramentas carregam também no jogo exportado; árvore cai com tronco contínuo e som falling-tree; acertos de picareta na pedra usam rock-falls. Colisões e gameplay preservados. Relatório e testes: ../docs/PRESENTATION_052.md.
+Correção 0.5.4: sprites finais das ferramentas carregam também no jogo exportado; árvore cai com tronco contínuo e som falling-tree; acertos de picareta na pedra usam rock-falls. Colisões e gameplay preservados. Relatório e testes: ../docs/PRESENTATION_052.md.
 
-Abertura 0.5.3: seis imagens aprovadas, cerca de 21,6 segundos, antes da tela de título. Espaço/Enter/seta direita, clique ou toque avançam; Esc ou PULAR encerram. Forest-birds toca continuamente da introdução ao título e seus menus; NOVO JOGO troca para o tema da partida. Iniciar/reiniciar partida não repete a cutscene. Detalhes: ../docs/OPENING_053.md.
+Abertura 0.5.4: seis imagens aprovadas, cerca de 21,6 segundos, antes da tela de título. Espaço/Enter/seta direita, clique ou toque avançam; Esc ou PULAR encerram. Forest-birds toca continuamente da introdução ao título e seus menus; NOVO JOGO troca para o tema da partida. Iniciar/reiniciar partida não repete a cutscene. Detalhes: ../docs/OPENING_053.md.
+
+Ajuste visual 0.5.4: ferramentas acompanham pontos reais das mãos em cada um dos 12 quadros, com cabos atrás das palmas e inclinação para não cobrir o rosto. Planar prende a ferramenta à bolsa; ataques e Dash respeitam suas direções registradas. Alcance/dano e PNGs preservados. Relatório: ../docs/EQUIPMENT_RIG_054.md.

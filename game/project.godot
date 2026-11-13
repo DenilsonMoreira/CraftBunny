@@ -15,7 +15,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="Craft Bunny"
-config/version="0.5.3"
+config/version="0.5.4"
 run/main_scene="res://opening.tscn"
 boot_splash/show_image=false
 boot_splash/bg_color=Color(0.13, 0.1, 0.08, 1)

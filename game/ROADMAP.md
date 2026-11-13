@@ -2,6 +2,11 @@
 
 **Regra de uso:** `[x]` = testado/verificado no projeto, `[ ]` = pendente. Recursos já codificados no protótipo mas **não testados** continuam pendentes. **Prioridade máxima:** estabilizar o build antes de adicionar assets ou efeitos.
 
+## Encaixe das ferramentas 0.5.4 — 2026-11-13
+- [x] Pontos reais de mão por quadro, cabos atrás da palma, inclinação e movimento sincronizados. Planar prende ferramentas à bolsa.
+- [x] 1.430 checks de rig e 494 de arte/captura aprovados; regressões de ferramentas, mobilidade, toque, ataques, apresentação e abertura aprovadas.
+- [ ] Avaliar fluidez em playtest humano e Android físico. Relatório: ../docs/EQUIPMENT_RIG_054.md.
+
 ## Abertura 0.5.3 — 2026-11-13
 - [x] Cutscene aprovada de seis slides integrada antes do título, com crossfade, avanço automático/manual e pular.
 - [x] Forest-birds em loop na abertura e título, sem reinício entre cenas; tema anterior somente na partida. Volume salvo e foco respeitados.

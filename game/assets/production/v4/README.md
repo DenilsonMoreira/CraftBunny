@@ -21,3 +21,7 @@ O gerador `tools/build_tool_art.gd` cria os AtlasTextures com pivôs nos pés, c
 Árvores/rochas usam `world_art.gd`; regiões transparentes são recortadas em memória, sem alterar PNGs. As colisões, largura das pontes, HP, tempos e regras de ferramenta não foram modificados.
 
 Prompts completos, incluindo ajustes de revisão: [PROMPTS.md](PROMPTS.md). Relatório, testes e limites: [ART_051.md](../../../../../docs/ART_051.md). Revisão humana de todas as transições em velocidade normal e Android físico continua pendente.
+
+## Revisão de encaixes 0.5.4
+
+As imagens permanecem iguais. equipment_rig.gd registra os centros de mão em cada célula; build_tool_art.gd converte esses pontos para o canvas, levando em conta pés, escala e margens. Metadados attachments/angles têm 12 valores por estado. Tool_visual usa o mesmo índice do corpo, desenha o cabo atrás da palma e prende a ferramenta à bolsa durante planar. Rig versão2. Relatório/testes: ../../../../../docs/EQUIPMENT_RIG_054.md.
