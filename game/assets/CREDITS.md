@@ -34,6 +34,8 @@ Habilidades 2026-11-13: `production/v3/bunny_dash_12.png` e `bunny_glide_12.png`
 
 ## Áudio fornecido pelo usuário
 
+Adicionado em 2026-11-13: `music/item-switch.mp3`, arquivo fornecido pelo usuário e integrado ao bus SFX para troca de ferramentas. Dados de autoria/página específica não foram fornecidos nesta etapa. Ícones e poses provisórias da 0.5.0 são desenhos nativos criados para o projeto; árvores reutilizam a folhagem de produção já creditada e impactos usam `impact-thud.mp3` como som provisório substituível.
+
 Arquivos recebidos na pasta `music/` em 2026-11-06:
 
 - `music-theme.mp3` — tema do jogo.

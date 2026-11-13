@@ -2,18 +2,20 @@
 
 Build atualizado em 2026-11-13 com Godot 4.7.2.
 
-- Arquivo: builds/CraftBunny-Android-0.4.3.apk (também disponível como CraftBunny-Android-Test.apk).
+- Arquivo: builds/CraftBunny-Android-0.5.0.apk (também disponível como CraftBunny-Android-Test.apk).
 - Pacote: com.craftbunny.game
-- Versão: 0.4.3-android-test (código 11), martelo sem recorte e planar na escala normal; fase de 24.000 px e teto 200. Contrato global permanece 0.4.0, sem nova migração nesta atualização.
+- Versão: 0.5.0-android-test (código 12), quatro ferramentas, árvores/rochas e círculos com ícones; fase de 24.000 px e teto 200 antes de gastar munição. Contrato global permanece 0.4.0, sem nova migração nesta atualização.
 - Mínimo: Android API 24 (Android 7.0), aparelho com OpenGL ES 3 compatível com o renderer Compatibility.
 - Target SDK: 36.
 - Arquiteturas: arm64-v8a e armeabi-v7a.
 - Orientação: paisagem, conteúdo 960x540 com proporção preservada.
-- Tamanho: 83.096.748 bytes.
-- SHA256: 64AA204D1C092E1374852A4431BB24274B5D48589C03CBDD5FEDF938BF54E45C
+- Tamanho: 83.212.930 bytes.
+- SHA256: 3F46E9CB99EF8784768D27DAE006A4D31B4CFEB03D7F0515D1025539434AD37E
 - Assinatura de depuração verificada: esquemas v2 e v3.
 
 ## Instalar
+
+Atualização 0.5.0: mantido joystick esquerdo, ações em círculos com ícones e troca de ferramentas. Mira por segurar/soltar; ranking usa cenouras restantes. Artes novas são provisórias, com template para estados finais. Pacote, ARM32/64, INTERNET e mesmo certificado da 0.4.3 confirmados. Somente builds locais 0.5.0/0.4.3 mantidos; site não atualizado nesta etapa. Playtest físico pendente. Relatório: ../../docs/TOOLS_050.md. Notas abaixo são históricas.
 
 Atualização 0.4.3: corrigidos enquadramento do martelo e escala do planar, mantendo os 12 quadros e regras. Manifesto e mesmo certificado da 0.4.2 confirmados. Somente APKs locais 0.4.3 e 0.4.2 mantidos; notas de versões anteriores são históricas e seus builds foram removidos. Site preservado. Relatório: ../../docs/SPRITE_LAYOUT_043.md.
 

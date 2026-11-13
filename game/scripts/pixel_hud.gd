@@ -9,6 +9,15 @@ var carrot_icon: Texture2D
 var wood_icon: Texture2D
 var full_heart: Texture2D
 var empty_heart: Texture2D
+var equipped_tool := 0
+var aiming := false
+var switch_flash := 0.0
+
+func update_equipment(tool: int, is_aiming: bool, flash: float) -> void:
+ equipped_tool = tool
+ aiming = is_aiming
+ switch_flash = flash
+ queue_redraw()
 
 func _ready() -> void:
  mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -48,7 +57,8 @@ func _draw() -> void:
  if wood_icon != null: draw_texture_rect(wood_icon, Rect2(451,41,28,17), false)
  text_at(str(wood), Vector2(495,58), 21 if wood < 100000 else 15)
  text_at("SEM LIMITE", Vector2(557,30), 9, Color("b5d36a"))
- text_at("CONSTRUIR CAIXA", Vector2(699,31), 12, Color("ddb77b"))
+ var tools = preload("res://scripts/tool_catalog.gd")
+ text_at(tools.NAMES[equipped_tool].to_upper(), Vector2(714,31), 12, Color("ffe4a0") if switch_flash>0 else Color("ddb77b"))
+ preload("res://scripts/tool_icons.gd").draw_icon(self,tools.KEYS[equipped_tool],Vector2(697,49),.85)
  var mobile := OS.has_feature("android") or DisplayServer.is_touchscreen_available() or "--touch" in OS.get_cmdline_user_args()
- text_at("TOQUE" if mobile else "K", Vector2(699,58), 10 if mobile else 21, Color("f7bb50"))
- text_at("3 tábuas", Vector2(750 if mobile else 734,57), 17, Color("b5d36a") if wood >= 3 else Color("cfb69a"))
+ text_at("MIRANDO" if aiming else (("Caixa: 3 tábuas" if mobile else "K: caixa / 3 tábuas") if equipped_tool==0 else ("Trocar ferramenta" if mobile else "I: trocar")), Vector2(720,57), 12,Color("ffe388") if aiming else Color("cfb69a"))

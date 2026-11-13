@@ -97,6 +97,16 @@ func _run() -> void:
  check(game.player.dash_timer > 0 and not game.player.gliding,"touch dash combines with held glide")
  controller.release_all()
  check(not Input.is_action_pressed("dash") and not game.player.glide_requested,"touch release clears dash and glide inputs")
+ game.player.dash_timer = 0
+ game.player.attack_visual_timer = 0
+ game.player.switch_remaining = 0
+ touch(controller,22,Vector2(689,389),true)
+ for tick in range(1): await physics_frame
+ touch(controller,22,Vector2(689,389),false)
+ check(game.player.equipped_tool==1,"circular touch switch selects next tool")
+ touch(controller,23,Vector2(651,351),true)
+ check(not Input.is_action_pressed("switch_tool"),"outside circular button corner does not trigger switch")
+ controller.release_all()
  game.music_player.play()
  game._notification(game.NOTIFICATION_APPLICATION_FOCUS_OUT)
  check(game.pause_open and game.music_player.stream_paused,"background pauses gameplay and music")

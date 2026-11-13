@@ -11,8 +11,12 @@ Registrar cada cenário como **Passou / Falhou / Não executado** e passos de re
 - [ ] T06 — Entrar na casa do coelhinho encerra a fase e apresenta resultado.
 
 ## Movimentação
+- [ ] T50 — Ferramentas: executar tools/test_tools.gd (68 checks aprovados); validar em partida real ciclo I, Dash L, danos, tempo pesado, parry, mira/munição, cancelamentos e saldo de ranking.
+- [ ] T51 — Obstáculos: tools/test_tool_level.gd passou em 15 checks; percorrer manualmente as duas pontes e duas passagens com inimigos ativos, sem comandos de QA.
+- [ ] T52 — Android físico: joystick com círculos de ação/troca/Dash/pulo/caixa/pausa, sem letras nos botões; 25 checks automatizados e seis capturas revisadas, ergonomia física pendente.
+- [ ] T53 — Substituir estados do template SpriteFrames por arte final de 12 quadros e revisar pivôs. Carregamento de recurso foi automatizado; qualidade artística final pendente.
 - [ ] T49 — Conferir martelo sem recorte nas duas direções e transição do planar sem aumento do corpo. 42 checks/capturas aprovados em tools/test_sprite_layout.gd; confirmação em partida real/Android físico pendente.
-- [ ] T46 — Dash I no chão/ar: uma carga por salto, cooldown, bloqueio em paredes, sem dano/invulnerabilidade, buffer do martelo e construção normal depois. Coberto por tools/test_mobility.gd; playtest humano pendente.
+- [ ] T46 — Dash L no chão/ar: uma carga por salto, cooldown, bloqueio em paredes, sem dano/invulnerabilidade, buffer do martelo e construção normal depois. Coberto por tools/test_mobility.gd; playtest humano pendente.
 - [ ] T47 — Duplo toque de pulo em 0,35 s: primeiro só salta, segundo aguarda descida, segurar plana, soltar cancela, limite 1 s, Dash suspende/retoma sem recarga aérea. Automatizado; playtest humano pendente.
 - [ ] T48 — Artes de 12 quadros, lenço, poeira, rastro e som de Dash: capturas OpenGL revisadas em câmera lenta; validar fluidez em velocidade normal, escuta e multitoque em aparelho físico.
 - [ ] T07 — Direção, aceleração e desaceleração funcionam nos dois sentidos.
@@ -24,7 +28,7 @@ Registrar cada cenário como **Passou / Falhou / Não executado** e passos de re
 ## Vida e martelo
 - [ ] T12 — Coelho começa 3 HP; coração restaura um até no máximo 3.
 - [ ] T13 — Dano inimigo 1/2/3 é aplicado corretamente (cobra/guaxinim/ave).
-- [ ] T14 — Após golpe sobrevivido, outros ataques dentro de 1 s não tiram HP.
+- [ ] T14 — Após golpe sobrevivido, outros ataques dentro de 0,5 s não tiram HP; novo dano depois desse intervalo. Automatizado em tools/test_tools.gd; playtest humano pendente.
 - [ ] T15 — Martelo tira 1 HP por golpe, sem múltiplos hits involuntários na mesma animação.
 - [ ] T16 — Cobra morre em 2, guaxinim em 5 e ave em 7 marteladas válidas.
 - [ ] T17 — Inimigo derrotado não causa dano posteriormente.

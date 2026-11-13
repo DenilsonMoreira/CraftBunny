@@ -1,5 +1,7 @@
 # Windows 0.3.5 — 2026-11-07
 
+Versão atual 0.5.0 (2026-11-13): `game/builds/windows-0.5.0/CraftBunny-0.5.0.exe` e ZIP `game/builds/CraftBunny-Windows-0.5.0.zip`. Quatro ferramentas, obstáculos e controles atualizados. Propriedades 0.5.0.0 e smoke OpenGL de 120 frames aprovados, saída 0 sem erros de runtime. SHA256 `d45944d20c6984ea6c2afc8e26dc1a8e63015b52cc745ee994c888935bea454a`. Retenção local: 0.5.0 e 0.4.3. Guia atual: ../../docs/TOOLS_050.md. Notas abaixo são históricas.
+
 Versão atual 0.4.3 (2026-11-13): `game/builds/windows-0.4.3/CraftBunny-0.4.3.exe` e ZIP `game/builds/CraftBunny-Windows-0.4.3.zip`. Corrigidos recorte do martelo e escala do planar. Smoke OpenGL de 120 frames aprovado, saída 0 e log sem erros. SHA256 `294009ca200fd3af7111438b79aa19382dab70369d798872bb876ba3597029ae`. Mantidos somente builds locais 0.4.3 e 0.4.2; referências a builds anteriores nas notas abaixo são históricas. Guia atual: ../../docs/SPRITE_LAYOUT_043.md.
 
 Versão atual 0.4.2 (2026-11-13): `game/builds/windows-0.4.2/CraftBunny-0.4.2.exe` e ZIP `game/builds/CraftBunny-Windows-0.4.2.zip`, com Dash e planar. Propriedades 0.4.2.0 e smoke OpenGL de 120 frames aprovados, sem erros no log. SHA256 `8fb03fc5a777ed04877072596ec48cc2658276c43583748384b8869615f28292`. Guia atual: ../../docs/MOVEMENT_ABILITIES_042.md. Notas seguintes são históricas.

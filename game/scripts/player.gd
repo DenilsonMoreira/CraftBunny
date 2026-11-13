@@ -6,6 +6,23 @@ signal box_requested()
 signal died()
 signal pit_falling()
 signal stomped()
+signal tool_changed(tool: int)
+signal tool_used(hitbox: Rect2, tool: int, damage: int)
+signal sling_released(origin: Vector2, launch_velocity: Vector2)
+
+const TOOLS = preload("res://scripts/tool_catalog.gd")
+var equipped_tool := TOOLS.Type.HAMMER
+var attack_tool := TOOLS.Type.HAMMER
+var attack_total := 0.35
+var tool_hit_ids: Dictionary = {}
+var aiming := false
+var switch_remaining := 0.0
+var switch_name_timer := 0.0
+var queued_switch := false
+var switch_press_pending := false
+var switch_audio: AudioStreamPlayer
+var tool_visual: Node2D
+@export var final_tool_frames: SpriteFrames
 
 const MAX_HEALTH := 3
 const SPEED := 230.0
@@ -18,12 +35,12 @@ const JUMP_SPEED := -340.0
 const MIN_RELEASE_JUMP_SPEED := -335.0
 const COYOTE_TIME := 0.12
 const JUMP_BUFFER_TIME := 0.12
-const INVULNERABILITY := 1.0
-const ATTACK_COOLDOWN := 0.42
+const INVULNERABILITY := 0.5
+const ATTACK_COOLDOWN := 0.35
 const ATTACK_ACTIVE_TIME := 0.12
 const HAMMER_REACH := 32.0
 const HAMMER_HEIGHT := 26.0
-const ATTACK_VISUAL_DURATION := 0.40
+const ATTACK_VISUAL_DURATION := 0.35
 const ATTACK_FRAME_COUNT := 12
 const WORLD_ZOOM := 1.25
 const DEATH_VISUAL_DURATION := 0.80
@@ -118,6 +135,14 @@ func _ready() -> void:
  dash_audio.stream = dash_sound if dash_sound != null else load("res://assets/audio/sfx/dash_placeholder.wav")
  dash_audio.volume_db = -12.0
  add_child(dash_audio)
+ switch_audio = AudioStreamPlayer.new()
+ switch_audio.bus = dash_audio.bus
+ switch_audio.stream = load("res://music/item-switch.mp3")
+ switch_audio.volume_db = -8
+ add_child(switch_audio)
+ tool_visual = preload("res://scripts/tool_visual.gd").new()
+ tool_visual.final_frames = final_tool_frames
+ add_child(tool_visual)
 
 func _input(event: InputEvent) -> void:
  handle_movement_input(event)
@@ -128,6 +153,7 @@ func handle_movement_input(event: InputEvent) -> void:
  if event.is_action_pressed("jump"): jump_press_pending = true
  if event.is_action_released("jump"): glide_requested = false
  if event.is_action_pressed("dash"): dash_press_pending = true
+ if event.is_action_pressed("switch_tool"): switch_press_pending = true
 
 func _reset_air_abilities() -> void:
  air_dash_used = false
@@ -147,9 +173,10 @@ func _cancel_mobility() -> void:
  buffered_attack = 0.0
  jump_press_pending = false
  dash_press_pending = false
+ aiming = false
 
 func _try_dash() -> void:
- if dash_timer > 0 or dash_cooldown_timer > 0 or attack_visual_timer > 0 or (not is_on_floor() and air_dash_used): return
+ if dash_timer > 0 or dash_cooldown_timer > 0 or attack_visual_timer > 0 or switch_remaining > 0 or (not is_on_floor() and air_dash_used): return
  dash_direction = facing
  dash_timer = dash_duration
  dash_elapsed = 0.0
@@ -157,19 +184,70 @@ func _try_dash() -> void:
  dash_cooldown_timer = dash_cooldown
  if not is_on_floor(): air_dash_used = true
  gliding = false
+ aiming = false
  movement_fx.start_dash(is_on_floor())
  dash_audio.play()
 
 func _begin_attack() -> void:
- hammer_timer = ATTACK_COOLDOWN
- attack_active = ATTACK_ACTIVE_TIME
+ if switch_remaining > 0 or dash_timer > 0: return
+ if equipped_tool == TOOLS.Type.SLINGSHOT:
+  aiming = Input.is_action_pressed("attack")
+  return
+ attack_tool = equipped_tool
+ var cfg: Dictionary = TOOLS.DATA[attack_tool]
+ attack_total = cfg["total"]
+ hammer_timer = attack_total
+ attack_active = cfg["active"] if cfg["windup"] == 0 else 0.0
  _hammer_hit_sent = false
- attack_visual_timer = ATTACK_VISUAL_DURATION
+ tool_hit_ids.clear()
+ attack_visual_timer = attack_total
  attack_facing = facing
  if is_instance_valid(attack_sprite):
   attack_sprite.stop()
   attack_sprite.play("attack")
   attack_sprite.pause()
+
+func request_tool_switch() -> void:
+ aiming = false
+ if attack_visual_timer > 0 or dash_timer > 0:
+  queued_switch = true
+  return
+ equipped_tool = (equipped_tool+1)%TOOLS.NAMES.size()
+ switch_remaining = TOOLS.SWITCH_DURATION
+ switch_name_timer = 1.2
+ queued_switch = false
+ buffered_attack = 0
+ switch_audio.play()
+ tool_changed.emit(equipped_tool)
+
+func get_tool_hitbox() -> Rect2:
+ if attack_tool == TOOLS.Type.HAMMER: return get_hammer_hitbox()
+ if attack_tool == TOOLS.Type.PICKAXE:
+  return Rect2(global_position+Vector2(-8 if facing>0 else -48,-60),Vector2(56,66))
+ return Rect2(global_position+Vector2(13 if facing>0 else -51,-24),Vector2(38,34))
+
+func is_pickaxe_active() -> bool:
+ return controls_enabled and health>0 and attack_tool == TOOLS.Type.PICKAXE and attack_active > 0 and attack_visual_timer > 0 and dash_timer <= 0
+
+func can_intercept_bird(enemy: CharacterBody2D) -> bool:
+ if not is_pickaxe_active() or not enemy.alive or enemy.kind != "ave" or enemy.state != "attack": return false
+ var relative: Vector2 = enemy.global_position-global_position
+ return enemy.dive_direction.y>0.25 and relative.y <= -6 and relative.y >= -66 and relative.x*facing >= -8 and absf(relative.x)<=52 and get_tool_hitbox().intersects(enemy.get_hurtbox())
+
+func try_intercept_bird(enemy: CharacterBody2D) -> bool:
+ if not can_intercept_bird(enemy) or tool_hit_ids.has(enemy.get_instance_id()): return false
+ if enemy.damage_recovery > 0: return false
+ tool_hit_ids[enemy.get_instance_id()] = true
+ enemy._attack_hit_sent = true
+ enemy._contact_damage_timer = 0.6
+ enemy.take_hit(int(TOOLS.DATA[TOOLS.Type.PICKAXE]["damage"]),global_position.x)
+ return true
+
+func sling_origin() -> Vector2:
+ return global_position+Vector2(facing*22,-12)
+
+func sling_velocity() -> Vector2:
+ return Vector2(facing*TOOLS.PROJECTILE_SPEED.x,TOOLS.PROJECTILE_SPEED.y)
 
 func _setup_visual() -> void:
  animated_sprite = preload("res://scripts/sprite_atlas.gd").create("res://assets/production/v2/bunny.png", {
@@ -245,7 +323,7 @@ func _update_animation(axis: float) -> void:
  if is_instance_valid(attack_sprite):
   var attacking := attack_visual_timer > 0 and health > 0
   if attacking:
-   attack_sprite.frame = mini(ATTACK_FRAME_COUNT-1, int((ATTACK_VISUAL_DURATION-attack_visual_timer) * ATTACK_FRAME_COUNT / ATTACK_VISUAL_DURATION))
+   attack_sprite.frame = mini(ATTACK_FRAME_COUNT-1, int((attack_total-attack_visual_timer) * ATTACK_FRAME_COUNT / attack_total))
   attack_sprite.visible = attacking and animated_sprite.visible
   attack_sprite.flip_h = attack_facing < 0
   if attacking: animated_sprite.visible = false
@@ -309,6 +387,8 @@ func _physics_process(delta: float) -> void:
   jump_press_pending = false
   dash_press_pending = false
   buffered_attack = 0.0
+  aiming = false
+  switch_press_pending = false
   if not Input.is_action_pressed("jump"): glide_requested = false
   velocity = Vector2.ZERO
   if is_instance_valid(attack_sprite): attack_sprite.speed_scale = 0
@@ -322,6 +402,15 @@ func _physics_process(delta: float) -> void:
  invincible_timer = maxf(0.0, invincible_timer - delta)
  hammer_timer = maxf(0.0, hammer_timer - delta)
  attack_active = maxf(0.0, attack_active - delta)
+ switch_remaining = maxf(0.0,switch_remaining-delta)
+ switch_name_timer = maxf(0.0,switch_name_timer-delta)
+ if switch_press_pending or Input.is_action_just_pressed("switch_tool"): request_tool_switch()
+ switch_press_pending = false
+ if queued_switch and attack_visual_timer <= 0 and dash_timer <= 0: request_tool_switch()
+ if attack_visual_timer > 0:
+  var cfg: Dictionary = TOOLS.DATA[attack_tool]
+  var elapsed := attack_total-attack_visual_timer
+  attack_active = maxf(0.0,float(cfg["windup"])+float(cfg["active"])-elapsed) if elapsed >= float(cfg["windup"]) else 0.0
  dash_cooldown_timer = maxf(0.0, dash_cooldown_timer-delta)
  buffered_attack = maxf(0.0, buffered_attack-delta)
  jump_tap_timer = maxf(0.0, jump_tap_timer-delta)
@@ -383,17 +472,24 @@ func _physics_process(delta: float) -> void:
   ground_bounce_count += 1
   velocity.y = STOMP_GROUND_BOUNCE
  _was_on_floor = is_on_floor()
- if Input.is_action_just_pressed("attack"):
+ if Input.is_action_just_pressed("attack") and switch_remaining <= 0:
   if dashing:
    buffered_attack = dash_attack_buffer_time
-  elif hammer_timer <= 0:
+  elif equipped_tool==TOOLS.Type.SLINGSHOT or hammer_timer <= 0:
    _begin_attack()
  if dash_timer <= 0 and buffered_attack > 0 and hammer_timer <= 0:
   buffered_attack = 0.0
   _begin_attack()
- if attack_active > 0 and not _hammer_hit_sent:
-  _hammer_hit_sent = true
-  hammer_used.emit(get_hammer_hitbox())
+ if aiming and Input.is_action_just_released("attack"):
+  aiming = false
+  if hammer_timer <= 0 and dash_timer <= 0 and switch_remaining <= 0:
+   sling_released.emit(sling_origin(),sling_velocity())
+ if attack_active > 0:
+  if attack_tool == TOOLS.Type.HAMMER and not _hammer_hit_sent:
+   _hammer_hit_sent = true
+   hammer_used.emit(get_hammer_hitbox())
+  elif attack_tool != TOOLS.Type.HAMMER:
+   tool_used.emit(get_tool_hitbox(),attack_tool,int(TOOLS.DATA[attack_tool]["damage"]))
  if Input.is_action_just_pressed("craft") and not dashing:
   box_requested.emit()
  if global_position.y > pit_warning_y and velocity.y > 0 and not is_on_floor() and not pit_announced:

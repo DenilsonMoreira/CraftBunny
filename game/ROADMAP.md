@@ -2,6 +2,18 @@
 
 **Regra de uso:** `[x]` = testado/verificado no projeto, `[ ]` = pendente. Recursos já codificados no protótipo mas **não testados** continuam pendentes. **Prioridade máxima:** estabilizar o build antes de adicionar assets ou efeitos.
 
+## Escopo adicional autorizado — Ferramentas 0.5.0
+- [x] Ciclo I, Dash L, HUD/som de troca, danos 1/2/3/3 e tempos configuráveis: 68 checks em tools/test_tools.gd.
+- [x] Picareta 0,30/0,20/0,50 s e interceptação frontal/superior sem imunidade geral; casos lateral e fora da janela validados.
+- [x] Estilingue com mira móvel, parábola, colisão, consumo de cenoura e ranking pelo saldo; integração local Godot/API/PostgreSQL aprovada.
+- [x] Fase editável com duas árvores-ponte e duas rochas guardando cenouras: 15 checks físicos, incluindo travessias reais.
+- [x] Analógico esquerdo preservado e círculos com ícones: 25 checks de toque e seis capturas OpenGL.
+- [x] Estrutura modular de 12 passos e 32 slots SpriteFrames, com fallback provisório e substituição por recurso final testada.
+- [ ] Produzir/revisar artes finais das novas variantes e dos obstáculos; não confundir poses provisórias com 12 desenhos finais por sequência.
+- [ ] Playtest humano completo, sensação das ferramentas/parry e ergonomia em Android físico.
+
+Relatório, arquivos e limitações: ../docs/TOOLS_050.md. Este escopo não conclui automaticamente os marcos gerais abaixo.
+
 ## M0 — Auditoria e inicialização (bloqueante)
 - [ ] Importar projeto em Godot 4.3+ sem erros de parser.
 - [ ] Abrir `main.tscn`; entrar em Novo Jogo e conseguir mover o personagem.
@@ -19,14 +31,14 @@
 - [ ] Verificar coyote time de 0,12 s e jump buffer de 0,12 s.
 - [ ] Corrigir salto de altura variável, clipping e aterrissagem nas bordas.
 - [ ] Câmera suavizada, com limites horizontais e verticais; parallax sem tremor.
-- [ ] Invulnerabilidade de 1 s, indicação visual e knockback.
+- [ ] Invulnerabilidade atual de 0,5 s, indicação visual e knockback em playtest humano.
 **Pronto quando:** personagem atravessa sequência de teste sem bugs de física e sem sair dos limites de câmera.
 
 ## M2 — Combate e inimigos
 - [ ] Cobra: 2 HP, 1 dano, 1 cenoura; patrulha + bote + recuperação.
 - [ ] Guaxinim: 5 HP, 2 danos, 3 cenouras; patrulha + perseguição + investida.
 - [ ] Ave: 7 HP, 3 danos, 5 cenouras; voo + telegraph + mergulho + recuperação.
-- [ ] Martelo: 1 HP por acerto, hitbox 0,12 s, cooldown 0,42 s, 1 acerto por alvo/golpe.
+- [ ] Martelo: 1 HP por acerto, hitbox 0,12 s, cooldown atual 0,35 s, 1 acerto por alvo/golpe em playtest humano.
 - [ ] Verificar frames de invulnerabilidade e que danos simultâneos não atravessam proteção.
 - [ ] Testar mortes, despawn/drops, colisão, knockback e ausência de dano depois da morte.
 **Pronto quando:** todos os três inimigos podem ser derrotados e seus ataques funcionam como especificado.

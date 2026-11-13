@@ -15,6 +15,7 @@ const BUTTONS := [
  {"area": Rect2(742,446,78,78), "action":"attack", "label":"GOLPE"},
  {"area": Rect2(650,446,78,78), "action":"craft", "label":"CAIXA"},
  {"area": Rect2(742,350,78,78), "action":"dash", "label":"DASH"},
+ {"area": Rect2(650,350,78,78), "action":"switch_tool", "label":""},
  {"area": Rect2(886,90,50,44), "action":"pause", "label":"II"}
 ]
 
@@ -99,7 +100,8 @@ func handle_touch(index: int, point: Vector2, pressed: bool) -> void:
   get_viewport().set_input_as_handled()
   return
  for button in BUTTONS:
-  if not button["area"].has_point(local): continue
+  var area: Rect2 = button["area"]
+  if local.distance_to(area.get_center()) > minf(area.size.x,area.size.y)/2.0: continue
   var action: String = button["action"]
   if action == "pause":
    if pressed:
@@ -123,12 +125,16 @@ func _draw() -> void:
   var action: String = button["action"]
   var rect: Rect2 = button["area"]
   var pressed: bool = action in fingers.values()
-  var style := preload("res://scripts/ui_theme.gd").wood(true,Color(0.65,0.90,0.55) if pressed else Color(1,1,1,0.90))
-  draw_style_box(style,rect)
-  var font := preload("res://scripts/ui_theme.gd").pixel_font()
-  var label: String = button["label"]
-  var text_size := font.get_string_size(label,HORIZONTAL_ALIGNMENT_LEFT,-1,16)
-  draw_string(font,Vector2(rect.get_center().x-text_size.x/2,rect.get_center().y+6),label,HORIZONTAL_ALIGNMENT_LEFT,-1,16,Color("fff0cf"))
+  var ring := _pixel_ring(rect.get_center(),minf(rect.size.x,rect.size.y)/2.0-2)
+  draw_colored_polygon(ring,Color(.14,.24,.17,.80) if pressed else Color(.15,.19,.14,.60))
+  var edge := ring.duplicate()
+  edge.append(ring[0])
+  draw_polyline(edge,Color("f0cf87"),2)
+  var icon := action
+  if action=="attack" and is_instance_valid(game):
+   icon = preload("res://scripts/tool_catalog.gd").KEYS[game.player.equipped_tool]
+   if game.player.aiming: draw_polyline(edge,Color("ffe867"),4)
+  preload("res://scripts/tool_icons.gd").draw_icon(self,icon,rect.get_center(),1.0)
 
 func _pixel_ring(center: Vector2, radius: float) -> PackedVector2Array:
  var points := PackedVector2Array()

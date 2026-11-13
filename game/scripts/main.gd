@@ -54,6 +54,7 @@ var global_ranking: Node
 var global_status: Label
 var local_reset_pending := false
 var level: Node2D
+var obstacle_hints: Dictionary = {}
 
 func _ready() -> void:
 	if OS.has_feature("android"): get_tree().quit_on_go_back = false
@@ -91,6 +92,9 @@ func _ready() -> void:
 	player.died.connect(_on_player_died)
 	player.pit_falling.connect(_on_pit_falling)
 	player.stomped.connect(_on_player_stomped)
+	player.tool_used.connect(_on_tool_used)
+	player.sling_released.connect(_on_sling_released)
+	player.tool_changed.connect(func(_tool): _update_hud())
 	_populate_level()
 	_create_hud()
 	global_ranking = preload("res://scripts/global_ranking.gd").new()
@@ -122,7 +126,7 @@ func _create_audio_player(player_name: String, stream: AudioStream, bus_name: St
 	return player_node
 
 func _setup_inputs() -> void:
-	var bindings := {"move_left": [KEY_A,KEY_LEFT],"move_right":[KEY_D,KEY_RIGHT],"jump":[KEY_SPACE,KEY_W,KEY_UP],"dash":[KEY_I],"attack":[KEY_J],"craft":[KEY_K],"pause_game":[KEY_ESCAPE,KEY_P]}
+	var bindings := {"move_left": [KEY_A,KEY_LEFT],"move_right":[KEY_D,KEY_RIGHT],"jump":[KEY_SPACE,KEY_W,KEY_UP],"dash":[KEY_L],"switch_tool":[KEY_I],"attack":[KEY_J],"craft":[KEY_K],"pause_game":[KEY_ESCAPE,KEY_P]}
 	for action in bindings.keys():
 		if not InputMap.has_action(action): InputMap.add_action(action)
 		for key in bindings[action]:
@@ -131,7 +135,7 @@ func _setup_inputs() -> void:
 			if not InputMap.action_has_event(action,event): InputMap.action_add_event(action,event)
 
 func _generate_level() -> void:
-	level = load("res://scenes/level_wide/fase_compacta.tscn").instantiate()
+	level = load("res://scenes/level_wide/fase_ferramentas.tscn").instantiate()
 	add_child(level)
 	for rect in level.solid_rects():
 		rocks.append([rect.get_center().x,rect.get_center().y,rect.size.x,rect.size.y])
@@ -272,6 +276,9 @@ func _on_enemy_defeated(enemy: CharacterBody2D,reward: int) -> void:
 
 func _on_box_requested() -> void:
 	if is_finished or not game_started: return
+	if player.equipped_tool != player.TOOLS.Type.HAMMER or player.switch_remaining > 0:
+		show_message("Equipe o martelo para construir (I).",1.5)
+		return
 	if wood_count < 3:
 		show_message("Você tem %d tábua(s). Precisa de 3; cenouras não constroem caixas." % wood_count,2.7)
 		return
@@ -301,6 +308,8 @@ func _find_box_position() -> Variant:
 	for crate in get_tree().get_nodes_in_group("crates"):
 		if not is_instance_valid(crate) or crate.is_queued_for_deletion(): continue
 		supports.append({"rect": Rect2(crate.global_position-Vector2.ONE*BOX_SIZE/2,Vector2.ONE*BOX_SIZE), "snap": true})
+	for bridge in get_tree().get_nodes_in_group("bridges"):
+		if bridge.bridge_ready: supports.append({"rect":bridge.bridge_rect(),"snap":false})
 	supports.sort_custom(func(a: Dictionary,b: Dictionary) -> bool: return a["rect"].position.y < b["rect"].position.y)
 	for support in supports:
 		var rect: Rect2 = support["rect"]
@@ -332,20 +341,61 @@ func _find_box_position() -> Variant:
 func _on_hammer_used(hitbox: Rect2) -> void:
 	if not game_started or is_finished: return
 	if is_instance_valid(hammer_player): hammer_player.play()
+	_on_tool_used(hitbox,player.TOOLS.Type.HAMMER,1)
+
+func _on_tool_used(hitbox: Rect2, tool: int, damage: int) -> void:
+	if not game_started or is_finished: return
+	if tool!=player.TOOLS.Type.HAMMER and not player._hammer_hit_sent:
+		player._hammer_hit_sent = true
+		hammer_player.play()
 	for enemy in get_tree().get_nodes_in_group("enemy"):
 		if not is_instance_valid(enemy) or not enemy.alive: continue
+		if tool!=player.TOOLS.Type.HAMMER and player.tool_hit_ids.has(enemy.get_instance_id()): continue
 		var bounds: Rect2 = enemy.get_hurtbox()
 		if hitbox.intersects(bounds):
-			enemy.take_hit(1,player.global_position.x)
+			if tool==player.TOOLS.Type.PICKAXE and enemy.kind=="ave" and enemy.state=="attack":
+				player.try_intercept_bird(enemy)
+				continue
+			var old_hp: int = enemy.hp
+			enemy.take_hit(damage,player.global_position.x)
+			if tool!=player.TOOLS.Type.HAMMER and enemy.hp != old_hp: player.tool_hit_ids[enemy.get_instance_id()] = true
+	for obstacle in get_tree().get_nodes_in_group("tool_obstacles"):
+		if player.tool_hit_ids.has(obstacle.get_instance_id()): continue
+		if hitbox.intersects(obstacle.hit_rect()):
+			if obstacle.apply_tool(tool): player.tool_hit_ids[obstacle.get_instance_id()] = true
+	if tool!=player.TOOLS.Type.HAMMER: return
 	for crate in get_tree().get_nodes_in_group("crates"):
 		if not is_instance_valid(crate): continue
 		var bounds := Rect2(crate.global_position-Vector2(21,21),Vector2(42,42))
 		if hitbox.intersects(bounds): crate.take_hammer_hit()
 
+func _on_sling_released(origin: Vector2, launch_velocity: Vector2) -> void:
+	if not game_started or is_finished or carrot_count < 1:
+		if carrot_count < 1: show_message("Sem cenouras para disparar.",1.2)
+		return
+	var projectile := preload("res://scripts/carrot_projectile.gd").new()
+	projectile.owner_player = player
+	projectile.game = self
+	projectile.position = origin
+	projectile.velocity = launch_velocity
+	add_child(projectile)
+	player.attack_tool = player.TOOLS.Type.SLINGSHOT
+	var duration: float = player.TOOLS.DATA[player.TOOLS.Type.SLINGSHOT]["total"]
+	player.attack_total = duration
+	player.attack_visual_timer = duration
+	player.hammer_timer = duration
+	carrot_count -= 1
+	_update_hud()
+
 func _on_health_changed(_hp: int) -> void: _update_hud()
 
 func _physics_process(delta: float) -> void:
 	if not game_started or is_finished: return
+	if is_instance_valid(status_hud): status_hud.update_equipment(player.equipped_tool,player.aiming,player.switch_name_timer)
+	for obstacle in get_tree().get_nodes_in_group("tool_obstacles"):
+		if not obstacle_hints.has(obstacle.get_instance_id()) and player.position.distance_to(obstacle.global_position)<200:
+			obstacle_hints[obstacle.get_instance_id()] = true
+			show_message("Equipe o machado e corte a árvore para formar uma ponte." if obstacle.kind=="tree" else "Equipe a picareta para abrir a passagem nas rochas.",4.0)
 	if status_timer>0:
 		status_timer -= delta
 		if status_timer<=0 and is_instance_valid(info): info.text = ""
@@ -438,7 +488,7 @@ func _create_hud() -> void:
 	info.add_theme_constant_override("outline_size",4)
 	hud.add_child(info)
 	var instructions := Label.new()
-	instructions.text = "A/D mover · Espaço pulo / 2 toques planar · I dash · J martelo · K caixa · ESC opções"
+	instructions.text = "A/D mover · Espaço pulo/planar · J ação/mira · K caixa · I ferramenta · L dash · ESC pausa"
 	instructions.position = Vector2(20,504)
 	instructions.add_theme_color_override("font_color",Color("ffffff"))
 	instructions.add_theme_color_override("font_outline_color",Color("30251f"))
@@ -457,6 +507,7 @@ func _create_hud() -> void:
 func _update_hud() -> void:
 	if not is_instance_valid(status_hud) or not is_instance_valid(player): return
 	status_hud.update_values(player.health, carrot_count, wood_count)
+	status_hud.update_equipment(player.equipped_tool,player.aiming,player.switch_name_timer)
 
 func _clear_overlay() -> void:
 	local_reset_pending = false
@@ -650,12 +701,12 @@ func _show_controls() -> void:
 	if is_instance_valid(mobile_controls):
 		var content := _create_overlay("CONTROLES DE TOQUE")
 		var help := Label.new()
-		help.text = "ANALÓGICO: andar\nPULO: saltar; toque novamente e segure para planar\nDASH: arrancada\nGOLPE: martelo\nCAIXA: construir (3 tábuas)\nII: pausar e retomar\n\nUse vários dedos para combinar as ações."
+		help.text = "Analógico: andar\nSeta para cima: pulo / duplo toque e segurar para planar\nFerramenta: ação / segurar e soltar para estilingue\nSetas circulares: trocar ferramenta\nSetas duplas: Dash\nCaixa: construir com martelo (3 tábuas)\nBarras: pausa"
 		content.add_child(help)
 		_button(content,"VOLTAR",_show_settings)
 		return
 	var content := _create_overlay("CONTROLES")
-	var keys := {"move_left":"Mover esquerda","move_right":"Mover direita","jump":"Pular / planar (2 toques)","dash":"Dash","attack":"Martelar","craft":"Construir","pause_game":"Pausar"}
+	var keys := {"move_left":"Mover esquerda","move_right":"Mover direita","jump":"Pular / planar (2 toques)","dash":"Dash","switch_tool":"Trocar ferramenta","attack":"Ação / mirar","craft":"Construir","pause_game":"Pausar"}
 	for action in keys:
 		var control_button := Button.new()
 		control_button.custom_minimum_size.y = 40
@@ -689,7 +740,8 @@ func _apply_binding(event: InputEventKey) -> void:
 
 func _save_controls() -> void:
 	var cfg := ConfigFile.new()
-	for action in ["move_left","move_right","jump","dash","attack","craft","pause_game"]:
+	cfg.set_value("meta","schema",2)
+	for action in ["move_left","move_right","jump","dash","switch_tool","attack","craft","pause_game"]:
 		var events := InputMap.action_get_events(action)
 		if events.size()>0 and events[0] is InputEventKey:
 			cfg.set_value("keys",action,events[0].physical_keycode)
@@ -698,11 +750,12 @@ func _save_controls() -> void:
 func _load_controls() -> void:
 	var cfg := ConfigFile.new()
 	if cfg.load(controls_file)!=OK: return
-	for action in ["move_left","move_right","jump","dash","attack","craft","pause_game"]:
+	for action in ["move_left","move_right","jump","dash","switch_tool","attack","craft","pause_game"]:
 		if not cfg.has_section_key("keys",action): continue
 		var raw: Variant = cfg.get_value("keys",action)
 		if typeof(raw) != TYPE_INT: continue
 		var physical := int(raw)
+		if action=="dash" and physical==KEY_I and int(cfg.get_value("meta","schema",1))<2: continue
 		if physical <= 0: continue
 		InputMap.action_erase_events(action)
 		var ev := InputEventKey.new()

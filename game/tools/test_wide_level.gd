@@ -54,8 +54,8 @@ func _run() -> void:
  var gaps_ok := true
  for index in range(1,branches.size()):
   var gap: float = branches[index].surface_rect().position.x-branches[index-1].surface_rect().end.x
-  gaps_ok = gaps_ok and absf(gap-64)<0.1
- check(gaps_ok,"branch gaps stay 64px instead of shrinking with map length")
+  gaps_ok = gaps_ok and (absf(gap-64)<0.1 or (gap>=1024 and gap<=1152))
+ check(gaps_ok,"branch gaps remain 64px except the two authorized tree chasms")
  game.player.set_physics_process(false)
  game.player.position = Vector2(1000,894)
  game.player.velocity = Vector2.ZERO

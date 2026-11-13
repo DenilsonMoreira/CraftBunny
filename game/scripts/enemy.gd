@@ -94,6 +94,7 @@ func _physics_process(delta: float) -> void:
  timer += delta
  attack_timer = maxf(0.0, attack_timer - delta)
  _contact_damage_timer = maxf(0.0, _contact_damage_timer - delta)
+ if kind=="ave" and is_instance_valid(player) and player.has_method("try_intercept_bird") and player.try_intercept_bird(self): return
  if kind=="ave" and state=="grounded":
   damage_recovery = maxf(0,damage_recovery-delta)
   velocity = Vector2(0,GRAVITY*delta)
@@ -140,6 +141,7 @@ func _physics_process(delta: float) -> void:
   if kind == "ave":
    velocity = dive_direction * BIRD_DIVE_SPEED
    blocked_dive = move_and_collide(velocity*delta) != null
+   if player.has_method("try_intercept_bird") and player.try_intercept_bird(self): return
   else:
    velocity.x = facing * (205.0 if kind == "cobra" else 190.0)
    velocity.y += GRAVITY*delta

@@ -1,6 +1,6 @@
 # Craft Bunny 🐰🔨 — Godot 4
 
-> **Status:** protótipo v0.4.3 com martelo sem recorte, planar na escala normal e fase editável de 24.000 px em três alturas; QA completo e duração pendentes de playtest. **Objetivo:** concluir uma versão 1.0 jogável de **uma única fase**, com pontuação por cenouras e ranking local/global. **Engine validada:** Godot 4.7.2 / GDScript / 2D.
+> **Status:** protótipo v0.5.0 com quatro ferramentas, projétil/mira, árvores-ponte, rochas quebráveis e botões touch circulares. Artes novas de ferramentas/personagem são provisórias; percurso completo e Android físico pendentes de playtest. **Objetivo:** concluir uma versão 1.0 jogável de **uma única fase**. **Engine validada:** Godot 4.7.2 / GDScript / 2D.
 
 ## O jogo
 
@@ -10,11 +10,11 @@
 
 ## Iniciar e testar
 
-**Fase atual 0.4.1:** `scenes/level_wide/fase_compacta.tscn`, editável na área 2D, com floresta, copa e subsolo. 140 cenouras no mapa + 60 de inimigos = 200. Quatro desníveis exigem caixas; aves pousam por 0,5 s após atacar. Guia em `../docs/COMPACT_LEVEL_041.md`. Geometria anterior e exemplo inicial preservados.
+**Fase atual 0.5.0:** `scenes/level_wide/fase_ferramentas.tscn`, editável na área 2D, com floresta, copa e subsolo. 140 cenouras no mapa + 60 de inimigos = 200 antes de gastar munição. Dois buracos exigem árvores derrubadas com machado; duas passagens com cenouras visíveis exigem picareta. Quatro desníveis da escada continuam exigindo caixas; aves pousam por 0,5 s após atacar. Guia em `../docs/TOOLS_050.md`. Cenas anteriores e exemplo inicial preservados.
 
 **Aprender a editar a fase visualmente:** abra `scenes/editor_example/fase_exemplo.tscn` e pressione **F6**. Contém terra pintável com colisão, início do coelho e uma cobra arrastáveis. F5 continua no jogo principal. Guia passo a passo em `docs/EDITABLE_EXAMPLE.md`.
 
-Windows atual: `builds/windows-0.4.3/CraftBunny-0.4.3.exe`. Abrir a pasta antiga não atualiza o jogo de PC. Histórico em `docs/WINDOWS_BUILD.md`; correção em `../docs/SPRITE_LAYOUT_043.md`.
+Windows atual: `builds/windows-0.5.0/CraftBunny-0.5.0.exe`. Abrir a pasta antiga não atualiza o jogo de PC. Histórico em `docs/WINDOWS_BUILD.md`; atualização em `../docs/TOOLS_050.md`.
 
 RECORDES → ZERAR RANKING LOCAL pede confirmação antes de apagar os recordes deste aparelho. Cancelar preserva os dados; a ação não afeta o ranking global. Detalhes em ../docs/LOCAL_RESET_AND_RANKING_LAYOUT.md.
 
@@ -24,9 +24,9 @@ Título, opções e controles com tema pixel art; inimigos exibem balão de dete
 
 Atualização visual: mundo ampliado em 25% pela câmera, com colisões preservadas. Ataque exclusivo do coelho em 12 quadros, martelo maior e alcance frontal de 32 unidades. Detalhes e testes em assets/production/v2/bunny_attack_12.md.
 
-Versão Android atual em builds/CraftBunny-Android-0.4.3.apk, com analógico semitransparente, botão DASH e PULO com duplo toque/segurar para planar. Paisagem e mínimo API 24. Envio automático de recorde elegível. APKs não são versionados. Instalação e limitações em docs/ANDROID_BUILD.md. Playtest físico pendente.
+Versão Android atual em builds/CraftBunny-Android-0.5.0.apk, com analógico semitransparente à esquerda e círculos com ícones para pulo, ação, caixa, troca, Dash e pausa. Duplo toque/segurar no pulo plana; segurar/soltar a ação mira/dispara estilingue. Paisagem e mínimo API 24. APKs não são versionados. Playtest físico pendente.
 
-Retenção local: manter apenas os dois builds completos mais recentes. Após exportar EXE, ZIP e APK, `./tools/prune_builds.ps1 -Keep 2` lista as versões antigas; `-Apply` realiza a limpeza. Em 2026-11-13 foram mantidas 0.4.3 e 0.4.2, removendo 23 entradas antigas e liberando cerca de 2,09 GB. Documentos históricos podem citar builds já removidos; fontes, artes e histórico Git permanecem.
+Retenção local: manter apenas os dois builds completos mais recentes. Após exportar EXE, ZIP e APK, `./tools/prune_builds.ps1 -Keep 2` lista as versões antigas; `-Apply` realiza a limpeza. Atualmente mantidas **0.5.0 e 0.4.3**. A limpeza anterior da 0.4.3 liberou ~2,09 GB; a atualização 0.5.0 removeu a 0.4.2, liberando mais ~430 MB. Documentos históricos podem citar builds removidos; fontes, artes e histórico Git permanecem.
 
 1. Instale **Godot 4.3 ou superior**.
 2. Abra o gerenciador de projetos da Godot, clique em **Importar** e escolha `project.godot` nesta pasta.
@@ -40,14 +40,34 @@ Retenção local: manter apenas os dois builds completos mais recentes. Após ex
 |---|---|
 | Andar | A/D ou setas esquerda/direita |
 | Saltar | Espaço/W/seta cima |
-| Dash | I |
+| Alternar ferramenta | I |
+| Dash | L |
 | Planar | Segundo toque no pulo em até 0,35 s; segurar durante a descida |
-| Martelar | J |
-| Construir caixa | K |
+| Ação principal / segurar para mirar e soltar para disparar | J |
+| Construir caixa com martelo | K |
 | Pausar | Esc/P |
 | Reiniciar tentativa | R |
 
 As teclas devem ser remapeáveis nas opções. Reiniciar começa sempre do início.
+
+### Ferramentas — 0.5.0
+
+I alterna **martelo → machado → picareta → estilingue → martelo**. O HUD mostra ícone/nome, destaca a troca e usa `music/item-switch.mp3`. A troca leva 0,24 s sem parar movimento/pulo; pedidos feitos durante ataque/Dash aguardam o fim da ação. Trocar, receber dano, pausar ou iniciar Dash cancela a mira sem gastar munição. Preferências antigas com Dash em I migram para L; demais teclas personalizadas são preservadas.
+
+| Ferramenta | Dano | Tempo | Utilidade |
+|---|---|---|---|
+| Martelo | 1 HP | 0,35 s; janela ativa 0,12 s | Combate, construir por 3 tábuas e destruir caixas de 2 HP |
+| Machado | 2 HP | 0,55 s; preparação 0,10 s, ativa 0,12 s | Combate e árvores marcadas |
+| Picareta | 3 HP | 1,00 s: preparação 0,30 / ativa 0,20 / recuperação 0,50 | Rochas marcadas e interceptar ave frontal/de cima durante a janela ativa |
+| Estilingue | 3 HP | Recuperação 0,35 s após disparo válido | Gasta 1 cenoura por disparo; não dispara sem saldo |
+
+Estilingue: segure J para ver a parábola e continuar andando; solte para disparar. Velocidade inicial `(±390, -230)` px/s, gravidade 900 px/s², colisão contínua com inimigos/cenário e duração máxima 4 s. Munição é descontada uma vez ao criar o projétil; ranking local e envio global usam **somente cenouras restantes**, sem alterar dados de recordes antigos. Interceptação da picareta aplica 3 HP/knockback e cancela aquele mergulho; preparação, recuperação e ataques laterais continuam vulneráveis.
+
+A fase contém árvores em X≈2.008 e 14.296, criando pontes sobre vãos de 1.024 px; três golpes de machado e queda previsível para a direita (0,65 s). Passagens baixas com rochas em X=6.144 e 18.432 guardam 12 cenouras existentes; três golpes de picareta abrem cada passagem. Há rachaduras, fragmentos e som provisório. Sem áreas secretas nem novos recursos consumidos pelos obstáculos. F6 pela cena encaminha ao menu; F5 abre o jogo.
+
+Animações: martelo conserva os sprites existentes, incluindo ataque/Dash de 12 quadros. Machado, picareta, estilingue e switch usam **poses modulares provisórias em 12 passos**, sem afirmar 12 artes finais distintas. `assets/production/tools/tool_frames_template.tres` oferece 32 slots nomeados `ferramenta/estado`; `final_tool_frames` no jogador recebe SpriteFrames finais e substitui apenas estados preenchidos. Padrão e instruções em `assets/production/tools/README.md`.
+
+Configuração central em `scripts/tool_catalog.gd`; obstáculos têm propriedades exportadas no editor. Testes: `godot --headless --path . --script res://tools/test_tools.gd` e `... --script res://tools/test_tool_level.gd`. Relatório completo em `../docs/TOOLS_050.md`.
 
 ### Dash e planar — 0.4.2
 
@@ -59,7 +79,7 @@ Valores ajustáveis exportados em `scripts/player.gd`: `dash_speed`, `dash_durat
 
 Testes reproduzíveis: `godot --headless --path . --script res://tools/test_mobility.gd` e `godot --path . --rendering-method gl_compatibility --script res://tools/test_mobility_visual.gd`. O segundo usa câmera lenta para inspeção e capturas. Relatório e testes manuais pendentes em `../docs/MOVEMENT_ABILITIES_042.md`.
 
-Construção: aproxime-se de um apoio e pressione K (padrão). Caixas podem ser empilhadas ao mirar uma caixa próxima; para atingir níveis mais altos, suba ou salte e deixe livre o espaço da nova caixa. Cada construção custa três tábuas; cenouras são apenas pontuação.
+Construção: equipe martelo, aproxime-se de um apoio e pressione K. Caixas podem ser empilhadas ao mirar outra caixa; para níveis altos, suba ou salte e deixe livre o novo espaço. Cada construção custa três tábuas; cenouras são pontuação e munição do estilingue.
 
 ## Regras definitivas v1.0
 
@@ -67,7 +87,7 @@ Construção: aproxime-se de um apoio e pressione K (padrão). Caixas podem ser 
 |---|---|
 | Vida inicial do coelho | **3 HP = 3 corações** |
 | Coração coletável | +1 HP, máximo 3 |
-| Invulnerabilidade após dano | **1,0 segundo** |
+| Invulnerabilidade após dano | **0,5 segundo** |
 | Martelada | **1 dano** por golpe validado |
 | Pisão | **1 dano** ao cair por cima do inimigo; impulso de retorno e um quique no chão |
 | Cobra | **2 HP**, **1 dano**, derruba **1 cenoura** |
@@ -75,7 +95,7 @@ Construção: aproxime-se de um apoio e pressione K (padrão). Caixas podem ser 
 | Ave de rapina | **7 HP**, **3 danos**, derruba **5 cenouras** |
 | Tábuas | sem limite de quantidade carregada |
 | Caixa | custa **3 tábuas**, possui **2 HP** e **só o coelho pode destruí-la** |
-| Cenouras | +1 ponto por cenoura, nenhuma outra função |
+| Cenouras | +1 ponto ao coletar; estilingue consome 1 por disparo; ranking considera o saldo |
 | Coletáveis | flutuam pouco acima do chão; coletados por contato |
 | Fim da fase | tocar/entrar na área da **casa do coelhinho** |
 | Derrota | HP = 0 ou queda fora da fase, sem checkpoint |
@@ -87,9 +107,9 @@ Construção: aproxime-se de um apoio e pressione K (padrão). Caixas podem ser 
 ### Física e combate — valores iniciais para teste (não balanceamento final)
 
 - `SPEED = 230 px/s`, `ACCELERATION = 1250 px/s²`, `FRICTION = 1600 px/s²`.
-- Gravidade `1150 px/s²`; impulso vertical `-311 px/s` (altura ideal aproximada **42 px**, equivalente à altura-alvo inicial do coelho). Ajustar **somente em playtest** após confirmar a escala do sprite/collision shape.
+- Gravidade `1150 px/s²`; impulso vertical preservado em `-340 px/s` (altura ideal ~50 px, próxima à altura visual do coelho). Não houve ajuste do pulo nesta versão.
 - **Coyote time = 0,12 s** e **jump buffer = 0,12 s**.
-- Hitbox ativa do martelo **0,12 s**; intervalo entre marteladas **0,42 s**; impedir múltiplos acertos no mesmo alvo por golpe.
+- Hitbox ativa do martelo **0,12 s**; intervalo entre marteladas **0,35 s**; um acerto por alvo por golpe.
 - Knockback no coelho ao receber dano: ~**215 px/s horizontal**, **-190 px/s vertical**.
 - Recuperação após martelada em inimigo: **0,28 s**; recuperação pós-ataque: ~**0,35 s**.
 - IA com **patrulha → detecção → perseguição → aviso/ataque → recuperação**; cobra detecta 185 px, guaxinim 275 px, ave 315 px. A ave anuncia o mergulho para o jogador poder reagir.
@@ -105,7 +125,7 @@ Construção: aproxime-se de um apoio e pressione K (padrão). Caixas podem ser 
 | 4. Copas das árvores | 55–80% | Aves, elevação, risco/recompensa |
 | 5. Última travessia | 80–100% | Misturar ameaças, aumentar densidade, chegar à casa |
 
-**Regra de design:** não criar saltos impossíveis com o pulo padrão nem trechos obrigatórios que consumam mais tábuas do que o jogador pode obter. O jogo precisa ser concluível mesmo após erros razoáveis; não depender de um único item perdido para completar a fase. Sem checkpoints significa que justiça, legibilidade e telegraph de ataques são essenciais.
+**Regra de design:** saltos comuns devem respeitar pulo/caixas disponíveis. Os dois grandes vãos sinalizados são desafios de árvore/machado, com ferramenta sempre disponível e ponte permanente durante a tentativa. Não consumir mais tábuas do que o jogador pode obter nem depender de um único item perdido. Sem checkpoints significa que justiça, legibilidade e aviso de ataques são essenciais.
 
 ## Arquivos existentes
 
@@ -118,7 +138,7 @@ Construção: aproxime-se de um apoio e pressione K (padrão). Caixas podem ser 
 - `scripts/pickup.gd`: itens coletáveis.
 - `scripts/parallax.gd`: fundo provisório.
 
-**Arte atual:** placeholders desenhados via `_draw()`. As folhas de pixel art feitas durante o planejamento são referências visuais e **não estão integradas ao protótipo**. Tratar folhas com títulos/quadros como concept sheets; **não presumir que são sprite atlases prontos** para `AnimatedSprite2D`. Pode ser necessário recortar, remover fundos, padronizar dimensões e revisar frames. Consultar `docs/ASSETS.md`.
+**Arte atual:** sprites de produção v2/v3 já integrados ao jogo; novas ferramentas, suas poses e alguns obstáculos usam placeholders técnicos organizados. Referências com títulos/quadros continuam sendo concept sheets, não atlas prontos. A estrutura de substituição por arte final está em `assets/production/tools/README.md`; consultar também `docs/ASSETS.md`.
 
 ## Como trabalhar com Codex
 

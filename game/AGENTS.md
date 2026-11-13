@@ -6,12 +6,14 @@ Você está desenvolvendo **Craft Bunny**, jogo de plataforma 2D **Godot 4.3+ / 
 - **Uma fase**, em três alturas (floresta, copa e subsolo), casa do coelho = chegada, ranking de cenouras = competição. Largura atual **24.000 px**, reduzida de 48.000 em 2026-11-13 por solicitação. Mantidos 140 cenouras no mapa e 60 em drops, teto 200 pelo contrato 0.4.0. Tempo da fase compacta depende de playtest; não impor duração mínima.
 - Após atacar, a ave pousa por 0,5 s antes de retornar ao voo (alteração autorizada em 2026-11-12). A escada da copa exige quatro caixas; manter retorno do subsolo sem gasto obrigatório.
 - **Sem checkpoints nem save de progresso**. Persistir apenas recordes (e preferências de áudio e controles).
-- Coelho: 3 HP, 1 s invulnerabilidade, martelo 1 dano; cobra 2 HP/1 dano/1 cenoura; guaxinim 5/2/3; ave 7/3/5.
+- Coelho: 3 HP, 0,5 s invulnerabilidade após dano (atualização autorizada 2026-11-13); cobra 2 HP/1 dano/1 cenoura; guaxinim 5/2/3; ave 7/3/5.
+- Ferramentas autorizadas 2026-11-13: I alterna martelo→machado→picareta→estilingue; J age/mira e soltar dispara. Danos 1/2/3/3; martelo 0,35 s, machado 0,55 s, picareta 0,30+0,20+0,50 s. Estilingue gasta uma cenoura e ranking usa saldo restante. Construir/destruir caixas somente com martelo. Picareta ativa pode interceptar mergulho frontal/de cima, sem imunidade geral.
+- Fase ativa `scenes/level_wide/fase_ferramentas.tscn`: dois buracos de 1.024 px cruzando todos os pisos, resolvidos com árvore/machado; duas passagens baixas com 12 cenouras existentes exigem picareta. Não adicionar cenouras extras além do teto 200. Geometria editável e cenas anteriores preservadas.
 - Madeira sem limite (alteração solicitada pelo usuário); caixa custa 3 madeiras, tem 2 HP e somente o coelho a destrói.
 - Pisão autorizado: cair por cima de um inimigo causa 1 dano, impulso de retorno e um único quique pequeno ao pousar no chão, com animação própria e impact-thud.mp3.
 - Coyote time e jump buffer 0,12 s; pulo ~altura do coelho com valores iniciais. Não tunar sem playtest.
-- Habilidades autorizadas em 2026-11-13: Dash I (600 px/s, 0,16 s, cooldown 0,8 s, uma carga aérea) e planar pelo segundo toque de pulo (janela 0,35 s, até 1 s por salto, queda máxima 70 px/s). Sem dano/invulnerabilidade; manter colisões e regras de combate. Detalhes em ../docs/MOVEMENT_ABILITIES_042.md.
-- Não adicionar fases, save points, loja, áreas secretas, multiplayer, monetização, sistemas extras ou mais ataques antes da validação da primeira fase.
+- Habilidades: Dash L (600 px/s, 0,16 s, cooldown 0,8 s, uma carga aérea) e planar pelo segundo toque de pulo (janela 0,35 s, até 1 s por salto, queda máxima 70 px/s). Sem dano/invulnerabilidade; manter colisões e regras de combate. Migração de I para L e ferramentas em ../docs/TOOLS_050.md.
+- Não adicionar fases, save points, loja, áreas secretas, multiplayer, monetização ou ataques além das quatro ferramentas autorizadas antes da validação da primeira fase.
 
 ## Fluxo de trabalho
 1. Inspecione a arquitetura atual; prefira mudanças mínimas e progressivas. Refatore `main.gd` em componentes **somente quando reduzir risco** e sem alterar comportamento.
