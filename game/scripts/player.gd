@@ -11,6 +11,7 @@ signal tool_used(hitbox: Rect2, tool: int, damage: int)
 signal sling_released(origin: Vector2, launch_velocity: Vector2)
 
 const TOOLS = preload("res://scripts/tool_catalog.gd")
+const DEFAULT_TOOL_FRAMES = preload("res://assets/production/v4/tool_frames.tres")
 var equipped_tool := TOOLS.Type.HAMMER
 var previous_tool := TOOLS.Type.HAMMER
 var attack_tool := TOOLS.Type.HAMMER
@@ -142,8 +143,9 @@ func _ready() -> void:
  switch_audio.volume_db = -8
  add_child(switch_audio)
  tool_visual = preload("res://scripts/tool_visual.gd").new()
- if final_tool_frames==null and FileAccess.file_exists("res://assets/production/v4/tool_frames.tres"):
-  final_tool_frames = load("res://assets/production/v4/tool_frames.tres") as SpriteFrames
+ # Export remaps .tres to binary resources: FileAccess misses the source path.
+ if final_tool_frames==null:
+  final_tool_frames = DEFAULT_TOOL_FRAMES
  tool_visual.final_frames = final_tool_frames
  add_child(tool_visual)
 

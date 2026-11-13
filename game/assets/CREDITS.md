@@ -49,3 +49,7 @@ Autor e licença específica de cada faixa: conferir os detalhes das páginas de
 ## Artes v4 — 2026-11-13
 
 Coelho modular, ataques de machado/picareta/estilingue, mira, equipamentos, árvore-ponte e rochas: imagens geradas com a ferramenta integrada imagegen a partir da identidade visual do projeto. Prompts/proveniência em production/v4/PROMPTS.md. Referências originais preservadas; nenhuma arte de terceiros adicionada nesta etapa. Integração técnica pelo projeto Craft Bunny.
+
+## Áudio de obstáculos — 2026-11-13
+
+Arquivos falling-tree.mp3 e rock-falls.mp3 fornecidos pelo usuário na pasta music. Integrados em SFX, sem loop, respectivamente no início da queda da árvore e em cada acerto válido de picareta na rocha. Origem geral informada anteriormente: Pixabay; páginas individuais/autores destes dois arquivos não foram fornecidos nesta etapa.

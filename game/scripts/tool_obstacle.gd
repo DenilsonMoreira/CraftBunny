@@ -3,6 +3,8 @@ extends StaticBody2D
 const TOOLS = preload("res://scripts/tool_catalog.gd")
 const ICONS = preload("res://scripts/tool_icons.gd")
 const ART = preload("res://scripts/world_art.gd")
+const FALL_DURATION := .65
+const DROP_DURATION := .52
 @export_enum("tree","rock") var kind := "tree":
  set(value):
   kind = value
@@ -24,6 +26,7 @@ var animation_time := 0.0
 var flash := 0.0
 var collider: CollisionShape2D
 var sound: AudioStreamPlayer
+var fall_sound: AudioStreamPlayer
 
 func _refresh_preview() -> void:
  if is_instance_valid(collider) and not falling and not broken and not bridge_ready:
@@ -49,10 +52,16 @@ func _ready() -> void:
   add_to_group("tool_obstacles")
   if kind=="tree": add_to_group("bridges")
   sound = AudioStreamPlayer.new()
-  sound.stream = load("res://music/impact-thud.mp3")
+  sound.stream = load("res://music/rock-falls.mp3" if kind=="rock" else "res://music/impact-thud.mp3")
   sound.bus = "SFX" if AudioServer.get_bus_index("SFX")>=0 else "Master"
   sound.volume_db = -12
   add_child(sound)
+  if kind=="tree":
+   fall_sound = AudioStreamPlayer.new()
+   fall_sound.stream = preload("res://music/falling-tree.mp3")
+   fall_sound.bus = sound.bus
+   fall_sound.volume_db = -10
+   add_child(fall_sound)
  queue_redraw()
 
 func hit_rect() -> Rect2:
@@ -70,7 +79,9 @@ func apply_tool(tool: int) -> bool:
  if hp <= 0:
   animation_time = 0
   collider.set_deferred("disabled",true)
-  if kind=="tree": falling = true
+  if kind=="tree":
+   falling = true
+   if is_instance_valid(fall_sound): fall_sound.play()
   else: broken = true
  queue_redraw()
  return true
@@ -82,7 +93,7 @@ func _process(delta: float) -> void:
  flash = maxf(0,flash-delta)
  if falling:
   animation_time += delta
-  if animation_time >= .65:
+  if animation_time >= FALL_DURATION:
    falling = false
    bridge_ready = true
    _activate_bridge.call_deferred()
@@ -96,27 +107,38 @@ func _activate_bridge() -> void:
  collider.position = Vector2(bridge_length/2-80,12)
  collider.disabled = false
 
+func fall_pose() -> Dictionary:
+ var elapsed := FALL_DURATION if bridge_ready else (animation_time if falling else 0.0)
+ var drop := clampf(elapsed/DROP_DURATION,0,1)
+ var eased := drop*drop
+ var settle := clampf((elapsed-DROP_DURATION)/(FALL_DURATION-DROP_DURATION),0,1)
+ var angle := lerpf(-PI/2,0,eased)-sin(settle*PI)*.012*(1-settle)
+ return {"pivot":Vector2(-80*eased,12*eased),"angle":angle,"crown_alpha":1-smoothstep(.42,1.0,drop),"debris_alpha":smoothstep(.7,1.0,drop)}
+
+func _draw_log() -> void:
+ # One continuous geometry/material from standing trunk to final bridge.
+ var middle := ART.texture("tree",2)
+ for index in range(ceili((bridge_length-80)/64)):
+  var width := minf(64,bridge_length-80-index*64)
+  draw_texture_rect_region(middle,Rect2(40+index*64,-12,width,24),Rect2(Vector2.ZERO,Vector2(middle.get_width()*width/64,middle.get_height())))
+ draw_texture_rect(ART.texture("tree",5),Rect2(0,-12,40,24),false)
+ draw_texture_rect(ART.texture("tree",6),Rect2(bridge_length-40,-12,40,24),false)
+
 func _draw() -> void:
  if kind=="tree":
-  var t := clampf(animation_time/.65,0,1) if falling else (1.0 if bridge_ready else 0.0)
-  if t<.99:
-   draw_texture_rect(ART.texture("tree",4),Rect2(-32,-48,64,48),false)
-   draw_set_transform(Vector2(-80*t,12*t),t*PI/2)
-   var bark := ART.texture("tree",1)
-   for index in range(ceili(bridge_length/64)):
-    var height := minf(64,bridge_length-index*64)
-    draw_texture_rect_region(bark,Rect2(-16,-bridge_length+index*64,32,height),Rect2(Vector2.ZERO,Vector2(bark.get_width(),bark.get_height()*height/64)))
-   draw_texture_rect(ART.texture("tree",0),Rect2(-170,-bridge_length-120,340,290),false)
+  var pose := fall_pose()
+  draw_texture_rect(ART.texture("tree",4),Rect2(-32,-48,64,48),false)
+  if falling or bridge_ready: draw_texture_rect(ART.texture("tree",3),Rect2(-16,-12,32,12),false)
+  draw_set_transform(pose["pivot"],pose["angle"])
+  _draw_log()
+  draw_set_transform(Vector2.ZERO)
+  if pose["crown_alpha"]>0:
+   var tip: Vector2 = pose["pivot"]+Vector2(bridge_length-40,0).rotated(pose["angle"])
+   draw_set_transform(tip,pose["angle"]+PI/2)
+   draw_texture_rect(ART.texture("tree",0),Rect2(-170,-145,340,290),false,Color(1,1,1,pose["crown_alpha"]))
    draw_set_transform(Vector2.ZERO)
-  else:
-   var middle := ART.texture("tree",2)
-   for index in range(ceili((bridge_length-80)/64)):
-    var width := minf(64,bridge_length-80-index*64)
-    draw_texture_rect_region(middle,Rect2(-40+index*64,0,width,24),Rect2(Vector2.ZERO,Vector2(middle.get_width()*width/64,middle.get_height())))
-   draw_texture_rect(ART.texture("tree",5),Rect2(-80,0,40,24),false)
-   draw_texture_rect(ART.texture("tree",6),Rect2(bridge_length-120,0,40,24),false)
-   draw_texture_rect(ART.texture("tree",3),Rect2(-16,-12,32,12),false)
-   draw_texture_rect(ART.texture("tree",7),Rect2(bridge_length-145,-9,65,21),false)
+  if pose["debris_alpha"]>0:
+   draw_texture_rect(ART.texture("tree",7),Rect2(bridge_length-145,-9,65,21),false,Color(1,1,1,pose["debris_alpha"]))
   if not bridge_ready and not falling:
    draw_rect(Rect2(-19,-67,38,34),Color("eee0ac"))
    ICONS.draw_icon(self,"axe",Vector2(0,-49),.75)

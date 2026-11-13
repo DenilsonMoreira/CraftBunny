@@ -2,6 +2,12 @@
 
 **Regra de uso:** `[x]` = testado/verificado no projeto, `[ ]` = pendente. Recursos já codificados no protótipo mas **não testados** continuam pendentes. **Prioridade máxima:** estabilizar o build antes de adicionar assets ou efeitos.
 
+## Correções 0.5.2 — 2026-11-13
+- [x] Carregamento de SpriteFrames corrigido no pacote exportado; 46 checks headless e 49 checks/capturas OpenGL no PCK Windows, além de 47 em fontes.
+- [x] Queda da árvore contínua até a ponte; falling-tree no início da queda e rock-falls por golpe correto de picareta.
+- [x] Regressões de ferramentas, obstáculos, arte, toque, áudio, morte e mobilidade aprovadas. Relatório: ../docs/PRESENTATION_052.md.
+- [ ] Escuta e playtest humano da queda; renderização e ergonomia no Android físico.
+
 ## Arte 0.5.1 — 2026-11-13
 - [x] Novos sprites, ícones e obstáculos integrados, com transparência e escala controlada.
 - [x] Regressões: 315 checks de gameplay/interface, ataque e captura dos 12 quadros de mobilidade aprovados.

@@ -2,18 +2,21 @@
 
 Build atualizado em 2026-11-13 com Godot 4.7.2.
 
-- Arquivo: builds/CraftBunny-Android-0.5.1.apk (também disponível como CraftBunny-Android-Test.apk).
+- Arquivo: builds/CraftBunny-Android-0.5.2.apk (também disponível como CraftBunny-Android-Test.apk).
 - Pacote: com.craftbunny.game
-- Versão: 0.5.1-android-test (código 13), artes v4 de personagem, ferramentas, árvores/rochas e círculos com ícones; fase de 24.000 px e teto 200 antes de gastar munição. Contrato global permanece 0.4.0, sem nova migração nesta atualização.
+- Versão: 0.5.2-android-test (código 14), artes v4 de personagem, ferramentas, árvores/rochas e círculos com ícones; fase de 24.000 px e teto 200 antes de gastar munição. Contrato global permanece 0.4.0, sem nova migração nesta atualização.
 - Mínimo: Android API 24 (Android 7.0), aparelho com OpenGL ES 3 compatível com o renderer Compatibility.
 - Target SDK: 36.
 - Arquiteturas: arm64-v8a e armeabi-v7a.
 - Orientação: paisagem, conteúdo 960x540 com proporção preservada.
-- Tamanho: 95.672.672 bytes.
-- SHA256: 56B705D33BC232AA66C4BAD37A847372E218803BCA313701F59ECBB7E11030E0
+- Tamanho: 95.886.074 bytes.
+- SHA256: 81E663E9459EAF90170A68066BF470DDE2D18D6E093518F8530F486BA4EC17DE
 - Assinatura de depuração verificada: esquemas v2 e v3.
 
 ## Instalar
+
+Atualização 0.5.2: corrigido carregamento de sprites no export, queda contínua da árvore e sons de obstáculos. Manifesto código14, ARM32/64, INTERNET e assinatura v2/v3 confirmados; mesmo certificado da 0.5.1. Recurso SpriteFrames remapeado e sons conferidos dentro do APK. Versões locais mantidas: 0.5.2/0.5.1. Android físico e escuta pendentes; site/Blob não atualizados. Relatório: ../../docs/PRESENTATION_052.md. Notas seguintes são históricas.
+
 
 Atualização 0.5.1: artes v4 integradas. Manifesto ARM32/64, INTERNET, código 13 e assinatura v2/v3 verificados; mesmo certificado da 0.5.0. Retidas somente versões locais 0.5.1/0.5.0. Site/Blob não atualizados nesta etapa; execução em aparelho físico pendente. Relatório: ../../docs/ART_051.md.
 
