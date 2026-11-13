@@ -1,5 +1,7 @@
 # Windows 0.3.5 — 2026-11-07
 
+Versão atual 0.5.3 (2026-11-13): game/builds/windows-0.5.3/CraftBunny-0.5.3.exe, 158.184.120 bytes, propriedades 0.5.3.0, SHA256 17e2a5f656a21f002175c71e7e10873b8dae2b0766005a46399512e385ca4f3d. ZIP CraftBunny-Windows-0.5.3.zip, 87.143.957 bytes. Cutscene e forest-birds na abertura/título. Teste do pacote: 45 checks headless e 52 OpenGL; EXE executado por 1450 frames a 60fps fixos, percorrendo a abertura automática até o título, saída 0 sem erros. Mantidas 0.5.3/0.5.2. Guia: ../../docs/OPENING_053.md. Notas seguintes são históricas.
+
 Versão atual 0.5.2 (2026-11-13): game/builds/windows-0.5.2/CraftBunny-0.5.2.exe, 153.887.352 bytes, versão 0.5.2.0, SHA256 5e71d192ad104834803148e279afc7914448c0962d89410a2363e420a525fdc0. ZIP CraftBunny-Windows-0.5.2.zip, 82.893.504 bytes. Corrigidos sprites no pacote exportado, queda e sons de obstáculos. Testes no PCK Windows e smoke OpenGL de 120 frames aprovados; saída 0, sem erros. Retenção 0.5.2/0.5.1. Guia: ../../docs/PRESENTATION_052.md. Notas seguintes são históricas.
 
 Versão atual 0.5.1 (2026-11-13): game/builds/windows-0.5.1/CraftBunny-0.5.1.exe e ZIP CraftBunny-Windows-0.5.1.zip. Novas artes de personagem, ferramentas, árvore/ponte e rochas. EXE 151.817.440 bytes; versão 0.5.1.0; SHA256 67cb872000703d1736d328b2ae26cb1f1d91ee6fb1f34ac52262a27cf84010af. Smoke OpenGL 120 frames, saída 0, log sem erros. Retenção local 0.5.1/0.5.0; notas seguintes são históricas. Guia: ../../docs/ART_051.md.

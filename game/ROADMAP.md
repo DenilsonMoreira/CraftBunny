@@ -2,6 +2,12 @@
 
 **Regra de uso:** `[x]` = testado/verificado no projeto, `[ ]` = pendente. Recursos já codificados no protótipo mas **não testados** continuam pendentes. **Prioridade máxima:** estabilizar o build antes de adicionar assets ou efeitos.
 
+## Abertura 0.5.3 — 2026-11-13
+- [x] Cutscene aprovada de seis slides integrada antes do título, com crossfade, avanço automático/manual e pular.
+- [x] Forest-birds em loop na abertura e título, sem reinício entre cenas; tema anterior somente na partida. Volume salvo e foco respeitados.
+- [x] 52 checks/capturas da abertura e 45 checks headless aprovados; regressões de áudio, morte, fluxo, ferramentas, toque, mobilidade e ranking offline aprovadas.
+- [ ] Escutar emenda/volume e validar o ritmo em velocidade normal e Android físico. Relatório: ../docs/OPENING_053.md.
+
 ## Correções 0.5.2 — 2026-11-13
 - [x] Carregamento de SpriteFrames corrigido no pacote exportado; 46 checks headless e 49 checks/capturas OpenGL no PCK Windows, além de 47 em fontes.
 - [x] Queda da árvore contínua até a ponte; falling-tree no início da queda e rock-falls por golpe correto de picareta.

@@ -33,3 +33,7 @@
 ## Pacote v4 / 0.5.1
 
 Artes de ferramentas e obstáculos substituem o desenho provisório do lançamento 0.5.0. Onze folhas de 12 quadros, quatro equipamentos e kits ambientais. Atlas, pivôs, composição e prompts em ../assets/production/v4/README.md; validação em ../../docs/ART_051.md. Referências e assets anteriores preservados.
+
+## Abertura aprovada 0.5.3
+
+production/intro/storyboard.png reutiliza a prévia v2 aprovada, com olhos fechados no terceiro painel. AtlasTextures separam seis cenas sem editar o original. Catálogo/prompts em ../assets/production/intro/README.md. Forest-birds fornecido pelo usuário e creditado em assets/CREDITS.md. Integração/testes em ../../docs/OPENING_053.md.

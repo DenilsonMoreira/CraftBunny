@@ -89,3 +89,7 @@ Manual pendente: percurso completo, sensação/fluidez em velocidade normal, enc
 ## Correções 0.5.2 — executado em 2026-11-13
 
 Nova regressão tools/test_presentation.gd: 47 checks em fontes com captura; 46 no pacote Windows headless; 49 no pacote OpenGL com três capturas de ferramentas. Reproduzida falha anterior FileAccess=false/ResourceLoader=true no export e verificado preload corrigido. Queda contínua, canvas final alinhado à colisão e sons por evento aprovados. Regressões: ferramentas 68, obstáculos 15, touch 25, mobilidade 40, arte 493, morte 10, ataque PASS, áudio zero falhas. Alguns harnesses antigos continuam com avisos de recursos no encerramento. Comandos e evidências: ../../docs/PRESENTATION_052.md. Pendentes: escuta de volume e playtest humano da queda/fase; Android físico.
+
+## Abertura 0.5.3 — 2026-11-13
+
+Executado tools/test_opening.gd: 52 checks/capturas OpenGL e 45 headless, zero falhas. Recortes aprovados, seis quadros, crossfade, autoavanço, pular, teclado/toque, deduplicação de mouse emulado, foco, mute salvo, handoff da mesma instância de áudio, título e troca de tema/morte validados. Regressões: áudio zero falhas, morte10, fluxo16, ferramentas68, touch25, mobilidade40, ranking offline22. Alguns harnesses mantêm avisos de recursos no encerramento. Detalhes/comandos: ../../docs/OPENING_053.md. Escuta do loop/volume, ritmo humano e Android físico pendentes.

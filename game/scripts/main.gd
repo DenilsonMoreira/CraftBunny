@@ -41,6 +41,7 @@ var status_timer := 0.0
 var rebind_action := ""
 var controls_file := "user://controls.cfg"
 var music_player: AudioStreamPlayer
+var menu_music: AudioStreamPlayer
 var pickup_player: AudioStreamPlayer
 var death_player: AudioStreamPlayer
 var hammer_player: AudioStreamPlayer
@@ -108,6 +109,12 @@ func _prepare_audio() -> void:
 		if AudioServer.get_bus_index(name)<0:
 			AudioServer.add_bus()
 			AudioServer.set_bus_name(AudioServer.bus_count-1,name)
+	menu_music = get_tree().root.get_node_or_null("OpeningMusic") as AudioStreamPlayer
+	if is_instance_valid(menu_music):
+		menu_music.reparent(self)
+	else:
+		menu_music = preload("res://scripts/menu_music.gd").new()
+		add_child(menu_music)
 	music_player = _create_audio_player("MusicPlayer",load("res://music/music-theme.mp3") as AudioStream,"Music")
 	pickup_player = _create_audio_player("PickupPlayer",load("res://music/collect-itens.mp3") as AudioStream,"SFX")
 	death_player = _create_audio_player("DeathPlayer",load("res://music/game-over.mp3") as AudioStream,"SFX")
@@ -556,6 +563,8 @@ func _button(parent: Node, label: String, callback: Callable) -> Button:
 func _show_title() -> void:
 	game_started = false
 	player.controls_enabled = false
+	music_player.stop()
+	menu_music.start_menu()
 	_clear_overlay()
 	title_screen = Control.new()
 	title_screen.name = "TitleScreen"
@@ -599,6 +608,7 @@ func _title_button(button_name: String, label: String, index: int, callback: Cal
 
 func _begin_game() -> void:
 	if game_started: return
+	menu_music.stop()
 	game_started = true
 	global_ranking.begin_attempt()
 	player.controls_enabled = true

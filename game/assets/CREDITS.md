@@ -53,3 +53,9 @@ Coelho modular, ataques de machado/picareta/estilingue, mira, equipamentos, árv
 ## Áudio de obstáculos — 2026-11-13
 
 Arquivos falling-tree.mp3 e rock-falls.mp3 fornecidos pelo usuário na pasta music. Integrados em SFX, sem loop, respectivamente no início da queda da árvore e em cada acerto válido de picareta na rocha. Origem geral informada anteriormente: Pixabay; páginas individuais/autores destes dois arquivos não foram fornecidos nesta etapa.
+
+## Abertura — 2026-11-13
+
+production/intro/storyboard.png: imagem de seis quadros gerada com imagegen e aprovada pelo usuário, com revisão dos olhos fechados em Já volto!. Prompts e histórico em production/intro/PROMPTS.md. Recortes AtlasTexture preservam o PNG completo.
+
+forest-birds.mp3: arquivo fornecido pelo usuário em Downloads; cópia integrada à abertura e ao título, em loop no bus Music. Origem geral anteriormente informada: Pixabay; página individual/autoria desta faixa não informada nesta etapa. Licenças da engine e avisos anteriores preservados.

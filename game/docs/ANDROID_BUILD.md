@@ -2,18 +2,21 @@
 
 Build atualizado em 2026-11-13 com Godot 4.7.2.
 
-- Arquivo: builds/CraftBunny-Android-0.5.2.apk (também disponível como CraftBunny-Android-Test.apk).
+- Arquivo: builds/CraftBunny-Android-0.5.3.apk (também disponível como CraftBunny-Android-Test.apk).
 - Pacote: com.craftbunny.game
-- Versão: 0.5.2-android-test (código 14), artes v4 de personagem, ferramentas, árvores/rochas e círculos com ícones; fase de 24.000 px e teto 200 antes de gastar munição. Contrato global permanece 0.4.0, sem nova migração nesta atualização.
+- Versão: 0.5.3-android-test (código 15), artes v4 de personagem, ferramentas, árvores/rochas e círculos com ícones; fase de 24.000 px e teto 200 antes de gastar munição. Contrato global permanece 0.4.0, sem nova migração nesta atualização.
 - Mínimo: Android API 24 (Android 7.0), aparelho com OpenGL ES 3 compatível com o renderer Compatibility.
 - Target SDK: 36.
 - Arquiteturas: arm64-v8a e armeabi-v7a.
 - Orientação: paisagem, conteúdo 960x540 com proporção preservada.
-- Tamanho: 95.886.074 bytes.
-- SHA256: 81E663E9459EAF90170A68066BF470DDE2D18D6E093518F8530F486BA4EC17DE
+- Tamanho: 100.130.461 bytes.
+- SHA256: 20377061DD81580C1C8D5A3B79FDB0CA7A5A1A5272B8ECA82B02B431306B86A8
 - Assinatura de depuração verificada: esquemas v2 e v3.
 
 ## Instalar
+
+Atualização 0.5.3: abertura aprovada em seis slides, com avançar/pular e forest-birds em loop até o título. NOVO JOGO troca para o tema anterior. APK código15, ARM32/64, INTERNET e assinatura v2/v3 verificados; mesmo certificado da 0.5.2. Recursos de cena, script, imagem e áudio conferidos dentro do APK. Mantidas versões locais 0.5.3/0.5.2. Android físico e escuta pendentes; download do site não alterado nesta etapa. Guia: ../../docs/OPENING_053.md. Notas seguintes são históricas.
+
 
 Atualização 0.5.2: corrigido carregamento de sprites no export, queda contínua da árvore e sons de obstáculos. Manifesto código14, ARM32/64, INTERNET e assinatura v2/v3 confirmados; mesmo certificado da 0.5.1. Recurso SpriteFrames remapeado e sons conferidos dentro do APK. Versões locais mantidas: 0.5.2/0.5.1. Android físico e escuta pendentes; site/Blob não atualizados. Relatório: ../../docs/PRESENTATION_052.md. Notas seguintes são históricas.
 
